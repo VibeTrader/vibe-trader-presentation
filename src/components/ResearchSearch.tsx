@@ -7,11 +7,19 @@ const assistants = [
   { name: 'Claude', url: 'https://claude.ai/new' },
 ];
 
-export function ResearchSearch() {
-  const [query, setQuery] = useState('Research on trading strategy performance across market conditions and investor decision-making');
+const DEFAULT_QUERY = 'Research on trading strategy performance across market conditions and investor decision-making';
+const DEFAULT_CONTEXT = 'retail traders keeping strategies effective as markets change, choosing strategies for current conditions, and turning charts and signals into decisions';
+
+type ResearchSearchProps = {
+  defaultQuery?: string;
+  context?: string;
+};
+
+export function ResearchSearch({ defaultQuery = DEFAULT_QUERY, context = DEFAULT_CONTEXT }: ResearchSearchProps = {}) {
+  const [query, setQuery] = useState(defaultQuery);
   const [status, setStatus] = useState('');
   const search = query.trim();
-  const prompt = `Research this question: ${search}\n\nContext: retail traders keeping strategies effective as markets change, choosing strategies for current conditions, and turning charts and signals into decisions. Cite primary research with links. Distinguish published findings from interpretation and explain limitations for retail FX and CFD traders.`;
+  const prompt = `Research this question: ${search}\n\nContext: ${context}. Cite primary research with links. Distinguish published findings from interpretation and explain limitations for retail FX and CFD traders.`;
 
   return (
     <section aria-labelledby="research-search-title" className="mb-12">

@@ -15,6 +15,7 @@ export default function Slide16() {
         <h1 className="text-6xl font-black tracking-tighter mb-20">FAQ</h1>
         <ul className="space-y-12 text-4xl font-light">
           <li><a href="/research/trader-challenges" target="_blank" rel="noopener noreferrer" onPointerDown={(event) => event.stopPropagation()} className="underline underline-offset-8 decoration-gray-300 hover:decoration-black">What research supports these trader challenges?</a></li>
+          <li><a href="/research/market-sizing" target="_blank" rel="noopener noreferrer" onPointerDown={(event) => event.stopPropagation()} className="underline underline-offset-8 decoration-gray-300 hover:decoration-black">How did you size the market on slide 4?</a></li>
           <li><Link href="/presentation/17" className="underline underline-offset-8 decoration-gray-300 hover:decoration-black">How is VibeTrader different from other strategy builders?</Link></li>
           <li><Link href="/presentation/18" className="underline underline-offset-8 decoration-gray-300 hover:decoration-black">Can we see the product in action?</Link></li>
         </ul>

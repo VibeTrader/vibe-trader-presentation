@@ -8,9 +8,9 @@ const TOTAL_SLIDES = 18;
 const ACTIVE = 3;
 
 const market = [
-  { label: 'TAM', value: '$20B', description: 'Global online trading platform market by 2030' },
-  { label: 'SAM', value: '7.4M+', description: 'Active retail FX and CFD accounts' },
-  { label: 'SOM', value: '150K–250K', description: 'Initial MT4 / MT5 beachhead traders' },
+  { label: 'TAM', value: '370M', description: 'Global active self-directed traders across equities, crypto, FX and derivatives' },
+  { label: 'SAM', value: '10–15M', description: 'Active retail forex and CFD traders worldwide, driving ~$242B in daily volume' },
+  { label: 'SOM', value: '62K', description: '1% of the 6.2M traders across APAC, North America and Europe' },
 ];
 
 export default function Slide4() {
@@ -89,6 +89,18 @@ export default function Slide4() {
 
         </motion.div>
       </div>
+
+      <a
+        href="/research/market-sizing"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Supporting research and sources (opens in a new tab)"
+        onClick={(event) => event.stopPropagation()}
+        onPointerDown={(event) => event.stopPropagation()}
+        className="absolute bottom-24 right-20 z-20 text-base leading-normal text-gray-500 underline decoration-gray-300 underline-offset-4 hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4"
+      >
+        <sup className="mr-1 text-xs">1</sup> Supporting research &amp; sources
+      </a>
 
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
