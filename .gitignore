@@ -24,6 +24,10 @@
 .DS_Store
 *.pem
 
+# image and PDF artifacts
+*.png
+*.pdf
+
 # debug
 npm-debug.log*
 yarn-debug.log*
