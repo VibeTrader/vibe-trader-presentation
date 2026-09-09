@@ -1,33 +1,40 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { Users, Handshake, Cpu } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 17;
+const TOTAL_SLIDES = 18;
 const ACTIVE = 13;
 
-const cards = [
+const deployment = [
   {
+    icon: Cpu,
     category: 'PRODUCT',
-    title: 'Built & Live',
-    points: ['AI decision intelligence', 'Live trading infrastructure'],
+    title: 'Advance the Platform',
+    points: ['AI decision intelligence', 'Mobile experience', 'Infrastructure & security'],
   },
   {
-    category: 'MARKET',
-    title: 'Early Validation',
-    points: ['Trader adoption', 'Live partner pilots'],
+    icon: Handshake,
+    category: 'GROWTH',
+    title: 'Scale Distribution',
+    points: ['Broker partnerships', 'Academies & affiliates', 'Trader acquisition'],
   },
   {
-    category: 'EFFICIENCY',
-    title: '~$25K Monthly Burn',
-    points: ['Lean execution', 'Capital efficient'],
+    icon: Users,
+    category: 'TEAM',
+    title: 'Build for Scale',
+    points: ['Engineering', 'Sales & partnerships', 'Customer success'],
   },
-  {
-    category: 'DISTRIBUTION',
-    title: 'Ready to Scale',
-    points: ['Direct acquisition', 'Broker & academy channels'],
-  },
+];
+
+const outcomes = [
+  '5,000+ active users',
+  'Commercial broker partnerships',
+  'Recurring Revenue Growth',
+  'Expansion beyond Forex',
+  'Enterprise licensing',
 ];
 
 export default function Slide14() {
@@ -67,7 +74,7 @@ export default function Slide14() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Why Invest Now
+            Funding the Next Stage
           </motion.h1>
 
           <motion.p
@@ -76,36 +83,45 @@ export default function Slide14() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            From Validation to Scale
+            $1M Pre-Seed
           </motion.p>
 
-          <div className="grid grid-cols-4 gap-6 mb-8 w-full max-w-[1500px]">
-            {cards.map((c, i) => (
-              <motion.div
-                key={i}
-                className="border-2 border-gray-200 hover:border-black transition-colors p-8 rounded-lg group bg-white"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
-              >
-                <div className="text-8xl font-black text-black mb-3 leading-none">{i + 1}</div>
-                <p className="text-sm uppercase tracking-widest text-gray-400 font-bold mb-3">{c.category}</p>
-                <h3 className="text-2xl font-black text-black leading-tight mb-4 min-h-[40px] flex items-center">
-                  {c.title}
-                </h3>
-                <ul className="space-y-3">
-                  {c.points.map((pt, j) => (
-                    <li
-                      key={j}
-                      className="flex items-start gap-2.5 text-xl text-gray-700 font-light leading-relaxed"
-                    >
-                      <span className="mt-3 inline-block h-2 w-2 shrink-0 bg-black" />
-                      <span>{pt}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
+          <motion.p
+            className="text-xl uppercase tracking-[0.3em] text-gray-500 mb-5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.45, duration: 0.6 }}
+          >
+            Where we&apos;ll invest
+          </motion.p>
+
+          <div className="grid grid-cols-3 gap-10 mb-8">
+            {deployment.map((d, i) => {
+              const Icon = d.icon;
+              return (
+                <motion.div
+                  key={i}
+                  className="border-2 border-gray-200 hover:border-black transition-colors p-10 rounded-lg group"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + i * 0.12, duration: 0.5 }}
+                >
+                  <div className="w-16 h-16 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors mb-4 rounded-lg">
+                    <Icon className="w-9 h-9" />
+                  </div>
+                  <p className="text-sm uppercase tracking-widest text-gray-400 font-bold mb-1">{d.category}</p>
+                  <h3 className="text-3xl font-black text-black leading-tight mb-4">{d.title}</h3>
+                  <ul className="space-y-3">
+                    {d.points.map((pt, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xl text-gray-700 font-light leading-relaxed">
+                        <span className="mt-3.5 inline-block h-2 w-2 shrink-0 bg-black" />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              );
+            })}
           </div>
 
           <motion.div
@@ -114,9 +130,14 @@ export default function Slide14() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0, duration: 0.6 }}
           >
-            <p className="text-2xl font-light leading-snug">
-              Built lean. Validated in market. Ready to scale.
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-y-2 text-xl font-light leading-snug">
+              {outcomes.map((o, i) => (
+                <div key={i} className="flex items-center gap-2.5">
+                  <span className="inline-block h-2.5 w-2.5 shrink-0 bg-white" />
+                  <span>{o}</span>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </div>

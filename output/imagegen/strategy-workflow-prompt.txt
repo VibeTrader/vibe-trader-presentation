@@ -1,0 +1,9 @@
+Generated with the built-in ImageGen tool.
+
+Create one 16:9 landscape sample image, a polished editorial explainer animation keyframe for a VibeTrader investor slide. Use the attached reference ONLY for visual style: illustrated cut-paper stickers with thick irregular cream-white outlines, painterly faceted shading, tactile layered shadows, dark charcoal background, striking vermilion-orange accents, dynamic Vox-style editorial motion-graphics composition. Do not copy its hand or keyboard scene. This is a still image, not a video.
+Show a single exceptionally readable left-to-right illustrative workflow, four large separate paper-cutout objects linked with bold cream arrows: (1) a small layered collage of a social post, breaking-news newspaper and economic calendar; (2) an AI chip examining that incoming information; (3) a mechanical checklist with gears representing fixed trading rules; (4) a trading terminal showing a neutral simulation chart and test play button. No actual celebrity names, invented tweets, invented returns or profit claims. Make each object expressive and substantial, like tangible animated stickers, not flat corporate line icons or SaaS cards.
+Large exact labels underneath each object: "EVENT ARRIVES", "AI ASSESSES", "RULES CHECK", "STRATEGY ACTS".
+Above, a restrained large cream headline: "More Than a Strategy Builder".
+Below the entire connected workflow place one broad torn-paper cream strip, tying all four stages into one built-in environment, with exact dark text: "Build and test the entire workflow in VibeTrader".
+Small unobtrusive label: "Illustrative workflow".
+Excellent spacing, large readable type, minimal text, generous margins. Colors charcoal, cream, vermilion and muted teal accents. Editorial illustration suitable for a sophisticated pitch deck; no logo imitation, no watermark.

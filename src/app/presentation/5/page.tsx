@@ -1,11 +1,39 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { Users, Rocket, Handshake } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 17;
+const TOTAL_SLIDES = 18;
 const ACTIVE = 4;
+
+const stats = [
+  {
+    icon: Users,
+    metric: '1,800+',
+    label: 'Registered traders',
+    detail: 'Users across 100+ countries.',
+  },
+  {
+    icon: Rocket,
+    metric: '2',
+    label: 'Live pilots',
+    detail: 'Trading LatAm (Academy) · Dupoin (Broker).',
+  },
+  {
+    icon: Handshake,
+    metric: '7+',
+    label: 'Broker pipeline',
+    detail: 'Lirunex · PU Prime · GTCFX · Blueberry Markets · HFM · Ultima Markets · OneRoyal.',
+  },
+];
+
+const infra = [
+  'MT4 / MT5 integration',
+  'Multi-language platform: English · Spanish · Arabic',
+  'Broker ecosystem',
+];
 
 export default function Slide5() {
   const { nextSlide, prevSlide } = useSlideNavigation();
@@ -31,12 +59,22 @@ export default function Slide5() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          <motion.div
-            className="w-16 h-1.5 bg-black mb-6"
-            initial={{ width: 0 }}
-            animate={{ width: 64 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          />
+          <div className="flex items-center gap-4 mb-6">
+            <motion.div
+              className="w-16 h-1.5 bg-black"
+              initial={{ width: 0 }}
+              animate={{ width: 64 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            />
+            <motion.p
+              className="text-base uppercase tracking-[0.25em] text-gray-600 font-bold"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              As of July 21, 2026
+            </motion.p>
+          </div>
 
           <motion.h1
             className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight"
@@ -44,7 +82,7 @@ export default function Slide5() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Decision Intelligence in Action
+            Market Validation
           </motion.h1>
 
           <motion.p
@@ -53,25 +91,50 @@ export default function Slide5() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            See how VibeTrader helps traders make smarter decisions in real time.
+            Growing validation from traders and industry partners.
           </motion.p>
 
+          <div className="grid grid-cols-3 gap-6 mb-8">
+            {stats.map((s, i) => {
+              const Icon = s.icon;
+              return (
+                <motion.div
+                  key={i}
+                  className="border-2 border-gray-200 hover:border-black transition-colors p-7 group"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
+                >
+                  <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors mb-4">
+                    <Icon className="w-7 h-7" />
+                  </div>
+                  <p className="text-5xl font-black text-black mb-2 leading-none tracking-tighter">
+                    {s.metric}
+                  </p>
+                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-3">{s.label}</p>
+                  <p className="text-lg text-gray-700 font-light leading-snug">{s.detail}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+
           <motion.div
-            className="mb-8 max-w-5xl aspect-video border border-gray-200 bg-black rounded-lg overflow-hidden relative shadow-lg"
+            className="bg-black text-white p-8 max-w-7xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45, duration: 0.6 }}
-            onClick={(e) => e.stopPropagation()}
+            transition={{ delay: 1.0, duration: 0.6 }}
           >
-            <video
-              src="/100.mp4"
-              className="w-full h-full object-contain"
-              controls
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
+            <p className="text-lg uppercase tracking-widest text-gray-400 mb-3 font-semibold">
+              Ready to scale
+            </p>
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-xl font-light leading-snug">
+              {infra.map((m, i) => (
+                <div key={i} className="flex items-center gap-2.5">
+                  <span className="inline-block h-2 w-2 shrink-0 bg-white" />
+                  <span>{m}</span>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </div>
@@ -80,9 +143,8 @@ export default function Slide5() {
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
           <motion.div
             key={i + 1}
-            className={`h-2 transition-all duration-300 ${
-              i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
-            } rounded-full`}
+            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
+              } rounded-full`}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.8 + i * 0.03 }}

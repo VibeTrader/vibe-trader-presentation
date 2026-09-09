@@ -4,19 +4,13 @@ import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 17;
+const TOTAL_SLIDES = 18;
 const ACTIVE = 1;
 
-const forTraders = [
-  'Strategies stop working as markets change',
-  'No clarity on what works in current conditions',
-  'Emotional decision-making'
-];
-
-const forBrokers = [
-  'High trader churn',
-  'Limited visibility into trader behavior',
-  'Difficult to sustain engagement',
+const traderProblems = [
+  'Keeping strategies effective as markets change',
+  'Knowing which strategy fits current conditions',
+  'Turning charts and signals into a clear trading decision',
 ];
 
 export default function Slide2() {
@@ -51,86 +45,71 @@ export default function Slide2() {
           />
 
           <motion.h1
-            className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight"
+            className="text-6xl font-bold text-black mb-6 tracking-[-0.035em] leading-[1.1]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            The Decision Gap
+            Why We Built VibeTrader
           </motion.h1>
 
           <motion.p
-            className="text-3xl text-gray-600 mb-16 font-light max-w-4xl leading-relaxed"
+            className="text-[28px] text-gray-600 font-normal max-w-7xl leading-[1.55]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            Trading has never had more tools — yet most traders still lose. Execution is solved. Decision-making is not.
+            We saw a family member lose everything through trading. We built VibeTrader to help traders make more informed decisions.
           </motion.p>
 
-          <div className="grid grid-cols-2 gap-24 max-w-7xl mb-16">
+          <div className="mt-10 flex items-center gap-16">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
+              className="w-[1100px] shrink-0 aspect-video overflow-hidden relative"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.7 }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <p className="text-xl uppercase tracking-[0.25em] text-gray-500 mb-8">
-                For Traders
-              </p>
-              <ul className="space-y-8">
-                {forTraders.map((t, i) => (
-                  <motion.li
-                    key={i}
-                    className="flex items-start gap-6 text-2xl text-gray-800 font-light leading-snug"
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 + i * 0.08, duration: 0.4 }}
-                  >
-                    <span className="mt-3.5 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                    <span>{t}</span>
-                  </motion.li>
-                ))}
-              </ul>
+              <video
+                src="/slide%201_V3.mp4"
+                className="w-full h-full object-contain"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
             </motion.div>
-
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
+              className="flex-1 min-w-0"
+              initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
             >
-              <p className="text-xl uppercase tracking-[0.25em] text-gray-500 mb-8">
-                For Brokers
-              </p>
-              <ul className="space-y-8">
-                {forBrokers.map((b, i) => (
-                  <motion.li
-                    key={i}
-                    className="flex items-start gap-6 text-2xl text-gray-800 font-light leading-snug"
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 + i * 0.08, duration: 0.4 }}
-                  >
-                    <span className="mt-3.5 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                    <span>{b}</span>
-                  </motion.li>
+              <h2 className="text-[30px] font-semibold tracking-tight text-black mb-9 leading-[1.25]">
+                What traders struggle with
+                <sup className="ml-1 text-sm font-normal text-gray-500">1</sup>
+              </h2>
+              <ul className="list-disc pl-6 space-y-7 text-[28px] text-gray-700 font-normal leading-[1.45] marker:text-gray-400">
+                {traderProblems.map((problem) => (
+                  <li key={problem} className="pl-2">{problem}</li>
                 ))}
               </ul>
             </motion.div>
           </div>
-
-          <motion.div
-            className="bg-black text-white p-8 max-w-7xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.6 }}
-          >
-            <p className="text-2xl font-light leading-snug">
-              Better decisions ={' '}
-              <span className="font-bold">better trader retention + higher trading activity</span>
-            </p>
-          </motion.div>
         </motion.div>
       </div>
+
+      <a
+        href="/research/trader-challenges"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Supporting research and sources (opens in a new tab)"
+        onClick={(event) => event.stopPropagation()}
+        onPointerDown={(event) => event.stopPropagation()}
+        className="absolute bottom-24 right-20 z-20 text-base leading-normal text-gray-500 underline decoration-gray-300 underline-offset-4 hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4"
+      >
+        <sup className="mr-1 text-xs">1</sup> Supporting research &amp; sources
+      </a>
 
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (

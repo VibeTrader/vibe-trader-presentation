@@ -15,7 +15,7 @@ const Globe = dynamic(() => import('@/components/Globe'), {
   ),
 });
 
-const TOTAL_SLIDES = 17;
+const TOTAL_SLIDES = 18;
 
 export default function Slide1() {
   const { nextSlide } = useSlideNavigation();

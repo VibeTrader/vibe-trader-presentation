@@ -1,36 +1,40 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CreditCard, Handshake, Server, BarChart3, ArrowRight } from 'lucide-react';
+import { UserCheck, Users2, Building2 } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 17;
+const TOTAL_SLIDES = 18;
 const ACTIVE = 7;
 
-const nowStreams = [
+const phases = [
   {
-    icon: CreditCard,
-    title: 'Trader subscriptions',
-    body: 'Trader $25 / Pro $99 / Elite $200 per month. Pro is the core monetization layer.',
+    icon: UserCheck,
+    label: '1',
+    category: 'Direct',
+    title: 'Acquire',
+    timeline: '0–6 months',
+    points: ['Organic acquisition', 'Product-led onboarding'],
+    accent: 'bg-black text-white',
   },
   {
-    icon: Handshake,
-    title: 'Broker partnerships',
-    body: 'Piloting with Dupoin — CPA, API, and distribution agreements.',
-  },
-];
-
-const nextStreams = [
-  {
-    icon: Server,
-    title: 'Software licensing',
-    body: 'Decision intelligence for brokers, academies, and trading communities.',
+    icon: Users2,
+    label: '2',
+    category: 'Community',
+    title: 'Expand',
+    timeline: '6–12 months',
+    points: ['Trading academies', 'Affiliates and educators'],
+    accent: 'bg-white text-black border-2 border-black',
   },
   {
-    icon: BarChart3,
-    title: 'Market intelligence',
-    body: 'Anonymous behavioral insights and institutional analytics.',
+    icon: Building2,
+    label: '3',
+    category: 'Broker',
+    title: 'Scale',
+    timeline: '12–24 months',
+    points: ['Embedded distribution', 'Broker partnerships', 'White-label / API'],
+    accent: 'bg-gray-100 text-black border-2 border-gray-300',
   },
 ];
 
@@ -71,7 +75,7 @@ export default function Slide8() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Business Model
+            Go-to-Market Strategy
           </motion.h1>
 
           <motion.p
@@ -80,89 +84,62 @@ export default function Slide8() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            Multiple recurring revenue streams.
+            From direct adoption to broker-led distribution.
           </motion.p>
 
-          <div className="grid grid-cols-2 gap-12 max-w-7xl mb-8">
-            {/* NOW Column */}
-            <div>
-              <motion.div
-                className="flex items-center gap-3 mb-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.45, duration: 0.5 }}
-              >
-                <span className="h-2.5 w-2.5 rounded-full bg-black animate-pulse" />
-                <h2 className="text-2xl uppercase tracking-[0.2em] text-black font-bold">Now</h2>
-              </motion.div>
-              <div className="flex flex-col gap-6">
-                {nowStreams.map((s, i) => {
-                  const Icon = s.icon;
-                  return (
-                    <motion.div
-                      key={i}
-                      className="bg-gray-50/30 border border-gray-100 hover:border-black transition-all duration-300 p-8 rounded-lg flex gap-6 items-start min-h-[190px]"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 + i * 0.08, duration: 0.5 }}
+          <div className="grid grid-cols-3 gap-6 mb-8">
+            {phases.map((p, i) => {
+              const Icon = p.icon;
+              return (
+                <motion.div
+                  key={i}
+                  className="border-2 border-gray-200 hover:border-black transition-colors p-10 flex flex-col rounded-lg"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + i * 0.12, duration: 0.5 }}
+                >
+                  <div className="flex items-center gap-4 mb-5">
+                    <div
+                      className={`w-16 h-16 flex items-center justify-center text-4xl font-black rounded-lg ${p.accent}`}
                     >
-                      <div className="w-14 h-14 bg-black text-white flex items-center justify-center shrink-0 rounded-lg">
-                        <Icon className="w-7 h-7" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-4xl font-bold text-black mb-2 leading-tight">{s.title}</h3>
-                        <p className="text-2xl text-gray-600 font-light leading-relaxed">{s.body}</p>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* NEXT Column */}
-            <div>
-              <motion.div
-                className="flex items-center gap-3 mb-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.65, duration: 0.5 }}
-              >
-                <span className="h-2.5 w-2.5 rounded-full bg-gray-400" />
-                <h2 className="text-2xl uppercase tracking-[0.2em] text-gray-500 font-bold">Next</h2>
-              </motion.div>
-              <div className="flex flex-col gap-6">
-                {nextStreams.map((s, i) => {
-                  const Icon = s.icon;
-                  return (
-                    <motion.div
-                      key={i}
-                      className="bg-gray-50/30 border border-gray-100 hover:border-black transition-all duration-300 p-8 rounded-lg flex gap-6 items-start min-h-[190px]"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.7 + i * 0.08, duration: 0.5 }}
-                    >
-                      <div className="w-14 h-14 bg-white text-black border border-gray-200 flex items-center justify-center shrink-0 rounded-lg">
-                        <Icon className="w-7 h-7" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-4xl font-bold text-black mb-2 leading-tight">{s.title}</h3>
-                        <p className="text-2xl text-gray-600 font-light leading-relaxed">{s.body}</p>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
+                      {p.label}
+                    </div>
+                    <Icon className="w-9 h-9 text-gray-400" />
+                  </div>
+                  <h3 className="text-4xl font-bold text-black leading-tight mb-1">
+                    {p.category}
+                  </h3>
+                  <p className="text-base uppercase tracking-[0.25em] text-gray-400 mb-2">
+                    {p.title}
+                  </p>
+                  <p className="text-xl uppercase tracking-widest text-gray-500 mb-5">
+                    {p.timeline}
+                  </p>
+                  <ul className="space-y-3">
+                    {p.points.map((pt, j) => (
+                      <li
+                        key={j}
+                        className="flex items-start gap-3 text-2xl text-gray-700 font-light leading-relaxed"
+                      >
+                        <span className="mt-3.5 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              );
+            })}
           </div>
 
           <motion.div
-            className="bg-black text-white p-8 max-w-7xl mt-8"
+            className="bg-black text-white p-8 max-w-7xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 0.6 }}
+            transition={{ delay: 1.1, duration: 0.6 }}
           >
             <p className="text-2xl font-light leading-snug">
-              B2C subscriptions | Partner distribution | Enterprise licensing
+              Designed to scale across our initial{' '}
+              <span className="font-bold text-white">150K–250K MT4/MT5 retail trader market</span>.
             </p>
           </motion.div>
         </motion.div>
@@ -172,8 +149,9 @@ export default function Slide8() {
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
           <motion.div
             key={i + 1}
-            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
-              } rounded-full`}
+            className={`h-2 transition-all duration-300 ${
+              i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
+            } rounded-full`}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.8 + i * 0.03 }}

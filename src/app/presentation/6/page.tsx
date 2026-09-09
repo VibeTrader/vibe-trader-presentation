@@ -1,62 +1,38 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Globe2, Target, Crosshair } from 'lucide-react';
+import { CreditCard, ShieldCheck, Server, BarChart3 } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 17;
+const TOTAL_SLIDES = 18;
 const ACTIVE = 5;
 
-const market = [
+const nowStreams = [
   {
-    icon: Globe2,
-    label: 'TAM',
-    headline: '$20B by 2030',
-    title: 'Global Online Trading Platform Market',
-    accent: 'bg-black text-white',
+    icon: CreditCard,
+    title: 'App subscriptions',
+    body: 'Trader $25 / Pro $99 / Elite $200 per month. Build, test, and deploy strategies with AI insights.',
   },
   {
-    icon: Target,
-    label: 'SAM',
-    headline: '7.4M+',
-    title: 'Active Retail FX & CFD Accounts',
-    accent: 'bg-white text-black border-2 border-black',
-  },
-  {
-    icon: Crosshair,
-    label: 'SOM',
-    headline: '150K–250K*',
-    title: 'MT4/MT5 Retail Traders',
-    accent: 'bg-gray-100 text-black border-2 border-gray-300',
+    icon: ShieldCheck,
+    title: 'Premium strategies',
+    body: 'Falcon: $100–$2,500 by risk tier. Pre-tested strategies validated on live accounts. Value-based pricing.',
   },
 ];
 
-const sources = [
+const nextStreams = [
   {
-    n: '1',
-    text: 'Next Move Strategy Consulting, "Online Trading Platform Market"',
-    url: 'https://www.nextmsc.com/report/online-trading-platform-market-bf3483',
+    icon: Server,
+    title: 'Software licensing',
+    body: 'Decision intelligence for brokers, academies, and trading communities.',
   },
   {
-    n: '2',
-    text: 'Finance Magnates Intelligence, "7.4 Million Active Accounts: Retail FX/CFD Client Base Hits New High in Q1 2026"',
-    url: 'https://www.financemagnates.com/forex/analysis/74-million-active-accounts-retail-fxcfd-client-base-hits-new-high-in-q1-2026/',
-  },
-  {
-    n: '3',
-    text: 'BIS Triennial Central Bank Survey, 2025',
-    url: 'https://www.bis.org/press/p250930.htm',
+    icon: BarChart3,
+    title: 'Market intelligence',
+    body: 'Anonymous behavioral insights and institutional analytics.',
   },
 ];
-
-function sourceHost(url: string) {
-  try {
-    return new URL(url).hostname.replace(/^www\./, '');
-  } catch {
-    return url;
-  }
-}
 
 export default function Slide6() {
   const { nextSlide, prevSlide } = useSlideNavigation();
@@ -95,7 +71,7 @@ export default function Slide6() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Market Opportunity
+            Business Model
           </motion.h1>
 
           <motion.p
@@ -104,64 +80,90 @@ export default function Slide6() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            $9.6T — Daily FX Trading Volume
+            App subscriptions plus premium strategy sales.
           </motion.p>
 
-          <div className="grid grid-cols-3 gap-8 mb-12">
-            {market.map((m, i) => {
-              const Icon = m.icon;
-              return (
-                <motion.div
-                  key={i}
-                  className="border-2 border-gray-200 hover:border-black transition-colors p-10 flex flex-col justify-between min-h-[220px]"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + i * 0.12, duration: 0.5 }}
-                >
-                  <div>
-                    <div className="flex items-center gap-4 mb-6">
-                      <div
-                        className={`w-14 h-14 flex items-center justify-center text-2xl font-black ${m.accent}`}
-                      >
-                        {m.label}
+          <div className="grid grid-cols-2 gap-12 max-w-7xl mb-8">
+            {/* NOW Column */}
+            <div>
+              <motion.div
+                className="flex items-center gap-3 mb-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.45, duration: 0.5 }}
+              >
+                <span className="h-2.5 w-2.5 rounded-full bg-black animate-pulse" />
+                <h2 className="text-2xl uppercase tracking-[0.2em] text-black font-bold">Now</h2>
+              </motion.div>
+              <div className="flex flex-col gap-6">
+                {nowStreams.map((s, i) => {
+                  const Icon = s.icon;
+                  return (
+                    <motion.div
+                      key={i}
+                      className="bg-gray-50/30 border border-gray-100 hover:border-black transition-all duration-300 p-8 rounded-lg flex gap-6 items-start min-h-[190px]"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 + i * 0.08, duration: 0.5 }}
+                    >
+                      <div className="w-14 h-14 bg-black text-white flex items-center justify-center shrink-0 rounded-lg">
+                        <Icon className="w-7 h-7" />
                       </div>
-                      <Icon className="w-7 h-7 text-gray-400" />
-                    </div>
-                    <p className="text-4xl font-bold text-black leading-tight mb-3">{m.headline}</p>
-                  </div>
-                  <p className="text-sm uppercase tracking-widest text-gray-500 font-medium">{m.title}</p>
-                </motion.div>
-              );
-            })}
+                      <div className="flex-1">
+                        <h3 className="text-4xl font-bold text-black mb-2 leading-tight">{s.title}</h3>
+                        <p className="text-2xl text-gray-600 font-light leading-relaxed">{s.body}</p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* NEXT Column */}
+            <div>
+              <motion.div
+                className="flex items-center gap-3 mb-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.65, duration: 0.5 }}
+              >
+                <span className="h-2.5 w-2.5 rounded-full bg-gray-400" />
+                <h2 className="text-2xl uppercase tracking-[0.2em] text-gray-500 font-bold">Next</h2>
+              </motion.div>
+              <div className="flex flex-col gap-6">
+                {nextStreams.map((s, i) => {
+                  const Icon = s.icon;
+                  return (
+                    <motion.div
+                      key={i}
+                      className="bg-gray-50/30 border border-gray-100 hover:border-black transition-all duration-300 p-8 rounded-lg flex gap-6 items-start min-h-[190px]"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.7 + i * 0.08, duration: 0.5 }}
+                    >
+                      <div className="w-14 h-14 bg-white text-black border border-gray-200 flex items-center justify-center shrink-0 rounded-lg">
+                        <Icon className="w-7 h-7" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-4xl font-bold text-black mb-2 leading-tight">{s.title}</h3>
+                        <p className="text-2xl text-gray-600 font-light leading-relaxed">{s.body}</p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
-
           <motion.div
-            className="max-w-6xl border-t border-gray-200 pt-6 mt-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
+            className="bg-black text-white p-8 max-w-7xl mt-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.0, duration: 0.6 }}
           >
-            <p className="text-sm uppercase tracking-widest text-gray-500 mb-4 font-bold">Sources</p>
-            <div className="space-y-4">
-              {sources.map((s) => (
-                <div key={s.n} className="flex gap-3 text-lg leading-relaxed">
-                  <span className="shrink-0 text-gray-400 font-semibold">•</span>
-                  <p className="text-gray-700 font-normal">
-                    {s.text}{' '}
-                    <a
-                      href={s.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-500 underline decoration-gray-300 underline-offset-4 hover:text-black transition-colors ml-2 font-medium"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {sourceHost(s.url)}
-                    </a>
-                  </p>
-                </div>
-              ))}
-            </div>
+            <p className="text-2xl font-light leading-snug">
+              Subscription access to the app. Premium pricing for validated strategies.
+            </p>
           </motion.div>
         </motion.div>
       </div>
