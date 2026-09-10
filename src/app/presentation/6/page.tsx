@@ -4,38 +4,42 @@ import { motion } from 'framer-motion';
 import { Building2, Network, GraduationCap } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
-import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = 16;
 const ACTIVE = 5;
 
+// Bars are a log-scale read on reach per partner, so 200 and 200,000 can sit
+// on the same axis. Schools stay unquantified until we have a cohort size.
 const channels = [
   {
     icon: Building2,
-    label: 'Brokers',
-    headline: 'Embedded distribution',
-    reach: '20K–200K traders per broker',
+    channel: 'Brokers',
+    label: 'Embedded distribution',
     status: 'Live',
-    statusDetail: 'Dupoin pilot · 7 in pipeline',
-    model: 'White label or flat licence',
+    reach: '20K–200K',
+    reachNote: 'traders per broker',
+    bar: 100,
+    stage: 'Dupoin live · 7 in pipeline',
   },
   {
     icon: Network,
-    label: 'IB partnerships',
-    headline: 'Community-led growth',
-    reach: 'Introducing brokers with active trader communities',
-    status: 'In talks',
-    statusDetail: '2 communities onboarding',
-    model: 'Revenue share per converted subscriber',
+    channel: 'IB partners',
+    label: 'Community-led',
+    status: 'Signing',
+    reach: '200+',
+    reachNote: 'users per IB',
+    bar: 43,
+    stage: 'Contracts signing · onboarding under way',
   },
   {
     icon: GraduationCap,
-    label: 'Trading schools',
-    headline: 'Cohort distribution',
-    reach: 'Students already paying to learn',
-    status: 'Live',
-    statusDetail: 'Trading LatAm pilot',
-    model: 'Seat licence per cohort',
+    channel: 'Schools',
+    label: 'Cohort distribution',
+    status: 'Signed',
+    reach: 'Cohort',
+    reachNote: 'students per academy cohort',
+    bar: null,
+    stage: 'Trading LatAm referral signed · no paying users yet',
   },
 ];
 
@@ -94,13 +98,13 @@ export default function Slide5() {
               const isLive = c.status === 'Live';
               return (
                 <motion.div
-                  key={c.label}
+                  key={c.channel}
                   className="flex flex-col border-2 border-gray-200 hover:border-black transition-colors p-7 group"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
                 >
-                  <div className="flex items-center justify-between mb-5">
+                  <div className="flex items-center justify-between mb-4">
                     <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors">
                       <Icon className="w-7 h-7" />
                     </div>
@@ -113,40 +117,51 @@ export default function Slide5() {
                     </span>
                   </div>
 
-                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-2">{c.label}</p>
-                  <p className="text-[32px] font-black text-black leading-none tracking-tighter mb-4">
-                    {c.headline}
+                  <p className="text-5xl font-black text-black mb-2 leading-none tracking-tighter">
+                    {c.channel}
                   </p>
-                  <p className="text-lg text-gray-700 font-light leading-snug mb-4">{c.reach}</p>
-                  <p className="text-lg text-black font-medium leading-snug mb-5">{c.statusDetail}</p>
+                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-6">{c.label}</p>
+
+                  <p className="text-sm uppercase tracking-widest text-gray-400 mb-2">Reach</p>
+                  <p className="text-3xl font-black text-black leading-none tracking-tight mb-1">{c.reach}</p>
+                  <p className="text-base text-gray-600 font-light mb-3">{c.reachNote}</p>
+                  <div className="h-2.5 w-full bg-gray-100 mb-6">
+                    {c.bar === null ? (
+                      <div
+                        className="h-full w-full"
+                        style={{
+                          backgroundImage:
+                            'repeating-linear-gradient(135deg, #d1d5db 0 6px, transparent 6px 12px)',
+                        }}
+                      />
+                    ) : (
+                      <motion.div
+                        className="h-full bg-black"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${c.bar}%` }}
+                        transition={{ delay: 0.8 + i * 0.1, duration: 0.7, ease: 'easeOut' }}
+                      />
+                    )}
+                  </div>
 
                   <div className="mt-auto border-t-2 border-gray-100 pt-4">
-                    <p className="text-sm uppercase tracking-widest text-gray-400 mb-1">Model</p>
-                    <p className="text-lg text-gray-700 font-light leading-snug">{c.model}</p>
+                    <p className="text-sm uppercase tracking-widest text-gray-400 mb-1">Status</p>
+                    <p className="text-lg text-black font-light leading-snug">{c.stage}</p>
                   </div>
                 </motion.div>
               );
             })}
           </div>
 
-          <motion.svg
-            viewBox="0 0 1200 56"
-            preserveAspectRatio="none"
-            className="w-full h-12"
-            aria-hidden="true"
+          <motion.p
+            className="mt-5 text-base text-gray-400 font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.95, duration: 0.5 }}
+            transition={{ delay: 1.2, duration: 0.5 }}
           >
-            <path d="M200 0 L200 20 L600 38 L600 50" fill="none" stroke="#d1d5db" strokeWidth="3" />
-            <path d="M600 0 L600 50" fill="none" stroke="#d1d5db" strokeWidth="3" />
-            <path d="M1000 0 L1000 20 L600 38 L600 50" fill="none" stroke="#d1d5db" strokeWidth="3" />
-            <path d="M588 44 L600 56 L612 44 Z" fill="#111827" />
-          </motion.svg>
+            Bars show reach per partner on a log scale. Cohort size for schools is not yet quantified.
+          </motion.p>
 
-          <SlideFooter brand eyebrow="Direct / product-led base" className="" delay={1.05}>
-            2,300+ registered traders across 100+ countries on minimal ad spend · English · Spanish · Arabic
-          </SlideFooter>
         </motion.div>
       </div>
 
