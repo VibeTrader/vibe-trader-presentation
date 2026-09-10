@@ -1,10 +1,12 @@
 'use client';
 
+import { PRESENTATION_CONFIG } from '@/config/presentation';
+
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 16;
+const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 1;
 
 const traderProblems = [

@@ -1,11 +1,13 @@
 'use client';
 
+import { PRESENTATION_CONFIG } from '@/config/presentation';
+
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 import { SlideFooter } from '@/components/SlideFooter';
 
-const TOTAL_SLIDES = 16;
+const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 4;
 
 const market = [

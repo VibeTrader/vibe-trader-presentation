@@ -1,51 +1,40 @@
 'use client';
 
+import { PRESENTATION_CONFIG } from '@/config/presentation';
+
 import { motion } from 'framer-motion';
-import { Users, Handshake, Cpu } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 import { SlideFooter } from '@/components/SlideFooter';
 
-const TOTAL_SLIDES = 16;
+const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 11;
 
-const deployment = [
+const contacts = [
   {
-    icon: Cpu,
-    category: 'PRODUCT',
-    title: 'Advance the Platform',
-    points: ['AI decision intelligence', 'Mobile experience', 'Infrastructure & security'],
+    icon: '👤',
+    label: 'Saranya Amirthalingam',
+    sub: 'Co-Founder & CEO, VibeTrader',
   },
   {
-    icon: Handshake,
-    category: 'GROWTH',
-    title: 'Scale Distribution',
-    points: ['Broker partnerships', 'Academies & affiliates', 'Trader acquisition'],
+    icon: '✉',
+    label: 'saranya@vibetrader.com',
+    sub: 'Reach out directly',
+    href: 'mailto:saranya@vibetrader.com',
   },
   {
-    icon: Users,
-    category: 'TEAM',
-    title: 'Build for Scale',
-    points: ['Engineering', 'Sales & partnerships', 'Customer success'],
+    icon: '🌐',
+    label: 'vibetrader.com',
+    sub: 'Product & Demo',
+    href: 'https://vibetrader.com',
   },
 ];
 
-const outcomes = [
-  '5,000+ active users',
-  'Commercial broker partnerships',
-  'Recurring Revenue Growth',
-  'Expansion beyond Forex',
-  'Enterprise licensing',
-];
-
-export default function Slide14() {
-  const { nextSlide, prevSlide } = useSlideNavigation();
+export default function Slide15() {
+  const { prevSlide, nextSlide } = useSlideNavigation();
 
   return (
-    <div
-      className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white"
-      onClick={nextSlide}
-    >
+    <div className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white">
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
@@ -62,6 +51,7 @@ export default function Slide14() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
+          {/* Standard header bar */}
           <motion.div
             className="w-16 h-1.5 bg-black mb-6"
             initial={{ width: 0 }}
@@ -69,72 +59,101 @@ export default function Slide14() {
             transition={{ delay: 0.2, duration: 0.5 }}
           />
 
+          {/* Title */}
           <motion.h1
             className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Funding the Next Stage
+            Let&apos;s Build This Together.
           </motion.h1>
 
+          {/* Subtitle */}
           <motion.p
-            className="text-3xl text-gray-600 mb-10 font-light max-w-4xl"
+            className="text-3xl text-gray-600 mb-16 font-light max-w-7xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            $1M Pre-Seed
+            Trading platforms helped traders execute. VibeTrader helps traders{' '}
+            <span className="italic text-black font-medium">decide.</span>
           </motion.p>
 
-          <motion.p
-            className="text-xl uppercase tracking-[0.3em] text-gray-500 mb-5"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.45, duration: 0.6 }}
-          >
-            Where we&apos;ll invest
-          </motion.p>
-
-          <div className="grid grid-cols-3 gap-10 mb-8">
-            {deployment.map((d, i) => {
-              const Icon = d.icon;
-              return (
+          {/* Contact cards + QR side by side */}
+          <div className="flex gap-10 items-stretch mb-10 w-full max-w-[1550px]">
+            {/* Left: Contact details (Heights match QR code card via flex-1 stretching) */}
+            <div className="flex flex-col gap-4 max-w-7xl w-full flex-1">
+              {contacts.map((c, i) => (
                 <motion.div
                   key={i}
-                  className="border-2 border-gray-200 hover:border-black transition-colors p-10 rounded-lg group"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-5 border-2 border-gray-200 rounded-lg p-6 hover:border-black transition-colors group bg-white flex-1"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 + i * 0.12, duration: 0.5 }}
                 >
-                  <div className="w-16 h-16 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors mb-4 rounded-lg">
-                    <Icon className="w-9 h-9" />
+                  <span className="text-3xl flex-shrink-0">{c.icon}</span>
+                  <div>
+                    {c.href ? (
+                      <a
+                        href={c.href}
+                        onClick={(e) => e.stopPropagation()}
+                        className="font-black text-black text-2xl tracking-tight group-hover:underline"
+                      >
+                        {c.label}
+                      </a>
+                    ) : (
+                      <p className="font-black text-black text-2xl tracking-tight">{c.label}</p>
+                    )}
+                    <p className="text-gray-400 text-sm font-light mt-0.5">{c.sub}</p>
                   </div>
-                  <p className="text-sm uppercase tracking-widest text-gray-400 font-bold mb-1">{d.category}</p>
-                  <h3 className="text-3xl font-black text-black leading-tight mb-4">{d.title}</h3>
-                  <ul className="space-y-3">
-                    {d.points.map((pt, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5 text-xl text-gray-700 font-light leading-relaxed">
-                        <span className="mt-3.5 inline-block h-2 w-2 shrink-0 bg-black" />
-                        <span>{pt}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </motion.div>
-              );
-            })}
+              ))}
+            </div>
+
+            {/* Right: QR code card (Vertically aligned) */}
+            <motion.div
+              className="flex-shrink-0 flex flex-col items-center justify-between gap-4 bg-white p-8 border-2 border-gray-200 rounded-lg w-[320px]"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+            >
+              {/* QR code — Real scannable QR Code for https://vibetrader.com */}
+              <div className="flex items-center justify-center flex-1">
+                <svg
+                  width="220"
+                  height="220"
+                  viewBox="0 0 33 33"
+                  xmlns="http://www.w3.org/2000/svg"
+                  shapeRendering="crispEdges"
+                >
+                  <path fill="#ffffff" d="M0 0h33v33H0z"/>
+                  <path
+                    stroke="#000000"
+                    d="M4 4.5h7m2 0h1m2 0h1m1 0h1m1 0h1m1 0h7M4 5.5h1m5 0h1m3 0h4m1 0h2m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h3m4 0h2m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h1m4 0h1m2 0h1m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h3m2 0h3m2 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 11.5h4m3 0h2M4 12.5h1m1 0h5m4 0h5m2 0h5M4 13.5h2m1 0h2m2 0h1m2 0h2m4 0h1m2 0h1m3 0h1M5 14.5h2m2 0h2m2 0h3m1 0h1m1 0h2m3 0h2m1 0h2M4 15.5h1m6 0h5m2 0h2m1 0h3m4 0h1M5 16.5h1m1 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h4m1 0h3M4 17.5h3m4 0h1m2 0h1m1 0h2m2 0h1m2 0h1m1 0h1m1 0h1M4 18.5h1m2 0h8m2 0h3m2 0h4m1 0h2M4 19.5h1m3 0h2m1 0h4m1 0h1m1 0h1m4 0h2m3 0h1M4 20.5h1m5 0h1m2 0h1m2 0h9m1 0h1M12 21.5h1m4 0h1m2 0h1m3 0h2M4 22.5h7m3 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3M4 23.5h1m5 0h1m1 0h4m2 0h1m1 0h1m3 0h2M4 24.5h1m1 0h3m1 0h1m1 0h4m3 0h6m1 0h3M4 25.5h1m1 0h3m1 0h1m1 0h3m1 0h2m1 0h1m1 0h2m1 0h5M4 26.5h1m1 0h3m1 0h1m1 0h3m2 0h2m6 0h2m1 0h1M4 27.5h1m5 0h1m5 0h2m2 0h6m2 0h1M4 28.5h7m1 0h2m2 0h1m1 0h1m2 0h8"
+                  />
+                </svg>
+              </div>
+              <p className="text-sm text-gray-400 font-medium uppercase tracking-widest text-center mt-2">
+                Scan to visit<br />vibetrader.com
+              </p>
+            </motion.div>
           </div>
 
-          <SlideFooter items={outcomes} spread className="max-w-7xl" delay={1.0} />
+          {/* Bottom Takeaway — standard style matching all other slides */}
+          <SlideFooter className="max-w-7xl w-full" delay={1.0}>
+            The <span className="font-bold text-white">AI decision intelligence layer</span> for trading.
+          </SlideFooter>
+
         </motion.div>
       </div>
 
+      {/* Navigation dots */}
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
           <motion.div
             key={i + 1}
-            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
-              } rounded-full`}
+            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'} rounded-full`}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.8 + i * 0.03 }}
@@ -143,25 +162,15 @@ export default function Slide14() {
       </div>
 
       <button
-        onClick={(e) => {
-          e.stopPropagation();
-          prevSlide();
-        }}
+        onClick={prevSlide}
         className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
         aria-label="Previous slide"
-      >
-        ←
-      </button>
+      >←</button>
       <button
-        onClick={(e) => {
-          e.stopPropagation();
-          nextSlide();
-        }}
+        onClick={nextSlide}
         className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
-        aria-label="Next slide"
-      >
-        →
-      </button>
+        aria-label="Next slide: FAQ"
+      >→</button>
     </div>
   );
 }

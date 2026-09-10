@@ -1,0 +1,21 @@
+const { chromium } = require('playwright');
+(async () => {
+ const browser = await chromium.launch({headless:true});
+ const page = await browser.newPage({viewport:{width:1920,height:1080},storageState:'.playwright-mcp/pdf-auth.json'});
+ const errors=[]; page.on('pageerror', e=>errors.push(e.message));
+ await page.goto('http://localhost:3000/presentation/16');
+ await page.waitForTimeout(2500);
+ await page.screenshot({path:'/tmp/trading-results-slide.png'});
+ console.log(JSON.stringify({path:new URL(page.url()).pathname,errors}));
+ await page.goto('http://localhost:3000/presentation/13');
+ await page.getByRole('link', {name:'What trading results does Falcon show?'}).click();
+ await page.waitForURL('**/presentation/16');
+ await page.goto('http://localhost:3000/presentation/10');
+ await page.getByRole('link', {name:/View Myfxbook snapshot/}).click();
+ await page.waitForURL('**/presentation/16');
+ await page.goto('http://localhost:3000/research/trading-results');
+ console.log('Statistics rows:', await page.locator('tr').count());
+ const pdf = await page.request.get('http://localhost:3000/evidence/ai-oro-gold-x9-2026-09-10.pdf');
+ console.log('PDF status:', pdf.status());
+ await browser.close();
+})();

@@ -1,11 +1,13 @@
 'use client';
 
+import { PRESENTATION_CONFIG } from '@/config/presentation';
+
 import { motion } from 'framer-motion';
 import { Building2, Network, GraduationCap } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 16;
+const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 5;
 
 // Bars are a log-scale read on reach per partner, so 200 and 200,000 can sit

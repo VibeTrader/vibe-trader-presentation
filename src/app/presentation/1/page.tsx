@@ -1,5 +1,7 @@
 'use client';
 
+import { PRESENTATION_CONFIG } from '@/config/presentation';
+
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
@@ -15,7 +17,7 @@ const Globe = dynamic(() => import('@/components/Globe'), {
   ),
 });
 
-const TOTAL_SLIDES = 16;
+const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 
 export default function Slide1() {
   const { nextSlide } = useSlideNavigation();
