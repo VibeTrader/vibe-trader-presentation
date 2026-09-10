@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Users, Handshake, Cpu } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
+import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = 16;
 const ACTIVE = 11;
@@ -124,21 +125,7 @@ export default function Slide14() {
             })}
           </div>
 
-          <motion.div
-            className="bg-black text-white p-8 max-w-7xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 0.6 }}
-          >
-            <div className="flex flex-wrap items-center justify-between gap-y-2 text-xl font-light leading-snug">
-              {outcomes.map((o, i) => (
-                <div key={i} className="flex items-center gap-2.5">
-                  <span className="inline-block h-2.5 w-2.5 shrink-0 bg-white" />
-                  <span>{o}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+          <SlideFooter items={outcomes} spread className="max-w-7xl" delay={1.0} />
         </motion.div>
       </div>
 

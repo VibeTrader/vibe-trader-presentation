@@ -45,7 +45,7 @@ export default function Slide2() {
           />
 
           <motion.h1
-            className="text-6xl font-bold text-black mb-6 tracking-[-0.035em] leading-[1.1]"
+            className="text-6xl font-black text-black mb-6 tracking-tighter leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
@@ -78,11 +78,11 @@ export default function Slide2() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
-              <h2 className="text-[30px] font-semibold tracking-tight text-black mb-9 leading-[1.25]">
+              <h2 className="text-3xl font-bold tracking-tight text-black mb-9 leading-[1.25]">
                 What traders struggle with
                 <sup className="ml-1 text-sm font-normal text-gray-500">1</sup>
               </h2>
-              <ul className="list-disc pl-6 space-y-7 text-[28px] text-gray-700 font-normal leading-[1.45] marker:text-gray-400">
+              <ul className="list-disc pl-6 space-y-7 text-2xl text-gray-700 font-light leading-[1.45] marker:text-gray-400">
                 {traderProblems.map((problem) => (
                   <li key={problem} className="pl-2">{problem}</li>
                 ))}

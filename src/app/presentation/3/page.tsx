@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
+import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = 16;
 const ACTIVE = 2;
@@ -95,16 +96,9 @@ export default function Slide3() {
             </motion.div>
           </div>
 
-          <motion.div
-            className="bg-black text-white p-8 w-full"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.6 }}
-          >
-            <p className="text-2xl font-light leading-snug">
-              VibeTrader combines <span className="font-bold">AI-powered strategy building</span> with <span className="font-bold">AI insights for trading.</span>
-            </p>
-          </motion.div>
+          <SlideFooter className="w-full" delay={1.0}>
+            VibeTrader combines <span className="font-bold">AI-powered strategy building</span> with <span className="font-bold">AI insights for trading.</span>
+          </SlideFooter>
         </motion.div>
       </div>
 

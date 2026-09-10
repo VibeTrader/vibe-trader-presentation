@@ -1,45 +1,32 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CandlestickChart, LineChart, Bitcoin } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
+import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = 16;
 const ACTIVE = 7;
 
-const phases = [
-  {
-    icon: CandlestickChart,
-    label: '1',
-    title: 'Forex',
-    timeline: 'Today',
-    points: [
-      'Deep MT4/MT5 ecosystem',
-      'Global broker distribution',
-      'High-frequency decision environment',
-    ],
-    accent: 'bg-black text-white',
-  },
-  {
-    icon: Bitcoin,
-    label: '2',
-    title: 'Crypto & Futures',
-    timeline: 'Next',
-    points: ['Quant strategies', '24/7 crypto markets', 'High-frequency decisions'],
-    accent: 'bg-white text-black border-2 border-black',
-  },
-  {
-    icon: LineChart,
-    label: '3',
-    title: 'Stocks & Options',
-    timeline: 'Future',
-    points: ['Portfolio intelligence', 'Options workflows', 'Cross-market insights'],
-    accent: 'bg-gray-100 text-black border-2 border-gray-300',
-  },
+const rows = [
+  { feature: 'Market Analysis', mt: '✓', tv: '✓', cap: '✓', ts: '✓', comp: '◐', vibe: '✓' },
+  { feature: 'Strategy Building & Testing', mt: '✓', tv: '✓', cap: '✓', ts: '✓', comp: '✓', vibe: '✓' },
+  { feature: 'Trade Automation', mt: '✓', tv: '◐', cap: '✓', ts: '✓', comp: '✓', vibe: '✓' },
+  { feature: 'Trader Decision Memory', mt: '—', tv: '—', cap: '—', ts: '—', comp: '—', vibe: '✓' },
+  { feature: 'Adaptive Intelligence', mt: '—', tv: '—', cap: '◐', ts: '◐', comp: '◐', vibe: '✓' },
 ];
 
-export default function Slide10() {
+const renderValue = (val: string, isVibe = false) => {
+  if (val === '✓') {
+    return <span className={`${isVibe ? 'text-black font-black' : 'text-gray-800 font-semibold'}`}>✓</span>;
+  }
+  if (val === '◐') {
+    return <span className="text-gray-500 font-normal">◐</span>;
+  }
+  return <span className="text-gray-300 font-light">—</span>;
+};
+
+export default function Slide9() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
@@ -63,6 +50,7 @@ export default function Slide10() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
+          {/* Header Line */}
           <motion.div
             className="w-16 h-1.5 bg-black mb-6"
             initial={{ width: 0 }}
@@ -76,7 +64,7 @@ export default function Slide10() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Expansion Strategy
+            Competitive Advantage
           </motion.h1>
 
           <motion.p
@@ -85,69 +73,59 @@ export default function Slide10() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            One intelligence engine. Multiple trading markets.
+            From Trading Tools to Decision Intelligence
           </motion.p>
 
-          <div className="grid grid-cols-3 gap-6 mb-8">
-            {phases.map((p, i) => {
-              const Icon = p.icon;
-              return (
-                <motion.div
-                  key={i}
-                  className="border-2 border-gray-200 hover:border-black transition-colors p-10 flex flex-col rounded-lg"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + i * 0.12, duration: 0.5 }}
-                >
-                  <div className="flex items-center gap-4 mb-5">
-                    <div
-                      className={`w-16 h-16 flex items-center justify-center text-4xl font-black rounded-lg ${p.accent}`}
-                    >
-                      {p.label}
-                    </div>
-                    <Icon className="w-9 h-9 text-gray-400" />
-                  </div>
-                  <h3 className="text-4xl font-bold text-black leading-tight mb-2">{p.title}</h3>
-                  <p className="text-xl uppercase tracking-widest text-gray-500 mb-5">
-                    {p.timeline}
-                  </p>
-                  <ul className="space-y-3">
-                    {p.points.map((pt, j) => (
-                      <li
-                        key={j}
-                        className="flex items-start gap-3 text-2xl text-gray-700 font-light leading-relaxed"
-                      >
-                        <span className="mt-3.5 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                        <span>{pt}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              );
-            })}
+          {/* Comparison Table */}
+          <div className="max-w-7xl mb-6 bg-white border border-gray-100 rounded-lg p-8 shadow-sm">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="py-3.5 px-4 text-left text-sm uppercase tracking-wider text-gray-400 font-bold">Feature</th>
+                  <th className="py-3.5 px-4 text-center text-lg font-bold text-gray-800">MetaTrader</th>
+                  <th className="py-3.5 px-4 text-center text-lg font-bold text-gray-800">TradingView</th>
+                  <th className="py-3.5 px-4 text-center text-lg font-bold text-gray-800">Capitalise.ai</th>
+                  <th className="py-3.5 px-4 text-center text-lg font-bold text-gray-800">TrendSpider</th>
+                  <th className="py-3.5 px-4 text-center text-lg font-bold text-gray-800">Composer</th>
+                  <th className="py-3.5 px-4 text-center text-lg font-black text-white bg-black rounded-t-lg">VibeTrader</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, idx) => (
+                  <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
+                    <td className="py-3.5 px-4 text-lg font-bold text-gray-900">{row.feature}</td>
+                    <td className="py-3.5 px-4 text-center text-xl">{renderValue(row.mt)}</td>
+                    <td className="py-3.5 px-4 text-center text-xl">{renderValue(row.tv)}</td>
+                    <td className="py-3.5 px-4 text-center text-xl">{renderValue(row.cap)}</td>
+                    <td className="py-3.5 px-4 text-center text-xl">{renderValue(row.ts)}</td>
+                    <td className="py-3.5 px-4 text-center text-xl">{renderValue(row.comp)}</td>
+                    <td className="py-3.5 px-4 text-center text-xl font-bold bg-gray-50/50 border-x-2 border-black last:border-b-2">
+                      {renderValue(row.vibe, true)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Legend */}
+            <div className="mt-6 text-sm tracking-wider text-gray-400 text-left font-medium uppercase">
+              ✓ Core &middot; ◐ Partial &middot; &mdash; Not core
+            </div>
           </div>
 
-          <motion.div
-            className="bg-black text-white p-8 max-w-7xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.6 }}
-          >
-            <p className="text-2xl font-light leading-snug">
-              Starting with Forex.{' '}
-              <span className="font-bold text-white">Designed for every market tomorrow.</span>
-            </p>
-          </motion.div>
+          {/* Bottom Takeaway */}
+          <SlideFooter className="max-w-7xl" delay={1.0}>
+            VibeTrader&rsquo;s advantage is not another AI model. It is the intelligence accumulated across decisions, behavior, strategies, and changing markets.
+          </SlideFooter>
         </motion.div>
       </div>
 
+      {/* Slide Navigation */}
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
           <motion.div
             key={i + 1}
-            className={`h-2 transition-all duration-300 ${
-              i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
-            } rounded-full`}
+            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'} rounded-full`}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.8 + i * 0.03 }}
@@ -156,25 +134,15 @@ export default function Slide10() {
       </div>
 
       <button
-        onClick={(e) => {
-          e.stopPropagation();
-          prevSlide();
-        }}
+        onClick={(e) => { e.stopPropagation(); prevSlide(); }}
         className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
         aria-label="Previous slide"
-      >
-        ←
-      </button>
+      >&larr;</button>
       <button
-        onClick={(e) => {
-          e.stopPropagation();
-          nextSlide();
-        }}
+        onClick={(e) => { e.stopPropagation(); nextSlide(); }}
         className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
         aria-label="Next slide"
-      >
-        →
-      </button>
+      >&rarr;</button>
     </div>
   );
 }

@@ -1,51 +1,50 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CreditCard, ShieldCheck, Server, ArrowLeftRight } from 'lucide-react';
+import { Building2, Network, GraduationCap } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
+import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = 16;
 const ACTIVE = 5;
 
-const nowStreams = [
+const channels = [
   {
-    icon: CreditCard,
-    title: 'App subscriptions',
-    body: 'Trader $25 / Pro $99 / Elite $200 per month. Build, test, and deploy strategies with AI insights.',
+    icon: Building2,
+    label: 'Brokers',
+    headline: 'Embedded distribution',
+    reach: '20K–200K traders per broker',
+    status: 'Live',
+    statusDetail: 'Dupoin pilot · 7 in pipeline',
+    model: 'White label or flat licence',
   },
   {
-    icon: ShieldCheck,
-    title: 'Premium strategies',
-    body: 'Falcon: $100–$2,500 per month by risk tier. Ongoing subscription to pre-tested strategies validated on live accounts.',
+    icon: Network,
+    label: 'IB partnerships',
+    headline: 'Community-led growth',
+    reach: 'Introducing brokers with active trader communities',
+    status: 'In talks',
+    statusDetail: '2 communities onboarding',
+    model: 'Revenue share per converted subscriber',
+  },
+  {
+    icon: GraduationCap,
+    label: 'Trading schools',
+    headline: 'Cohort distribution',
+    reach: 'Students already paying to learn',
+    status: 'Live',
+    statusDetail: 'Trading LatAm pilot',
+    model: 'Seat licence per cohort',
   },
 ];
 
-const nextStreams = [
-  {
-    icon: Server,
-    title: 'Software licensing',
-    body: 'Decision intelligence for brokers, academies, and trading communities.',
-  },
-  {
-    icon: ArrowLeftRight,
-    title: 'Payments & treasury',
-    body: 'Remittance firms, B2B payment providers and banks convert billions across corridors. The same strategy engine could price and time that flow. Exploratory, long term.',
-  },
-];
-
-// Row-major order so each grid row's two cards share a height and stay aligned.
-const rows = nowStreams.flatMap((stream, i) => [
-  { ...stream, stage: 'now' as const },
-  { ...nextStreams[i], stage: 'next' as const },
-]);
-
-export default function Slide6() {
+export default function Slide5() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
     <div
-      className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white"
+      className="relative flex h-full w-full items-start pt-32 overflow-hidden bg-white"
       onClick={nextSlide}
     >
       <div
@@ -77,76 +76,77 @@ export default function Slide6() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Business Model
+            How We Reach Traders
           </motion.h1>
 
           <motion.p
-            className="text-3xl text-gray-600 mb-10 font-light max-w-4xl"
+            className="text-3xl text-gray-600 mb-9 font-light max-w-4xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            Two recurring subscriptions: the app, and the strategies that run on it.
+            Partner-led distribution into audiences that already pay to trade.
           </motion.p>
 
-          <div className="grid grid-cols-2 gap-x-12 gap-y-6 max-w-7xl mb-8">
-            <motion.div
-              className="flex items-center gap-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.45, duration: 0.5 }}
-            >
-              <span className="h-2.5 w-2.5 rounded-full bg-black animate-pulse" />
-              <h2 className="text-2xl uppercase tracking-[0.2em] text-black font-bold">Now</h2>
-            </motion.div>
-
-            <motion.div
-              className="flex items-center gap-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.65, duration: 0.5 }}
-            >
-              <span className="h-2.5 w-2.5 rounded-full bg-gray-400" />
-              <h2 className="text-2xl uppercase tracking-[0.2em] text-gray-500 font-bold">Next</h2>
-            </motion.div>
-
-            {rows.map((cell, i) => {
-              const Icon = cell.icon;
-              const isNow = cell.stage === 'now';
+          <div className="grid grid-cols-3 gap-6">
+            {channels.map((c, i) => {
+              const Icon = c.icon;
+              const isLive = c.status === 'Live';
               return (
                 <motion.div
-                  key={`${cell.stage}-${cell.title}`}
-                  className="h-full bg-gray-50/30 border border-gray-100 hover:border-black transition-all duration-300 p-8 rounded-lg flex gap-6 items-start min-h-[190px]"
+                  key={c.label}
+                  className="flex flex-col border-2 border-gray-200 hover:border-black transition-colors p-7 group"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: (isNow ? 0.5 : 0.7) + Math.floor(i / 2) * 0.08, duration: 0.5 }}
+                  transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
                 >
-                  <div
-                    className={`w-14 h-14 flex items-center justify-center shrink-0 rounded-lg ${
-                      isNow ? 'bg-black text-white' : 'bg-white text-black border border-gray-200'
-                    }`}
-                  >
-                    <Icon className="w-7 h-7" />
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors">
+                      <Icon className="w-7 h-7" />
+                    </div>
+                    <span
+                      className={`px-3 py-1 text-sm font-bold uppercase tracking-[0.15em] ${
+                        isLive ? 'bg-black text-white' : 'border-2 border-gray-300 text-gray-500'
+                      }`}
+                    >
+                      {c.status}
+                    </span>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-4xl font-bold text-black mb-2 leading-tight">{cell.title}</h3>
-                    <p className="text-2xl text-gray-600 font-light leading-relaxed">{cell.body}</p>
+
+                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-2">{c.label}</p>
+                  <p className="text-[32px] font-black text-black leading-none tracking-tighter mb-4">
+                    {c.headline}
+                  </p>
+                  <p className="text-lg text-gray-700 font-light leading-snug mb-4">{c.reach}</p>
+                  <p className="text-lg text-black font-medium leading-snug mb-5">{c.statusDetail}</p>
+
+                  <div className="mt-auto border-t-2 border-gray-100 pt-4">
+                    <p className="text-sm uppercase tracking-widest text-gray-400 mb-1">Model</p>
+                    <p className="text-lg text-gray-700 font-light leading-snug">{c.model}</p>
                   </div>
                 </motion.div>
               );
             })}
           </div>
 
-          <motion.div
-            className="bg-black text-white p-8 max-w-7xl mt-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 0.6 }}
+          <motion.svg
+            viewBox="0 0 1200 56"
+            preserveAspectRatio="none"
+            className="w-full h-12"
+            aria-hidden="true"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.95, duration: 0.5 }}
           >
-            <p className="text-2xl font-light leading-snug">
-              Both streams bill monthly. Strategy subscriptions carry the higher price and the stronger demand.
-            </p>
-          </motion.div>
+            <path d="M200 0 L200 20 L600 38 L600 50" fill="none" stroke="#d1d5db" strokeWidth="3" />
+            <path d="M600 0 L600 50" fill="none" stroke="#d1d5db" strokeWidth="3" />
+            <path d="M1000 0 L1000 20 L600 38 L600 50" fill="none" stroke="#d1d5db" strokeWidth="3" />
+            <path d="M588 44 L600 56 L612 44 Z" fill="#111827" />
+          </motion.svg>
+
+          <SlideFooter brand eyebrow="Direct / product-led base" className="" delay={1.05}>
+            2,300+ registered traders across 100+ countries on minimal ad spend · English · Spanish · Arabic
+          </SlideFooter>
         </motion.div>
       </div>
 

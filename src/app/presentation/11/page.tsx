@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
+import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = 16;
 const ACTIVE = 10;
@@ -213,16 +214,9 @@ export default function Slide13() {
 
 
           {/* ── Bottom Takeaway ── */}
-          <motion.div
-            className="bg-black text-white px-8 py-7 max-w-7xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.6 }}
-          >
-            <p className="text-2xl font-light leading-snug">
-              Base case: 5% paid conversion across subscription tiers, broker partnerships, and platform licensing.
-            </p>
-          </motion.div>
+          <SlideFooter className="max-w-7xl" delay={1.1}>
+            Base case: 5% paid conversion across subscription tiers, broker partnerships, and platform licensing.
+          </SlideFooter>
 
         </motion.div>
       </div>

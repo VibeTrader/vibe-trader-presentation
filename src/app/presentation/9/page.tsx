@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
+import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = 16;
 const ACTIVE = 8;
@@ -10,7 +11,7 @@ const ACTIVE = 8;
 const ceo = [
   { text: 'Product strategy, partnerships, and fundraising', style: { paddingBottom: '20px' } },
   { text: 'Built broker and academy partnerships', style: { paddingBottom: '20px' } },
-  { text: '1,800+ traders · 2 live B2B pilots', style: { paddingBottom: '0px' } },
+  { text: '2,300+ traders · 2 live B2B pilots', style: { paddingBottom: '0px' } },
 ];
 
 const cto = [
@@ -215,16 +216,9 @@ export default function Slide11() {
           </div>
 
           {/* Simplified Bottom Takeaway */}
-          <motion.div
-            className="bg-black text-white p-8 w-full max-w-[1450px] mt-6 mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 0.6 }}
-          >
-            <p className="text-2xl font-light leading-snug">
-              Deep AI engineering + real trading experience.
-            </p>
-          </motion.div>
+          <SlideFooter className="w-full max-w-[1450px] mt-6 mb-6" delay={1.0}>
+            Deep AI engineering + real trading experience.
+          </SlideFooter>
         </motion.div>
       </div>
 

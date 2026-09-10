@@ -1,16 +1,33 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { User, ShieldCheck, GraduationCap } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
+import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = 16;
 const ACTIVE = 3;
 
-const market = [
-  { label: 'TAM', value: '370M', description: 'Global active self-directed traders across equities, crypto, FX and derivatives' },
-  { label: 'SAM', value: '10–15M', description: 'Active retail forex and CFD traders worldwide, driving ~$242B in daily volume' },
-  { label: 'SOM', value: '62K', description: '1% of the 6.2M traders across APAC, North America and Europe' },
+const personas = [
+  {
+    icon: User,
+    persona: 'Builder',
+    label: 'Self-directed',
+    detail: 'Trades their own ideas. Cannot tell which strategy fits today.',
+  },
+  {
+    icon: ShieldCheck,
+    persona: 'Subscriber',
+    label: 'Wants it done',
+    detail: 'Buys tested strategies. $100–$2,500 per month.',
+  },
+  {
+    icon: GraduationCap,
+    persona: 'Learner',
+    label: 'Community-led',
+    detail: 'Arrives through an academy or IB. Still building discipline.',
+  },
 ];
 
 export default function Slide4() {
@@ -50,7 +67,7 @@ export default function Slide4() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Market and Opportunity
+            Who We Serve
           </motion.h1>
 
           <motion.p
@@ -59,48 +76,38 @@ export default function Slide4() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            A massive global trading addressable market, starting with high-leverage Forex retail traders.
+            One problem. Three appetites for doing the work.
           </motion.p>
 
-          <div className="grid grid-cols-3 gap-9 mt-16 mb-12">
-            {market.map((item, i) => (
-              <motion.div
-                key={item.label}
-                className="border-2 border-gray-200 rounded-lg bg-white p-11 min-h-[310px]"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + i * 0.1, duration: 0.6 }}
-              >
-                <p className="inline-block bg-black text-white px-3 py-1 text-sm font-bold tracking-[0.25em] mb-7">{item.label}</p>
-                <p className="text-7xl font-black tracking-tight text-black mb-5">{item.value}</p>
-                <p className="text-2xl text-gray-600 font-light leading-relaxed">{item.description}</p>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-3 gap-6 mb-8">
+            {personas.map((p, i) => {
+              const Icon = p.icon;
+              return (
+                <motion.div
+                  key={p.persona}
+                  className="border-2 border-gray-200 hover:border-black transition-colors p-7 group"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
+                >
+                  <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors mb-4">
+                    <Icon className="w-7 h-7" />
+                  </div>
+                  <p className="text-5xl font-black text-black mb-2 leading-none tracking-tighter">
+                    {p.persona}
+                  </p>
+                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-3">{p.label}</p>
+                  <p className="text-lg text-gray-700 font-light leading-snug">{p.detail}</p>
+                </motion.div>
+              );
+            })}
           </div>
 
-          <motion.div
-            className="bg-black text-white p-9"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-          >
-            <p className="text-2xl font-light leading-relaxed">Start with forex. Expand across financial markets.</p>
-          </motion.div>
-
+          <SlideFooter brand eyebrow="Direct / product-led base" className="" delay={1.0}>
+            2,300+ registered traders across 100+ countries on minimal ad spend · English · Spanish · Arabic
+          </SlideFooter>
         </motion.div>
       </div>
-
-      <a
-        href="/research/market-sizing"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Supporting research and sources (opens in a new tab)"
-        onClick={(event) => event.stopPropagation()}
-        onPointerDown={(event) => event.stopPropagation()}
-        className="absolute bottom-24 right-20 z-20 text-base leading-normal text-gray-500 underline decoration-gray-300 underline-offset-4 hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4"
-      >
-        <sup className="mr-1 text-xs">1</sup> Supporting research &amp; sources
-      </a>
 
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (

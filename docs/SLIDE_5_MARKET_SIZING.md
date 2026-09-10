@@ -1,8 +1,8 @@
-# Slide 4: evidence for the market sizing figures
+# Slide 5: evidence for the market sizing figures
 
 Research checked September 9, 2026. Heading: **Large Market. Focused Entry.**
 
-Slide 4 states three numbers: a 370M TAM, a 10–15M SAM, and a 62K SOM. All three are industry estimates rather than measured populations. No official body counts self-directed retail traders globally, so the honest claim the slide can carry is that the market is large enough not to be the binding constraint — not that these are precise counts.
+Slide 5 states three numbers: a 370M TAM, a 10–15M SAM, and a 6.2M SOM. All three are industry estimates rather than measured populations. No official body counts self-directed retail traders globally, so the honest claim the slide can carry is that the market is large enough not to be the binding constraint — not that these are precise counts.
 
 Companion page for investors: `/research/market-sizing`.
 
@@ -35,7 +35,7 @@ Sources:
 
 The **$650B daily retail volume figure in the source market-sizing extract does not hold up.** It circulates on aggregator sites attributed to "margin account data" and could not be traced to a primary source.
 
-The BIS Triennial Central Bank Survey put total OTC FX turnover at **$9.6T per day in April 2025** (+28% since 2022). Within that, **retail-driven trades averaged $242B per day, about 2.5% of global turnover**, up 26% from $192B in 2022. That is roughly 2.7x smaller than the $650B claim. Slide 4 now cites $242B.
+The BIS Triennial Central Bank Survey put total OTC FX turnover at **$9.6T per day in April 2025** (+28% since 2022). Within that, **retail-driven trades averaged $242B per day, about 2.5% of global turnover**, up 26% from $192B in 2022. That is roughly 2.7x smaller than the $650B claim. Slide 5 now cites $242B.
 
 One caveat on the figure we do use: the BIS headline release breaks counterparties into inter-dealer (46%), other financial institutions (50%) and non-financial customers (5%), and does not publish a retail line. The $242B is reported from the survey dataset by industry analysts rather than lifted from the public summary.
 
@@ -46,7 +46,7 @@ Sources:
 - https://www.bis.org/statistics/rpfx25_announcement.htm
 - https://www.compareforexbrokers.com/trading/statistics/
 
-## SOM — 6.2M regional pool, 1% capture, 62K users
+## SOM — 6.2M traders in the three launch regions
 
 The three launch regions sum to ~6.2M traders: **APAC 3.2M, North America 1.5M, Europe 1.5M**. (EMEA expansion would add ~1.3M in Africa and ~1M in the Middle East.)
 
@@ -57,7 +57,7 @@ These regional counts trace to BrokerNotes' *Modern Trader* study — 9.6M onlin
 - It counts online traders across asset classes, not forex traders specifically.
 - The North America figure of 1.5M appears in secondary summaries but not in the published regional appendix we could retrieve.
 
-The 1% capture rate is a planning assumption, not a finding. 6.2M × 1% = **62,000 active users** over one to three years. It says nothing about *how* those users are acquired — that needs a channel mix, CAC and conversion rate defended separately — and it is a headcount, not revenue. Revenue requires a stated ARPU and retention assumption.
+The SOM states the reachable population in those regions. Capture is a separate planning assumption that belongs with the financials: 1% over one to three years would be **62,000 active users**. Capture rate is not a finding — it follows from a channel mix, CAC and conversion rate that must be defended on their own evidence, and it is a headcount, not revenue.
 
 Sources:
 - https://www.brokernotes.co/modern-trader
@@ -67,5 +67,5 @@ Sources:
 
 1. Replace the 2018 regional split with current broker-level or regulator-published account counts for the launch markets.
 2. Re-anchor the SAM on the Finance Magnates quarterly account series, which is measured and shows a real growth trend.
-3. Convert the SOM from headcount to revenue with a stated ARPU and retention assumption.
-4. Reconcile slide 8, which still cites a "150K–250K MT4/MT5 retail trader market" that contradicts the 62K SOM. Note also that MT5 overtook MT4 in 2025 per the Finance Magnates Q4 2025 report.
+3. Convert the capture assumption from headcount to revenue with a stated ARPU and retention assumption.
+4. The old slide 8 that cited a "150K–250K MT4/MT5 retail trader market" has since been removed from the deck, so that contradiction is resolved.

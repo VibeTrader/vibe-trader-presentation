@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
+import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = 16;
 const ACTIVE = 9;
@@ -96,16 +97,9 @@ export default function Slide12() {
             ))}
           </div>
 
-          <motion.div
-            className="bg-black text-white p-6 max-w-[1600px]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 0.6 }}
-          >
-            <p className="text-2xl font-light leading-snug">
-              Strategy sales are our entry point: bring buyers onto the app, where they can run more strategies or create their own.
-            </p>
-          </motion.div>
+          <SlideFooter className="max-w-[1600px]" delay={1.0}>
+            Strategy sales are our entry point: bring buyers onto the app, where they can run more strategies or create their own.
+          </SlideFooter>
           <p className="text-lg text-gray-500 mt-5 max-w-7xl leading-relaxed">
             *Founder-reported results across multiple users. Past performance does not guarantee future results.
           </p>

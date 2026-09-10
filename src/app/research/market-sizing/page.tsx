@@ -4,7 +4,7 @@ import { ResearchSearch } from '@/components/ResearchSearch';
 
 export const metadata: Metadata = {
   title: 'Market Sizing: Research | VibeTrader',
-  description: 'The sources behind the TAM, SAM and SOM figures on slide 4, and how far each one can be defended.',
+  description: 'The sources behind the TAM, SAM and SOM figures on slide 5, and how far each one can be defended.',
 };
 
 const questions = [
@@ -34,7 +34,7 @@ const questions = [
   {
     question: 'How much daily volume does the retail segment actually represent?',
     answer:
-      'The BIS Triennial Central Bank Survey put total OTC foreign exchange turnover at $9.6 trillion per day in April 2025, a 28% rise since 2022. Within that, retail-driven trades averaged $242 billion per day, about 2.5% of global turnover, up 26% from $192 billion in 2022. Slide 4 cites the $242 billion figure.',
+      'The BIS Triennial Central Bank Survey put total OTC foreign exchange turnover at $9.6 trillion per day in April 2025, a 28% rise since 2022. Within that, retail-driven trades averaged $242 billion per day, about 2.5% of global turnover, up 26% from $192 billion in 2022. Slide 5 cites the $242 billion figure.',
     context:
       'A $650 billion daily retail figure circulates on aggregator sites, attributed to margin account data. It is roughly 2.7 times the BIS-derived number and we could not trace it to a primary source, so we do not use it. One caveat on the number we do use: the BIS headline release reports counterparties as inter-dealer, other financial institutions and non-financial customers, without publishing a retail line, so the $242 billion is reported from the survey dataset by industry analysts rather than lifted from the public summary. Volume is also the wrong denominator for a subscription business — it sizes the market traders operate in, not the revenue available from them.',
     sources: [
@@ -44,9 +44,9 @@ const questions = [
     ],
   },
   {
-    question: 'How is the 6.2M three-region pool derived?',
+    question: 'How is the 6.2M SOM derived?',
     answer:
-      'It sums the three regions we intend to serve first: roughly 3.2M traders in Asia-Pacific, 1.5M in North America and 1.5M in Europe. These regional counts trace back to BrokerNotes’ Modern Trader study, which counted 9.6M online traders worldwide and broke them out by region, including 3.2M in Asia and 1.5M in Europe.',
+      'The SOM is the trader population of the three regions we serve first: roughly 3.2M in Asia-Pacific, 1.5M in North America and 1.5M in Europe. These regional counts trace back to BrokerNotes’ Modern Trader study, which counted 9.6M online traders worldwide and broke them out by region, including 3.2M in Asia and 1.5M in Europe.',
     context:
       'This is the weakest input on the slide. The study dates from 2018, its regional counts derive from social platform audience data rather than broker records, and it counts online traders across asset classes rather than forex traders specifically. The North America figure of 1.5M appears in secondary summaries of that dataset but not in the published regional appendix we could retrieve. Aggregators that once cited the 9.6M headline now describe it as dated. Treat 6.2M as a directional split of the SAM across our launch regions, and expect a diligence question on it.',
     sources: [
@@ -55,19 +55,19 @@ const questions = [
     ],
   },
   {
-    question: 'Why 1%, and what does the 62K SOM assume?',
+    question: 'What share of the 6.2M do you expect to capture?',
     answer:
-      'Capturing 1% of the 6.2M traders in our three launch regions over one to three years gives 62,000 active users. The percentage is a planning assumption, not a finding. It is deliberately conservative relative to what a funded acquisition plan would target, and it makes the arithmetic on the slide easy to check.',
+      'The SOM states the reachable population, not a capture target. Capture is a planning assumption that belongs with the financials rather than the market slide: 1% of the 6.2M over one to three years would be 62,000 active users, and the revenue plan is built bottom-up from subscriptions and strategy subscriptions rather than from a share of this pool.',
     context:
-      'Two things this figure does not establish. It does not model acquisition: 62,000 users only follows from a channel mix, a cost per acquisition and a conversion rate we have to defend separately. And it is a headcount, not revenue — revenue requires multiplying by ARPU, which depends on pricing and retention rather than on market size. A reader should read the 1% as the share we consider achievable, and press on the acquisition plan behind it.',
+      'Capture rate is not a finding, and no market-sizing source can supply it. It follows from a channel mix, a cost per acquisition and a conversion rate, all of which have to be defended on their own evidence. Read the 6.2M as the population our launch regions put within reach, and press on the acquisition plan for what we expect to convert from it.',
     sources: [],
   },
   {
     question: 'What would make these numbers more defensible?',
     answer:
-      'Three things. Replacing the 2018 regional split with current broker-level or regulator-published account counts for our launch markets. Grounding the SAM in the Finance Magnates account series, which is measured quarterly and shows a real growth trend. And converting the SOM from headcount to revenue with a stated ARPU and retention assumption.',
+      'Three things. Replacing the 2018 regional split with current broker-level or regulator-published account counts for our launch markets. Grounding the SAM in the Finance Magnates account series, which is measured quarterly and shows a real growth trend. And converting the capture assumption from headcount to revenue with a stated ARPU and retention assumption.',
     context:
-      'Until then, the honest framing of slide 4 is that the market is large enough not to be the binding constraint, and the numbers are estimates drawn from industry sources of varying quality. The figures support a claim about scale. They do not establish demand for VibeTrader specifically — that requires customer evidence, not market sizing.',
+      'Until then, the honest framing of slide 5 is that the market is large enough not to be the binding constraint, and the numbers are estimates drawn from industry sources of varying quality. The figures support a claim about scale. They do not establish demand for VibeTrader specifically — that requires customer evidence, not market sizing.',
     sources: [
       { label: 'Finance Magnates Intelligence: quarterly CFD industry account data', href: 'https://www.financemagnates.com/tag/intelligence-report/' },
     ],
@@ -78,14 +78,14 @@ export default function MarketSizingResearchPage() {
   return (
     <main className="min-h-screen bg-white text-gray-950 px-6 py-12 sm:px-12 sm:py-16">
       <div className="mx-auto max-w-3xl">
-        <Link href="/presentation/4" className="text-sm text-gray-600 underline underline-offset-4 hover:text-black">
-          Back to slide 4
+        <Link href="/presentation/5" className="text-sm text-gray-600 underline underline-offset-4 hover:text-black">
+          Back to slide 5
         </Link>
         <header className="mt-12 mb-12">
           <p className="text-sm uppercase tracking-widest text-gray-500 mb-4">VibeTrader research</p>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-tight">How we sized the market</h1>
           <p className="mt-6 text-lg leading-relaxed text-gray-600">
-            The sources behind the TAM, SAM and SOM on slide 4, how each figure was derived, and where the evidence is
+            The sources behind the TAM, SAM and SOM on slide 5, how each figure was derived, and where the evidence is
             thinner than the number on the slide suggests.
           </p>
           <p className="mt-4 text-sm text-gray-500">Research reviewed September 9, 2026</p>

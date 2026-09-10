@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
+import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = 16;
 const ACTIVE = 12;
@@ -138,16 +139,9 @@ export default function Slide15() {
           </div>
 
           {/* Bottom Takeaway — standard style matching all other slides */}
-          <motion.div
-            className="bg-black text-white p-8 max-w-7xl w-full"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 0.6 }}
-          >
-            <p className="text-2xl font-light leading-snug">
-              The <span className="font-bold text-white">AI decision intelligence layer</span> for trading.
-            </p>
-          </motion.div>
+          <SlideFooter className="max-w-7xl w-full" delay={1.0}>
+            The <span className="font-bold text-white">AI decision intelligence layer</span> for trading.
+          </SlideFooter>
 
         </motion.div>
       </div>

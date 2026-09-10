@@ -58,7 +58,7 @@ export default function Slide1() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
         >
-          AI Decision Intelligence for Traders
+          We are building an AI trading harness
         </motion.p>
 
         <motion.p
@@ -67,7 +67,7 @@ export default function Slide1() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          Helping traders make smarter decisions through intelligence that continuously learns and adapts.
+          Build, test and run trading strategies in one system that keeps learning as markets change.
         </motion.p>
 
         <motion.div
