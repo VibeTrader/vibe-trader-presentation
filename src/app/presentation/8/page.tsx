@@ -1,44 +1,45 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { UserCheck, Users2, Building2 } from 'lucide-react';
+import { CandlestickChart, LineChart, Bitcoin } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 18;
+const TOTAL_SLIDES = 16;
 const ACTIVE = 7;
 
 const phases = [
   {
-    icon: UserCheck,
+    icon: CandlestickChart,
     label: '1',
-    category: 'Direct',
-    title: 'Acquire',
-    timeline: '0–6 months',
-    points: ['Organic acquisition', 'Product-led onboarding'],
+    title: 'Forex',
+    timeline: 'Today',
+    points: [
+      'Deep MT4/MT5 ecosystem',
+      'Global broker distribution',
+      'High-frequency decision environment',
+    ],
     accent: 'bg-black text-white',
   },
   {
-    icon: Users2,
+    icon: Bitcoin,
     label: '2',
-    category: 'Community',
-    title: 'Expand',
-    timeline: '6–12 months',
-    points: ['Trading academies', 'Affiliates and educators'],
+    title: 'Crypto & Futures',
+    timeline: 'Next',
+    points: ['Quant strategies', '24/7 crypto markets', 'High-frequency decisions'],
     accent: 'bg-white text-black border-2 border-black',
   },
   {
-    icon: Building2,
+    icon: LineChart,
     label: '3',
-    category: 'Broker',
-    title: 'Scale',
-    timeline: '12–24 months',
-    points: ['Embedded distribution', 'Broker partnerships', 'White-label / API'],
+    title: 'Stocks & Options',
+    timeline: 'Future',
+    points: ['Portfolio intelligence', 'Options workflows', 'Cross-market insights'],
     accent: 'bg-gray-100 text-black border-2 border-gray-300',
   },
 ];
 
-export default function Slide8() {
+export default function Slide10() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
@@ -75,7 +76,7 @@ export default function Slide8() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Go-to-Market Strategy
+            Expansion Strategy
           </motion.h1>
 
           <motion.p
@@ -84,7 +85,7 @@ export default function Slide8() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            From direct adoption to broker-led distribution.
+            One intelligence engine. Multiple trading markets.
           </motion.p>
 
           <div className="grid grid-cols-3 gap-6 mb-8">
@@ -106,12 +107,7 @@ export default function Slide8() {
                     </div>
                     <Icon className="w-9 h-9 text-gray-400" />
                   </div>
-                  <h3 className="text-4xl font-bold text-black leading-tight mb-1">
-                    {p.category}
-                  </h3>
-                  <p className="text-base uppercase tracking-[0.25em] text-gray-400 mb-2">
-                    {p.title}
-                  </p>
+                  <h3 className="text-4xl font-bold text-black leading-tight mb-2">{p.title}</h3>
                   <p className="text-xl uppercase tracking-widest text-gray-500 mb-5">
                     {p.timeline}
                   </p>
@@ -138,8 +134,8 @@ export default function Slide8() {
             transition={{ delay: 1.1, duration: 0.6 }}
           >
             <p className="text-2xl font-light leading-snug">
-              Designed to scale across our initial{' '}
-              <span className="font-bold text-white">150K–250K MT4/MT5 retail trader market</span>.
+              Starting with Forex.{' '}
+              <span className="font-bold text-white">Designed for every market tomorrow.</span>
             </p>
           </motion.div>
         </motion.div>

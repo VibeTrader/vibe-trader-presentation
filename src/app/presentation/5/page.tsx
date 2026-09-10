@@ -1,38 +1,41 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Users, Rocket, Handshake } from 'lucide-react';
+import { Building2, Network, GraduationCap } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 18;
+const TOTAL_SLIDES = 16;
 const ACTIVE = 4;
 
-const stats = [
+const channels = [
   {
-    icon: Users,
-    metric: '1,800+',
-    label: 'Registered traders',
-    detail: 'Users across 100+ countries.',
+    icon: Building2,
+    label: 'Brokers',
+    headline: 'Embedded distribution',
+    reach: '20K–200K traders per broker',
+    status: 'Live',
+    statusDetail: 'Dupoin pilot · 7 in pipeline',
+    model: 'White label or flat licence',
   },
   {
-    icon: Rocket,
-    metric: '2',
-    label: 'Live pilots',
-    detail: 'Trading LatAm (Academy) · Dupoin (Broker).',
+    icon: Network,
+    label: 'IB partnerships',
+    headline: 'Community-led growth',
+    reach: 'Introducing brokers with active trader communities',
+    status: 'In talks',
+    statusDetail: '2 communities onboarding',
+    model: 'Revenue share per converted subscriber',
   },
   {
-    icon: Handshake,
-    metric: '7+',
-    label: 'Broker pipeline',
-    detail: 'Lirunex · PU Prime · GTCFX · Blueberry Markets · HFM · Ultima Markets · OneRoyal.',
+    icon: GraduationCap,
+    label: 'Trading schools',
+    headline: 'Cohort distribution',
+    reach: 'Students already paying to learn',
+    status: 'Live',
+    statusDetail: 'Trading LatAm pilot',
+    model: 'Seat licence per cohort',
   },
-];
-
-const infra = [
-  'MT4 / MT5 integration',
-  'Multi-language platform: English · Spanish · Arabic',
-  'Broker ecosystem',
 ];
 
 export default function Slide5() {
@@ -40,7 +43,7 @@ export default function Slide5() {
 
   return (
     <div
-      className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white"
+      className="relative flex h-full w-full items-start pt-32 overflow-hidden bg-white"
       onClick={nextSlide}
     >
       <div
@@ -72,7 +75,7 @@ export default function Slide5() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              As of July 21, 2026
+              Distribution · As of July 21, 2026
             </motion.p>
           </div>
 
@@ -82,58 +85,89 @@ export default function Slide5() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Market Validation
+            How We Reach Traders
           </motion.h1>
 
           <motion.p
-            className="text-3xl text-gray-600 mb-10 font-light max-w-4xl"
+            className="text-3xl text-gray-600 mb-9 font-light max-w-4xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            Growing validation from traders and industry partners.
+            Partner-led distribution into audiences that already pay to trade.
           </motion.p>
 
-          <div className="grid grid-cols-3 gap-6 mb-8">
-            {stats.map((s, i) => {
-              const Icon = s.icon;
+          <div className="grid grid-cols-3 gap-6">
+            {channels.map((c, i) => {
+              const Icon = c.icon;
+              const isLive = c.status === 'Live';
               return (
                 <motion.div
-                  key={i}
-                  className="border-2 border-gray-200 hover:border-black transition-colors p-7 group"
+                  key={c.label}
+                  className="flex flex-col border-2 border-gray-200 hover:border-black transition-colors p-7 group"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
                 >
-                  <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors mb-4">
-                    <Icon className="w-7 h-7" />
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors">
+                      <Icon className="w-7 h-7" />
+                    </div>
+                    <span
+                      className={`px-3 py-1 text-sm font-bold uppercase tracking-[0.15em] ${
+                        isLive ? 'bg-black text-white' : 'border-2 border-gray-300 text-gray-500'
+                      }`}
+                    >
+                      {c.status}
+                    </span>
                   </div>
-                  <p className="text-5xl font-black text-black mb-2 leading-none tracking-tighter">
-                    {s.metric}
+
+                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-2">{c.label}</p>
+                  <p className="text-[32px] font-black text-black leading-none tracking-tighter mb-4">
+                    {c.headline}
                   </p>
-                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-3">{s.label}</p>
-                  <p className="text-lg text-gray-700 font-light leading-snug">{s.detail}</p>
+                  <p className="text-lg text-gray-700 font-light leading-snug mb-4">{c.reach}</p>
+                  <p className="text-lg text-black font-medium leading-snug mb-5">{c.statusDetail}</p>
+
+                  <div className="mt-auto border-t-2 border-gray-100 pt-4">
+                    <p className="text-sm uppercase tracking-widest text-gray-400 mb-1">Model</p>
+                    <p className="text-lg text-gray-700 font-light leading-snug">{c.model}</p>
+                  </div>
                 </motion.div>
               );
             })}
           </div>
 
+          <motion.svg
+            viewBox="0 0 1200 56"
+            preserveAspectRatio="none"
+            className="w-full h-12"
+            aria-hidden="true"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.95, duration: 0.5 }}
+          >
+            <path d="M200 0 L200 20 L600 38 L600 50" fill="none" stroke="#d1d5db" strokeWidth="3" />
+            <path d="M600 0 L600 50" fill="none" stroke="#d1d5db" strokeWidth="3" />
+            <path d="M1000 0 L1000 20 L600 38 L600 50" fill="none" stroke="#d1d5db" strokeWidth="3" />
+            <path d="M588 44 L600 56 L612 44 Z" fill="#111827" />
+          </motion.svg>
+
           <motion.div
-            className="bg-black text-white p-8 max-w-7xl"
+            className="bg-black text-white px-9 py-7 flex items-center gap-9"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 0.6 }}
+            transition={{ delay: 1.05, duration: 0.6 }}
           >
-            <p className="text-lg uppercase tracking-widest text-gray-400 mb-3 font-semibold">
-              Ready to scale
-            </p>
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-xl font-light leading-snug">
-              {infra.map((m, i) => (
-                <div key={i} className="flex items-center gap-2.5">
-                  <span className="inline-block h-2 w-2 shrink-0 bg-white" />
-                  <span>{m}</span>
-                </div>
-              ))}
+            <p className="text-4xl font-black tracking-tighter shrink-0">VibeTrader</p>
+            <div className="h-14 w-px bg-gray-700 shrink-0" />
+            <div>
+              <p className="text-sm uppercase tracking-widest text-gray-400 mb-1.5 font-semibold">
+                Direct / product-led base
+              </p>
+              <p className="text-xl font-light leading-snug">
+                1,800+ registered traders across 100+ countries on minimal ad spend · English · Spanish · Arabic
+              </p>
             </div>
           </motion.div>
         </motion.div>

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 18;
+const TOTAL_SLIDES = 16;
 const ACTIVE = 3;
 
 const market = [
@@ -50,7 +50,7 @@ export default function Slide4() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Large Market. Focused Entry.
+            Market and Opportunity
           </motion.h1>
 
           <motion.p

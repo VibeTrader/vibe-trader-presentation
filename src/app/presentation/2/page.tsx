@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 18;
+const TOTAL_SLIDES = 16;
 const ACTIVE = 1;
 
 const traderProblems = [
@@ -53,14 +53,7 @@ export default function Slide2() {
             Why We Built VibeTrader
           </motion.h1>
 
-          <motion.p
-            className="text-[28px] text-gray-600 font-normal max-w-7xl leading-[1.55]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-          >
-            We saw a family member lose everything through trading. We built VibeTrader to help traders make more informed decisions.
-          </motion.p>
+          
 
           <div className="mt-10 flex items-center gap-16">
             <motion.div

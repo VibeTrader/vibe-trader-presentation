@@ -1,45 +1,36 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CandlestickChart, LineChart, Bitcoin } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 18;
+const TOTAL_SLIDES = 16;
 const ACTIVE = 9;
 
-const phases = [
+const cards = [
   {
-    icon: CandlestickChart,
-    label: '1',
-    title: 'Forex',
-    timeline: 'Today',
-    points: [
-      'Deep MT4/MT5 ecosystem',
-      'Global broker distribution',
-      'High-frequency decision environment',
-    ],
-    accent: 'bg-black text-white',
+    label: 'DEMAND',
+    title: 'Ready-Made Strategies',
+    body: 'We found stronger demand for tested strategies than for the app alone.',
   },
   {
-    icon: Bitcoin,
-    label: '2',
-    title: 'Crypto & Futures',
-    timeline: 'Next',
-    points: ['Quant strategies', '24/7 crypto markets', 'High-frequency decisions'],
-    accent: 'bg-white text-black border-2 border-black',
+    label: 'LIVE RESULTS',
+    title: '8–9 Months',
+    body: 'Strategies we built in-house have run profitably across multiple users’ live accounts.*',
   },
   {
-    icon: LineChart,
-    label: '3',
-    title: 'Stocks & Options',
-    timeline: 'Future',
-    points: ['Portfolio intelligence', 'Options workflows', 'Cross-market insights'],
-    accent: 'bg-gray-100 text-black border-2 border-gray-300',
+    label: 'PREMIUM SALES',
+    title: '$100–$2,500',
+    body: 'Falcon strategies sell at premium prices based on risk tier.',
+  },
+  {
+    label: 'FUNDING UNLOCKS',
+    title: 'Expand Sales',
+    body: 'Fund marketing and legal work to reach more buyers and accelerate strategy sales.',
   },
 ];
 
-export default function Slide10() {
+export default function Slide12() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
@@ -76,68 +67,48 @@ export default function Slide10() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Expansion Strategy
+            Why Invest Now
           </motion.h1>
 
           <motion.p
-            className="text-3xl text-gray-600 mb-10 font-light max-w-4xl"
+            className="text-3xl text-gray-600 mb-6 font-light max-w-[1600px] leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            One intelligence engine. Multiple trading markets.
+            We built an app to create strategies. Customers showed stronger demand for the finished product.
           </motion.p>
 
-          <div className="grid grid-cols-3 gap-6 mb-8">
-            {phases.map((p, i) => {
-              const Icon = p.icon;
-              return (
-                <motion.div
-                  key={i}
-                  className="border-2 border-gray-200 hover:border-black transition-colors p-10 flex flex-col rounded-lg"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + i * 0.12, duration: 0.5 }}
-                >
-                  <div className="flex items-center gap-4 mb-5">
-                    <div
-                      className={`w-16 h-16 flex items-center justify-center text-4xl font-black rounded-lg ${p.accent}`}
-                    >
-                      {p.label}
-                    </div>
-                    <Icon className="w-9 h-9 text-gray-400" />
-                  </div>
-                  <h3 className="text-4xl font-bold text-black leading-tight mb-2">{p.title}</h3>
-                  <p className="text-xl uppercase tracking-widest text-gray-500 mb-5">
-                    {p.timeline}
-                  </p>
-                  <ul className="space-y-3">
-                    {p.points.map((pt, j) => (
-                      <li
-                        key={j}
-                        className="flex items-start gap-3 text-2xl text-gray-700 font-light leading-relaxed"
-                      >
-                        <span className="mt-3.5 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                        <span>{pt}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              );
-            })}
+          <div className="grid grid-cols-4 gap-6 max-w-[1600px] mt-10 mb-10">
+            {cards.map((card, i) => (
+              <motion.div
+                key={card.label}
+                className="border-2 border-gray-200 rounded-lg bg-white p-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
+              >
+                <p className="text-6xl font-black mb-6">{i + 1}</p>
+                <p className="text-sm uppercase tracking-widest text-gray-500 font-bold mb-4">{card.label}</p>
+                <h2 className="text-3xl font-black leading-tight min-h-[76px] mb-5">{card.title}</h2>
+                <p className="text-2xl text-gray-700 font-light leading-relaxed">{card.body}</p>
+              </motion.div>
+            ))}
           </div>
 
           <motion.div
-            className="bg-black text-white p-8 max-w-7xl"
+            className="bg-black text-white p-6 max-w-[1600px]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.6 }}
+            transition={{ delay: 1.0, duration: 0.6 }}
           >
             <p className="text-2xl font-light leading-snug">
-              Starting with Forex.{' '}
-              <span className="font-bold text-white">Designed for every market tomorrow.</span>
+              Strategy sales are our entry point: bring buyers onto the app, where they can run more strategies or create their own.
             </p>
           </motion.div>
+          <p className="text-lg text-gray-500 mt-5 max-w-7xl leading-relaxed">
+            *Founder-reported results across multiple users. Past performance does not guarantee future results.
+          </p>
         </motion.div>
       </div>
 
@@ -145,9 +116,8 @@ export default function Slide10() {
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
           <motion.div
             key={i + 1}
-            className={`h-2 transition-all duration-300 ${
-              i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
-            } rounded-full`}
+            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
+              } rounded-full`}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.8 + i * 0.03 }}

@@ -1,36 +1,43 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { Users, Handshake, Cpu } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 18;
+const TOTAL_SLIDES = 16;
 const ACTIVE = 11;
 
-const cards = [
+const deployment = [
   {
-    label: 'DEMAND',
-    title: 'Ready-Made Strategies',
-    body: 'We found stronger demand for tested strategies than for the app alone.',
+    icon: Cpu,
+    category: 'PRODUCT',
+    title: 'Advance the Platform',
+    points: ['AI decision intelligence', 'Mobile experience', 'Infrastructure & security'],
   },
   {
-    label: 'LIVE RESULTS',
-    title: '8–9 Months',
-    body: 'Strategies we built in-house have run profitably across multiple users’ live accounts.*',
+    icon: Handshake,
+    category: 'GROWTH',
+    title: 'Scale Distribution',
+    points: ['Broker partnerships', 'Academies & affiliates', 'Trader acquisition'],
   },
   {
-    label: 'PREMIUM SALES',
-    title: '$100–$2,500',
-    body: 'Falcon strategies sell at premium prices based on risk tier.',
-  },
-  {
-    label: 'FUNDING UNLOCKS',
-    title: 'Expand Sales',
-    body: 'Fund marketing and legal work to reach more buyers and accelerate strategy sales.',
+    icon: Users,
+    category: 'TEAM',
+    title: 'Build for Scale',
+    points: ['Engineering', 'Sales & partnerships', 'Customer success'],
   },
 ];
 
-export default function Slide12() {
+const outcomes = [
+  '5,000+ active users',
+  'Commercial broker partnerships',
+  'Recurring Revenue Growth',
+  'Expansion beyond Forex',
+  'Enterprise licensing',
+];
+
+export default function Slide14() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
@@ -67,48 +74,71 @@ export default function Slide12() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Why Invest Now
+            Funding the Next Stage
           </motion.h1>
 
           <motion.p
-            className="text-3xl text-gray-600 mb-6 font-light max-w-[1600px] leading-relaxed"
+            className="text-3xl text-gray-600 mb-10 font-light max-w-4xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            We built an app to create strategies. Customers showed stronger demand for the finished product.
+            $1M Pre-Seed
           </motion.p>
 
-          <div className="grid grid-cols-4 gap-6 max-w-[1600px] mt-10 mb-10">
-            {cards.map((card, i) => (
-              <motion.div
-                key={card.label}
-                className="border-2 border-gray-200 rounded-lg bg-white p-8"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
-              >
-                <p className="text-6xl font-black mb-6">{i + 1}</p>
-                <p className="text-sm uppercase tracking-widest text-gray-500 font-bold mb-4">{card.label}</p>
-                <h2 className="text-3xl font-black leading-tight min-h-[76px] mb-5">{card.title}</h2>
-                <p className="text-2xl text-gray-700 font-light leading-relaxed">{card.body}</p>
-              </motion.div>
-            ))}
+          <motion.p
+            className="text-xl uppercase tracking-[0.3em] text-gray-500 mb-5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.45, duration: 0.6 }}
+          >
+            Where we&apos;ll invest
+          </motion.p>
+
+          <div className="grid grid-cols-3 gap-10 mb-8">
+            {deployment.map((d, i) => {
+              const Icon = d.icon;
+              return (
+                <motion.div
+                  key={i}
+                  className="border-2 border-gray-200 hover:border-black transition-colors p-10 rounded-lg group"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + i * 0.12, duration: 0.5 }}
+                >
+                  <div className="w-16 h-16 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors mb-4 rounded-lg">
+                    <Icon className="w-9 h-9" />
+                  </div>
+                  <p className="text-sm uppercase tracking-widest text-gray-400 font-bold mb-1">{d.category}</p>
+                  <h3 className="text-3xl font-black text-black leading-tight mb-4">{d.title}</h3>
+                  <ul className="space-y-3">
+                    {d.points.map((pt, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xl text-gray-700 font-light leading-relaxed">
+                        <span className="mt-3.5 inline-block h-2 w-2 shrink-0 bg-black" />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              );
+            })}
           </div>
 
           <motion.div
-            className="bg-black text-white p-6 max-w-[1600px]"
+            className="bg-black text-white p-8 max-w-7xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0, duration: 0.6 }}
           >
-            <p className="text-2xl font-light leading-snug">
-              Strategy sales are our entry point: bring buyers onto the app, where they can run more strategies or create their own.
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-y-2 text-xl font-light leading-snug">
+              {outcomes.map((o, i) => (
+                <div key={i} className="flex items-center gap-2.5">
+                  <span className="inline-block h-2.5 w-2.5 shrink-0 bg-white" />
+                  <span>{o}</span>
+                </div>
+              ))}
+            </div>
           </motion.div>
-          <p className="text-lg text-gray-500 mt-5 max-w-7xl leading-relaxed">
-            *Founder-reported results across multiple users. Past performance does not guarantee future results.
-          </p>
         </motion.div>
       </div>
 

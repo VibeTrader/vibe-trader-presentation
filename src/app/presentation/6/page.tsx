@@ -1,11 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CreditCard, ShieldCheck, Server, BarChart3 } from 'lucide-react';
+import { CreditCard, ShieldCheck, Server, ArrowLeftRight } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 18;
+const TOTAL_SLIDES = 16;
 const ACTIVE = 5;
 
 const nowStreams = [
@@ -17,7 +17,7 @@ const nowStreams = [
   {
     icon: ShieldCheck,
     title: 'Premium strategies',
-    body: 'Falcon: $100–$2,500 by risk tier. Pre-tested strategies validated on live accounts. Value-based pricing.',
+    body: 'Falcon: $100–$2,500 per month by risk tier. Ongoing subscription to pre-tested strategies validated on live accounts.',
   },
 ];
 
@@ -28,11 +28,17 @@ const nextStreams = [
     body: 'Decision intelligence for brokers, academies, and trading communities.',
   },
   {
-    icon: BarChart3,
-    title: 'Market intelligence',
-    body: 'Anonymous behavioral insights and institutional analytics.',
+    icon: ArrowLeftRight,
+    title: 'Payments & treasury',
+    body: 'Remittance firms, B2B payment providers and banks convert billions across corridors. The same strategy engine could price and time that flow. Exploratory, long term.',
   },
 ];
+
+// Row-major order so each grid row's two cards share a height and stay aligned.
+const rows = nowStreams.flatMap((stream, i) => [
+  { ...stream, stage: 'now' as const },
+  { ...nextStreams[i], stage: 'next' as const },
+]);
 
 export default function Slide6() {
   const { nextSlide, prevSlide } = useSlideNavigation();
@@ -80,79 +86,55 @@ export default function Slide6() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            App subscriptions plus premium strategy sales.
+            Two recurring subscriptions: the app, and the strategies that run on it.
           </motion.p>
 
-          <div className="grid grid-cols-2 gap-12 max-w-7xl mb-8">
-            {/* NOW Column */}
-            <div>
-              <motion.div
-                className="flex items-center gap-3 mb-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.45, duration: 0.5 }}
-              >
-                <span className="h-2.5 w-2.5 rounded-full bg-black animate-pulse" />
-                <h2 className="text-2xl uppercase tracking-[0.2em] text-black font-bold">Now</h2>
-              </motion.div>
-              <div className="flex flex-col gap-6">
-                {nowStreams.map((s, i) => {
-                  const Icon = s.icon;
-                  return (
-                    <motion.div
-                      key={i}
-                      className="bg-gray-50/30 border border-gray-100 hover:border-black transition-all duration-300 p-8 rounded-lg flex gap-6 items-start min-h-[190px]"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 + i * 0.08, duration: 0.5 }}
-                    >
-                      <div className="w-14 h-14 bg-black text-white flex items-center justify-center shrink-0 rounded-lg">
-                        <Icon className="w-7 h-7" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-4xl font-bold text-black mb-2 leading-tight">{s.title}</h3>
-                        <p className="text-2xl text-gray-600 font-light leading-relaxed">{s.body}</p>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
+          <div className="grid grid-cols-2 gap-x-12 gap-y-6 max-w-7xl mb-8">
+            <motion.div
+              className="flex items-center gap-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.45, duration: 0.5 }}
+            >
+              <span className="h-2.5 w-2.5 rounded-full bg-black animate-pulse" />
+              <h2 className="text-2xl uppercase tracking-[0.2em] text-black font-bold">Now</h2>
+            </motion.div>
 
-            {/* NEXT Column */}
-            <div>
-              <motion.div
-                className="flex items-center gap-3 mb-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.65, duration: 0.5 }}
-              >
-                <span className="h-2.5 w-2.5 rounded-full bg-gray-400" />
-                <h2 className="text-2xl uppercase tracking-[0.2em] text-gray-500 font-bold">Next</h2>
-              </motion.div>
-              <div className="flex flex-col gap-6">
-                {nextStreams.map((s, i) => {
-                  const Icon = s.icon;
-                  return (
-                    <motion.div
-                      key={i}
-                      className="bg-gray-50/30 border border-gray-100 hover:border-black transition-all duration-300 p-8 rounded-lg flex gap-6 items-start min-h-[190px]"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.7 + i * 0.08, duration: 0.5 }}
-                    >
-                      <div className="w-14 h-14 bg-white text-black border border-gray-200 flex items-center justify-center shrink-0 rounded-lg">
-                        <Icon className="w-7 h-7" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-4xl font-bold text-black mb-2 leading-tight">{s.title}</h3>
-                        <p className="text-2xl text-gray-600 font-light leading-relaxed">{s.body}</p>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
+            <motion.div
+              className="flex items-center gap-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.65, duration: 0.5 }}
+            >
+              <span className="h-2.5 w-2.5 rounded-full bg-gray-400" />
+              <h2 className="text-2xl uppercase tracking-[0.2em] text-gray-500 font-bold">Next</h2>
+            </motion.div>
+
+            {rows.map((cell, i) => {
+              const Icon = cell.icon;
+              const isNow = cell.stage === 'now';
+              return (
+                <motion.div
+                  key={`${cell.stage}-${cell.title}`}
+                  className="h-full bg-gray-50/30 border border-gray-100 hover:border-black transition-all duration-300 p-8 rounded-lg flex gap-6 items-start min-h-[190px]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: (isNow ? 0.5 : 0.7) + Math.floor(i / 2) * 0.08, duration: 0.5 }}
+                >
+                  <div
+                    className={`w-14 h-14 flex items-center justify-center shrink-0 rounded-lg ${
+                      isNow ? 'bg-black text-white' : 'bg-white text-black border border-gray-200'
+                    }`}
+                  >
+                    <Icon className="w-7 h-7" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-4xl font-bold text-black mb-2 leading-tight">{cell.title}</h3>
+                    <p className="text-2xl text-gray-600 font-light leading-relaxed">{cell.body}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
           <motion.div
@@ -162,7 +144,7 @@ export default function Slide6() {
             transition={{ delay: 1.0, duration: 0.6 }}
           >
             <p className="text-2xl font-light leading-snug">
-              Subscription access to the app. Premium pricing for validated strategies.
+              Both streams bill monthly. Strategy subscriptions carry the higher price and the stronger demand.
             </p>
           </motion.div>
         </motion.div>

@@ -4,26 +4,34 @@ import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-const TOTAL_SLIDES = 18;
+const TOTAL_SLIDES = 16;
 const ACTIVE = 12;
 
-// Chart data: barH = full bar height in px (out of 120 chart area)
-const bars = [
-  { year: 'Year 1', revenue: '$0.5M', users: '8K', barH: 22 },
-  { year: 'Year 2', revenue: '$1.5M', users: '25K', barH: 44 },
-  { year: 'Year 3', revenue: '$4M', users: '60K', barH: 68 },
-  { year: 'Year 4', revenue: '$8M', users: '120K', barH: 92 },
-  { year: 'Year 5', revenue: '$15M+', users: '200K', barH: 120 },
+const contacts = [
+  {
+    icon: '👤',
+    label: 'Saranya Amirthalingam',
+    sub: 'Co-Founder & CEO, VibeTrader',
+  },
+  {
+    icon: '✉',
+    label: 'saranya@vibetrader.com',
+    sub: 'Reach out directly',
+    href: 'mailto:saranya@vibetrader.com',
+  },
+  {
+    icon: '🌐',
+    label: 'vibetrader.com',
+    sub: 'Product & Demo',
+    href: 'https://vibetrader.com',
+  },
 ];
 
-export default function Slide13() {
-  const { nextSlide, prevSlide } = useSlideNavigation();
+export default function Slide15() {
+  const { prevSlide, nextSlide } = useSlideNavigation();
 
   return (
-    <div
-      className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white"
-      onClick={nextSlide}
-    >
+    <div className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white">
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
@@ -31,6 +39,7 @@ export default function Slide13() {
           backgroundSize: '20px 20px',
         }}
       />
+
       <GlobeWatermark />
 
       <div className="relative z-10 px-20 w-full">
@@ -39,7 +48,7 @@ export default function Slide13() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          {/* ── Standard header bar ── */}
+          {/* Standard header bar */}
           <motion.div
             className="w-16 h-1.5 bg-black mb-6"
             initial={{ width: 0 }}
@@ -47,180 +56,96 @@ export default function Slide13() {
             transition={{ delay: 0.2, duration: 0.5 }}
           />
 
-          {/* ── Title ── */}
+          {/* Title */}
           <motion.h1
             className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Financials
+            Let&apos;s Build This Together.
           </motion.h1>
 
-          {/* ── Subtitle ── */}
+          {/* Subtitle */}
           <motion.p
-            className="text-3xl text-gray-600 mb-8 font-light max-w-4xl"
+            className="text-3xl text-gray-600 mb-16 font-light max-w-7xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            Bottom-up growth driven by subscriptions and partner distribution.
+            Trading platforms helped traders execute. VibeTrader helps traders{' '}
+            <span className="italic text-black font-medium">decide.</span>
           </motion.p>
 
-          {/* ── Hero stat ── */}
-          <motion.div
-            className="mb-6"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            <span className="text-8xl font-black text-black tracking-tighter leading-none">$15M+</span>
-            <span className="block text-base uppercase tracking-widest text-gray-500 mt-2 font-mono font-bold">
-              Projected Annual Revenue — Year 5
-            </span>
-          </motion.div>
+          {/* Contact cards + QR side by side */}
+          <div className="flex gap-10 items-stretch mb-10 w-full max-w-[1550px]">
+            {/* Left: Contact details (Heights match QR code card via flex-1 stretching) */}
+            <div className="flex flex-col gap-4 max-w-7xl w-full flex-1">
+              {contacts.map((c, i) => (
+                <motion.div
+                  key={i}
+                  className="flex items-center gap-5 border-2 border-gray-200 rounded-lg p-6 hover:border-black transition-colors group bg-white flex-1"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 + i * 0.12, duration: 0.5 }}
+                >
+                  <span className="text-3xl flex-shrink-0">{c.icon}</span>
+                  <div>
+                    {c.href ? (
+                      <a
+                        href={c.href}
+                        onClick={(e) => e.stopPropagation()}
+                        className="font-black text-black text-2xl tracking-tight group-hover:underline"
+                      >
+                        {c.label}
+                      </a>
+                    ) : (
+                      <p className="font-black text-black text-2xl tracking-tight">{c.label}</p>
+                    )}
+                    <p className="text-gray-400 text-sm font-light mt-0.5">{c.sub}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
 
-          {/* ── Three Metric Cards (horizontal) ── */}
-          <div className="flex gap-5 mb-6">
-            {[
-              { value: '1.8K → 200K', label: 'Registered Users', sub: 'Actual → Year 5 Target', delay: 0.5 },
-              { value: '5%', label: 'Base-Case Conversion', sub: '10K Paying Subscribers by Year 5', delay: 0.6 },
-              { value: '3', label: 'Revenue Engines', sub: 'Subscriptions · Broker Partnerships · Licensing', delay: 0.7 },
-            ].map((card, i) => (
-              <motion.div
-                key={i}
-                className="flex-1 border-2 border-gray-200 rounded-lg bg-white"
-                style={{ padding: '0.85rem 1.1rem' }}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: card.delay, duration: 0.5 }}
-              >
-                <p className="font-black text-black leading-tight mb-1 text-4xl">{card.value}</p>
-                <p className="uppercase tracking-widest text-gray-400 font-bold mb-0.5 text-xs">{card.label}</p>
-                <p className="text-gray-400 font-light text-xs">{card.sub}</p>
-              </motion.div>
-            ))}
+            {/* Right: QR code card (Vertically aligned) */}
+            <motion.div
+              className="flex-shrink-0 flex flex-col items-center justify-between gap-4 bg-white p-8 border-2 border-gray-200 rounded-lg w-[320px]"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+            >
+              {/* QR code — Real scannable QR Code for https://vibetrader.com */}
+              <div className="flex items-center justify-center flex-1">
+                <svg
+                  width="220"
+                  height="220"
+                  viewBox="0 0 33 33"
+                  xmlns="http://www.w3.org/2000/svg"
+                  shapeRendering="crispEdges"
+                >
+                  <path fill="#ffffff" d="M0 0h33v33H0z"/>
+                  <path
+                    stroke="#000000"
+                    d="M4 4.5h7m2 0h1m2 0h1m1 0h1m1 0h1m1 0h7M4 5.5h1m5 0h1m3 0h4m1 0h2m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m1 0h3m4 0h2m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m1 0h1m4 0h1m2 0h1m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m1 0h3m2 0h3m2 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M12 11.5h4m3 0h2M4 12.5h1m1 0h5m4 0h5m2 0h5M4 13.5h2m1 0h2m2 0h1m2 0h2m4 0h1m2 0h1m3 0h1M5 14.5h2m2 0h2m2 0h3m1 0h1m1 0h2m3 0h2m1 0h2M4 15.5h1m6 0h5m2 0h2m1 0h3m4 0h1M5 16.5h1m1 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h4m1 0h3M4 17.5h3m4 0h1m2 0h1m1 0h2m2 0h1m2 0h1m1 0h1m1 0h1M4 18.5h1m2 0h8m2 0h3m2 0h4m1 0h2M4 19.5h1m3 0h2m1 0h4m1 0h1m1 0h1m4 0h2m3 0h1M4 20.5h1m5 0h1m2 0h1m2 0h9m1 0h1M12 21.5h1m4 0h1m2 0h1m3 0h2M4 22.5h7m3 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3M4 23.5h1m5 0h1m1 0h4m2 0h1m1 0h1m3 0h2M4 24.5h1m1 0h3m1 0h1m1 0h4m3 0h6m1 0h3M4 25.5h1m1 0h3m1 0h1m1 0h3m1 0h2m1 0h1m1 0h2m1 0h5M4 26.5h1m1 0h3m1 0h1m1 0h3m2 0h2m6 0h2m1 0h1M4 27.5h1m5 0h1m5 0h2m2 0h6m2 0h1M4 28.5h7m1 0h2m2 0h1m1 0h1m2 0h8"
+                  />
+                </svg>
+              </div>
+              <p className="text-sm text-gray-400 font-medium uppercase tracking-widest text-center mt-2">
+                Scan to visit<br />vibetrader.com
+              </p>
+            </motion.div>
           </div>
 
-          {/* ── Growth Chart — animated area line chart ── */}
+          {/* Bottom Takeaway — standard style matching all other slides */}
           <motion.div
-            className="border border-gray-100 rounded-lg bg-gray-50/30 mb-6"
-            style={{ padding: '1.5rem 1.5rem' }}
+            className="bg-black text-white p-8 max-w-7xl w-full"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-          >
-            <p className="uppercase tracking-widest text-gray-400 font-bold mb-4 text-xs">
-              Projected Annual Revenue Growth
-            </p>
-
-            <div className="relative w-full" style={{ height: '185px' }}>
-              {/* Gridlines */}
-              <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-40" style={{ bottom: '35px', top: '15px' }}>
-                <div className="border-b border-dashed border-gray-200 w-full h-0" />
-                <div className="border-b border-dashed border-gray-200 w-full h-0" />
-                <div className="border-b border-dashed border-gray-200 w-full h-0" />
-                <div className="border-b border-dashed border-gray-200 w-full h-0" />
-              </div>
-
-              {/* SVG Area & Line Chart */}
-              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1000 185" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(0,0,0,0.15)" />
-                    <stop offset="100%" stopColor="rgba(0,0,0,0.0)" />
-                  </linearGradient>
-                </defs>
-
-                {/* Filled Area */}
-                <motion.path
-                  d="M 100 135 L 300 120 L 500 95 L 700 65 L 900 25 L 900 150 L 100 150 Z"
-                  fill="url(#chartGrad)"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.9, duration: 0.5 }}
-                />
-
-                {/* Line */}
-                <motion.path
-                  d="M 100 135 L 300 120 L 500 95 L 700 65 L 900 25"
-                  fill="none"
-                  stroke="black"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
-                />
-
-                {/* Dots */}
-                {[
-                  { x: 100, y: 135 },
-                  { x: 300, y: 120 },
-                  { x: 500, y: 95 },
-                  { x: 700, y: 65 },
-                  { x: 900, y: 25 }
-                ].map((pt, i) => (
-                  <g key={i}>
-                    <motion.circle
-                      cx={pt.x}
-                      cy={pt.y}
-                      r="6"
-                      fill="white"
-                      stroke="black"
-                      strokeWidth="3"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.9 + i * 0.1, duration: 0.3 }}
-                    />
-                  </g>
-                ))}
-              </svg>
-
-              {/* HTML Labels Overlay */}
-              <div className="absolute inset-0 pointer-events-none">
-                {bars.map((bar, i) => {
-                  const xPositions = ['10%', '30%', '50%', '70%', '90%'];
-                  const yOffsets = ['105px', '90px', '65px', '35px', '-5px'];
-                  return (
-                    <div
-                      key={i}
-                      style={{ position: 'absolute', left: xPositions[i], top: 0, bottom: 0, width: '100px', transform: 'translateX(-50%)' }}
-                    >
-                      {/* Revenue Text */}
-                      <div style={{ position: 'absolute', top: yOffsets[i], left: 0, right: 0, display: 'flex', justifyContent: 'center' }}>
-                        <span className="font-black text-black text-sm block tracking-tight">
-                          {bar.revenue}
-                        </span>
-                      </div>
-
-                      {/* Year & Users (Fixed at bottom) */}
-                      <div style={{ position: 'absolute', bottom: '0px', left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <span className="font-bold text-black text-xs">
-                          {bar.year}
-                        </span>
-                        <span className="text-gray-400 font-medium text-[10px] whitespace-nowrap">
-                          {bar.users} users
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.div>
-
-
-          {/* ── Bottom Takeaway ── */}
-          <motion.div
-            className="bg-black text-white px-8 py-7 max-w-7xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.6 }}
+            transition={{ delay: 1.0, duration: 0.6 }}
           >
             <p className="text-2xl font-light leading-snug">
-              Base case: 5% paid conversion across subscription tiers, broker partnerships, and platform licensing.
+              The <span className="font-bold text-white">AI decision intelligence layer</span> for trading.
             </p>
           </motion.div>
 
@@ -240,12 +165,16 @@ export default function Slide13() {
         ))}
       </div>
 
-      <button onClick={(e) => { e.stopPropagation(); prevSlide(); }}
+      <button
+        onClick={prevSlide}
         className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
-        aria-label="Previous slide">←</button>
-      <button onClick={(e) => { e.stopPropagation(); nextSlide(); }}
+        aria-label="Previous slide"
+      >←</button>
+      <button
+        onClick={nextSlide}
         className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
-        aria-label="Next slide">→</button>
+        aria-label="Next slide: FAQ"
+      >→</button>
     </div>
   );
 }
