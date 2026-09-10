@@ -32,7 +32,7 @@ Options:
   --settle-ms N    Animation settling time per slide (default 2500)
 
 Run the app first. Install Chromium with: npx playwright install chromium
-PDFs contain video stills, clickable FAQ destinations, and research/source links.`);
+PDFs contain video stills marked with play buttons, clickable FAQ destinations, and research/source links.`);
   process.exit(0);
 }
 const base = new URL(values['base-url']);
@@ -122,6 +122,21 @@ try {
         else video.addEventListener('loadeddata', seek, { once: true });
       })));
     }, videoTime);
+    // Mark frozen videos with a play button so PDF readers know the still is a clickable video.
+    await page.evaluate(() => {
+      for (const video of document.querySelectorAll('video')) {
+        const r = video.getBoundingClientRect();
+        if (!r.width || !r.height || getComputedStyle(video).visibility === 'hidden') continue;
+        const size = Math.round(Math.min(120, Math.max(56, Math.min(r.width, r.height) * 0.2)));
+        const badge = document.createElement('div');
+        badge.style.cssText = `position:fixed;z-index:2147483647;pointer-events:none;
+          left:${r.left + (r.width - size) / 2}px;top:${r.top + (r.height - size) / 2}px;width:${size}px;height:${size}px;
+          display:flex;align-items:center;justify-content:center;border-radius:50%;
+          background:rgba(0,0,0,.6);border:${Math.max(2, Math.round(size / 24))}px solid #fff;box-shadow:0 4px 24px rgba(0,0,0,.35)`;
+        badge.innerHTML = `<svg viewBox="0 0 24 24" width="${size * .45}" height="${size * .45}" fill="#fff" style="margin-left:${size * .06}px"><path d="M8 5v14l11-7z"/></svg>`;
+        document.body.append(badge);
+      }
+    });
     if (new URL(page.url()).pathname !== path) throw new Error(`Slide ${number} navigated during capture.`);
     const links = await page.locator('a[href], video').evaluateAll(anchors => anchors.flatMap(a => {
       const r = a.getBoundingClientRect();
@@ -178,6 +193,10 @@ try {
     if (destination) {
       annotation.delete(PDFName.of('A'));
       annotation.set(PDFName.of('Dest'), pdf.context.obj([destination, 'Fit']));
+    } else if (url.origin === base.origin) {
+      // Keep links to unappended resources usable outside the local dev server.
+      const hosted = new URL(url.pathname + url.search + url.hash, 'https://pitchdeck.vibetrader.com');
+      annotation.set(PDFName.of('A'), pdf.context.obj({ S: 'URI', URI: PDFString.of(hosted.href) }));
     }
   }
   pdf.setTitle('VibeTrader Presentation and Supporting Research');
