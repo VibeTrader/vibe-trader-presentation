@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { createInterface } from 'node:readline/promises';
 import { chromium } from 'playwright';
-import { PDFDocument, PDFName, PDFString, PDFArray, PDFDict } from 'pdf-lib';
+import { PDFDocument, PDFName, PDFString } from 'pdf-lib';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const { values } = parseArgs({ options: {
@@ -18,7 +18,7 @@ const { values } = parseArgs({ options: {
   help: { type: 'boolean', short: 'h' },
 } });
 if (values.help) {
-  console.log(`Export all configured slides and append the research page.
+  console.log(`Export slides up to the FAQ slide as a short PDF deck.
 
   npm run export:pdf -- --login
   npm run export:pdf -- --base-url https://your-site.example
@@ -32,11 +32,15 @@ Options:
   --settle-ms N    Animation settling time per slide (default 2500)
 
 Run the app first. Install Chromium with: npx playwright install chromium
-PDFs contain video stills marked with play buttons, clickable FAQ destinations, and research/source links.`);
+PDFs contain video stills marked with play buttons. Videos, footnotes, research, and FAQ answers link to the public site.`);
   process.exit(0);
 }
 const base = new URL(values['base-url']);
 if (!['http:', 'https:'].includes(base.protocol)) throw new Error('Base URL must use HTTP or HTTPS.');
+const hostedUrl = href => {
+  const url = new URL(href, base);
+  return new URL(url.pathname + url.search + url.hash, 'https://pitchdeck.vibetrader.com').href;
+};
 const videoTime = Number(values['video-time']);
 const settleMs = Number(values['settle-ms']);
 if (![videoTime, settleMs].every(n => Number.isFinite(n) && n >= 0)) throw new Error('Video time and settle time must be nonnegative numbers.');
@@ -44,9 +48,10 @@ const output = resolve(root, values.output);
 const authFile = resolve(root, values.auth);
 const config = await readFile(resolve(root, 'src/config/presentation.ts'), 'utf8');
 const first = Number(config.match(/firstSlide:\s*(\d+)/)?.[1]);
-const last = Number(config.match(/lastSlide:\s*(\d+)/)?.[1]);
+const faqSlides = config.match(/faqSlides:\s*\[([\d,\s]*)\]/)?.[1].split(',').map(Number).filter(Boolean) ?? [];
+// End at the FAQ slide. Its answer slides are public web pages, so the PDF links there instead.
+const last = faqSlides.length ? Math.min(...faqSlides) : Number(config.match(/lastSlide:\s*(\d+)/)?.[1]);
 if (!first || !last || first > last) throw new Error('Cannot read slide range from presentation config.');
-const researchPath = '/research/trader-challenges';
 const pdf = await PDFDocument.create();
 const destinations = new Map();
 const pendingLinks = [];
@@ -138,13 +143,13 @@ try {
       }
     });
     if (new URL(page.url()).pathname !== path) throw new Error(`Slide ${number} navigated during capture.`);
+    // Videos and links marked data-pdf-link="web" open on the hosted site rather than inside the PDF.
     const links = await page.locator('a[href], video').evaluateAll(anchors => anchors.flatMap(a => {
       const r = a.getBoundingClientRect();
       if (!r.width || !r.height || getComputedStyle(a).visibility === 'hidden') return [];
-      const href = a instanceof HTMLVideoElement
-        ? new URL(new URL(a.currentSrc || a.src).pathname, 'https://pitchdeck.vibetrader.com').href
-        : a.href;
-      return [{ href, x: r.x, y: r.y, width: r.width, height: r.height }];
+      const video = a instanceof HTMLVideoElement;
+      return [{ href: video ? a.currentSrc || a.src : a.href, web: video || a.dataset.pdfLink === 'web',
+        x: r.x, y: r.y, width: r.width, height: r.height }];
     }));
     const png = await page.screenshot({ animations: 'disabled' });
     const image = await pdf.embedPng(png);
@@ -152,41 +157,16 @@ try {
     sheet.drawImage(image, { x: 0, y: 0, width: 1440, height: 810 });
     destinations.set(path, sheet.ref);
     for (const link of links) {
+      const href = link.web ? hostedUrl(link.href) : link.href;
       const annotation = pdf.context.obj({ Type: 'Annot', Subtype: 'Link', Border: [0, 0, 0],
         Rect: [link.x * .75, 810 - (link.y + link.height) * .75, (link.x + link.width) * .75, 810 - link.y * .75],
-        A: { S: 'URI', URI: PDFString.of(link.href) } });
+        A: { S: 'URI', URI: PDFString.of(href) } });
       sheet.node.addAnnot(pdf.context.register(annotation));
-      pendingLinks.push({ annotation, href: link.href });
+      if (!link.web) pendingLinks.push({ annotation, href });
     }
   }
 
-  console.log('Appending research and sources');
-  await page.setViewportSize({ width: 1000, height: 1200 });
-  await visit(researchPath);
-  await page.addStyleTag({ content: `
-    nextjs-portal, [data-nextjs-toast] { display: none !important; }
-    section[aria-labelledby="research-search-title"] { display: none !important; }
-    main { padding: 0 !important; min-height: 0 !important; }
-    header { margin-top: 20px !important; margin-bottom: 24px !important; }
-    section { break-inside: avoid; padding-top: 20px !important; padding-bottom: 20px !important; }
-    h2 { break-after: avoid; }
-    * { print-color-adjust: exact; }
-  ` });
-  const research = await PDFDocument.load(await page.pdf({ format: 'A4', printBackground: true, margin: { top: '18mm', bottom: '18mm', left: '18mm', right: '18mm' } }));
-  const researchPages = await pdf.copyPages(research, research.getPageIndices());
-  for (const sheet of researchPages) pdf.addPage(sheet);
-  destinations.set(researchPath, researchPages[0].ref);
-  // Native browser printing retains source links. Rewrite local links after all destinations exist.
-  for (const sheet of researchPages) {
-    const annotations = sheet.node.lookupMaybe(PDFName.of('Annots'), PDFArray);
-    if (!annotations) continue;
-    for (const item of annotations.asArray()) {
-      const annotation = pdf.context.lookup(item, PDFDict);
-      const action = annotation.lookupMaybe(PDFName.of('A'), PDFDict);
-      const uri = action?.lookup(PDFName.of('URI'));
-      if (uri && typeof uri.decodeText === 'function') pendingLinks.push({ annotation, href: uri.decodeText() });
-    }
-  }
+  // Links to exported slides jump within the PDF. Footnotes, research, and FAQ answers open on the website.
   for (const { annotation, href } of pendingLinks) {
     const url = new URL(href, base);
     const destination = url.origin === base.origin ? destinations.get(url.pathname.replace(/\/$/, '')) : undefined;
@@ -195,12 +175,11 @@ try {
       annotation.set(PDFName.of('Dest'), pdf.context.obj([destination, 'Fit']));
     } else if (url.origin === base.origin) {
       // Keep links to unappended resources usable outside the local dev server.
-      const hosted = new URL(url.pathname + url.search + url.hash, 'https://pitchdeck.vibetrader.com');
-      annotation.set(PDFName.of('A'), pdf.context.obj({ S: 'URI', URI: PDFString.of(hosted.href) }));
+      annotation.set(PDFName.of('A'), pdf.context.obj({ S: 'URI', URI: PDFString.of(hostedUrl(url.href)) }));
     }
   }
-  pdf.setTitle('VibeTrader Presentation and Supporting Research');
-  pdf.setSubject('Slides, FAQ, and research sources. Click video thumbnails to watch at pitchdeck.vibetrader.com.');
+  pdf.setTitle('VibeTrader Presentation');
+  pdf.setSubject('Pitch deck. Videos, research sources, and FAQ answers open at pitchdeck.vibetrader.com.');
   await mkdir(dirname(output), { recursive: true });
   await writeFile(output, await pdf.save());
   console.log(`Saved ${pdf.getPageCount()} pages to ${output}`);

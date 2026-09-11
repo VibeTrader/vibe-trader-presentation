@@ -5,7 +5,7 @@ import { monthlyResults, myfxbookUrl } from '@/data/trading-results';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 
 export default function TradingResultsSlide() {
-  const { totalSlides, prevSlide } = useSlideNavigation();
+  const { totalSlides, prevSlide, nextSlide } = useSlideNavigation();
   return (
     <div className="relative h-full w-full bg-white px-20 pt-16 text-black overflow-hidden">
       
@@ -53,6 +53,7 @@ export default function TradingResultsSlide() {
       <div className="absolute bottom-8 left-20 flex gap-8 text-xl underline underline-offset-4"><Link href="/presentation/13">Back to FAQ</Link><Link href="/presentation/10">Back to investment slide</Link></div>
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-2">{Array.from({length:totalSlides},(_,i)=><div key={i} className={`h-2 rounded-full ${i===15?'w-8 bg-black':'w-2 bg-gray-300'}`} />)}</div>
       <button onClick={prevSlide} aria-label="Previous slide" className="absolute left-8 top-1/2 text-gray-400">←</button>
+      <button onClick={nextSlide} aria-label="Next slide" className="absolute right-8 top-1/2 text-gray-400">→</button>
     </div>
   );
 }

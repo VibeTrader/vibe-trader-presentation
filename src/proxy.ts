@@ -1,10 +1,15 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import { PRESENTATION_CONFIG } from "@/config/presentation";
 
 const isProtectedRoute = createRouteMatcher([
   "/presentation(.*)",
   "/admin(.*)",
 ]);
+
+const isPublicFaqRoute = createRouteMatcher(
+  PRESENTATION_CONFIG.faqSlides.map((slide) => `/presentation/${slide}`),
+);
 
 const isAdminRoute = createRouteMatcher([
   "/admin(.*)",
@@ -14,7 +19,7 @@ export default clerkMiddleware(async (auth, req) => {
   const { userId, sessionClaims } = await auth();
   
   // Protect routes that require authentication
-  if (isProtectedRoute(req)) {
+  if (isProtectedRoute(req) && !isPublicFaqRoute(req)) {
     await auth.protect();
   }
 
