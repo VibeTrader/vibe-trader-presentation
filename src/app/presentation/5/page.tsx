@@ -81,8 +81,8 @@ export default function Slide4() {
             ))}
           </div>
 
-          <SlideFooter brand eyebrow="Expansion path" className="mt-20" delay={0.8}>
-            Start with forex. Expand across financial markets (crypto, stocks, options).
+          <SlideFooter className="w-full mt-20" delay={0.8}>
+            <span className="font-bold">Expansion path:</span> Start with forex. Expand across financial markets (crypto, stocks, options).
           </SlideFooter>
 
         </motion.div>

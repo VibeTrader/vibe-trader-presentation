@@ -56,6 +56,11 @@ export default function Slide18() {
             </motion.li>
           ))}
         </ul>
+
+        <p className="mt-12 text-3xl text-black">
+          <span className="font-bold">Think Formula 1 vs. Toyota:</span>{' '}
+          <span className="font-light">F1 teams have the best engineers in the world. They don’t sell cars to commuters. Toyota does.</span>
+        </p>
       </motion.div>
 
       <Link

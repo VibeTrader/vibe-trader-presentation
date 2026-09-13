@@ -33,7 +33,7 @@ const nextStreams = [
   {
     icon: ArrowLeftRight,
     title: 'Payments & treasury',
-    body: 'Remittance firms, B2B payment providers and banks convert billions across corridors. The same strategy engine could price and time that flow. Exploratory, long term.',
+    body: 'Remittance and payment firms convert billions across corridors. The same engine could price and time that flow. Exploratory.',
   },
 ];
 
@@ -140,8 +140,8 @@ export default function Slide6() {
             })}
           </div>
 
-          <SlideFooter className="max-w-7xl mt-8" delay={1.0}>
-            Both streams bill monthly. Strategy subscriptions carry the higher price and the stronger demand.
+          <SlideFooter className="w-full mt-8" delay={1.0}>
+            Strategy subscriptions carry the higher price and the stronger demand.
           </SlideFooter>
         </motion.div>
       </div>

@@ -25,7 +25,7 @@ const reasons = [
 ];
 
 export default function Slide19() {
-  const { prevSlide } = useSlideNavigation();
+  const { prevSlide, nextSlide } = useSlideNavigation();
 
   return (
     <div className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white">
@@ -57,7 +57,12 @@ export default function Slide19() {
           ))}
         </ul>
 
-        <p className="mt-12 text-lg text-gray-500">
+        <p className="mt-12 text-3xl text-black">
+          <span className="font-bold">Think circuit breakers:</span>{' '}
+          <span className="font-light">they don’t stop an appliance from failing. They stop one failure from burning the house down.</span>
+        </p>
+
+        <p className="mt-8 text-lg text-gray-500">
           Source: Bloomberg, “Jane Street Lost $15 Billion in Its First Down Month in a Decade,” Aug 14, 2026. Past performance does not guarantee future results.
         </p>
       </motion.div>
@@ -76,6 +81,8 @@ export default function Slide19() {
 
       <button onClick={prevSlide} aria-label="Previous slide"
         className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black z-20">←</button>
+      <button onClick={nextSlide} aria-label="Next slide"
+        className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black z-20">→</button>
     </div>
   );
 }

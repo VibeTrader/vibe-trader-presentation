@@ -56,6 +56,11 @@ export default function Slide17() {
             </motion.li>
           ))}
         </ul>
+
+        <p className="mt-12 text-3xl text-black">
+          <span className="font-bold">Think hedge funds:</span>{' '}
+          <span className="font-light">great traders don’t just trade their own savings. They start funds, because other people’s capital is the bigger business.</span>
+        </p>
       </motion.div>
 
       <Link

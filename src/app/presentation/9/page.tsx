@@ -69,7 +69,7 @@ export default function Slide11() {
           </motion.h1>
 
           {/* 3 Columns Grid for Team Cards */}
-          <div className="grid grid-cols-3 gap-8 w-full max-w-[1450px] mb-2">
+          <div className="grid grid-cols-3 gap-8 w-full mb-2">
             {/* CEO Card */}
             <motion.div
               className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
@@ -93,12 +93,12 @@ export default function Slide11() {
               <h3 className="text-3xl font-black text-black leading-tight mb-4">
                 Saranya Amirthalingam
               </h3>
-              <p className="text-xl text-gray-500 font-bold mb-4 mt-2">Co-Founder & CEO</p>
+              <p className="text-2xl text-gray-500 font-bold mb-4 mt-2">Co-Founder & CEO</p>
               <ul className="w-full mt-2">
                 {ceo.map((item, i) => (
                   <motion.li
                     key={i}
-                    className="flex items-start gap-3 text-2xl text-gray-700 font-light leading-relaxed"
+                    className="flex items-start gap-3 text-[26px] text-gray-700 font-light leading-relaxed"
                     style={item.style}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -131,15 +131,15 @@ export default function Slide11() {
                 />
               </div>
 
-              <h3 className="text-2xl font-black text-black leading-tight mb-4 whitespace-nowrap">
+              <h3 className="text-3xl font-black text-black leading-tight mb-4">
                 Nithyakumaran Gnanasekar
               </h3>
-              <p className="text-xl text-gray-500 font-bold mb-4 mt-2">Co-Founder & CTO</p>
+              <p className="text-2xl text-gray-500 font-bold mb-4 mt-2">Co-Founder & CTO</p>
               <ul className="w-full mt-2">
                 {cto.map((item, i) => (
                   <motion.li
                     key={i}
-                    className="flex items-start gap-3 text-2xl text-gray-700 font-light leading-relaxed"
+                    className="flex items-start gap-3 text-[26px] text-gray-700 font-light leading-relaxed"
                     style={item.style}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -198,12 +198,12 @@ export default function Slide11() {
               <h3 className="text-3xl font-black text-black leading-tight mb-4">
                 Trading Expertise
               </h3>
-              <p className="text-xl text-gray-500 font-bold mb-4 mt-2">Forex & Market Validation</p>
+              <p className="text-2xl text-gray-500 font-bold mb-4 mt-2">Forex & Market Validation</p>
               <ul className="w-full mt-2">
                 {advisor.map((item, i) => (
                   <motion.li
                     key={i}
-                    className="flex items-start gap-3 text-2xl text-gray-700 font-light leading-relaxed"
+                    className="flex items-start gap-3 text-[26px] text-gray-700 font-light leading-relaxed"
                     style={item.style}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -218,7 +218,7 @@ export default function Slide11() {
           </div>
 
           {/* Simplified Bottom Takeaway */}
-          <SlideFooter className="w-full max-w-[1450px] mt-6 mb-6" delay={1.0}>
+          <SlideFooter className="w-full mt-6 mb-6" delay={1.0}>
             Deep AI engineering + real trading experience.
           </SlideFooter>
         </motion.div>

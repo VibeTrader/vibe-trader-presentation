@@ -1,227 +1,68 @@
 'use client';
 
 import { PRESENTATION_CONFIG } from '@/config/presentation';
-
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
-import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 10;
 
-// Chart data: barH = full bar height in px (out of 120 chart area)
-const bars = [
-  { year: 'Year 1', revenue: '$0.5M', users: '8K', barH: 22 },
-  { year: 'Year 2', revenue: '$1.5M', users: '25K', barH: 44 },
-  { year: 'Year 3', revenue: '$4M', users: '60K', barH: 68 },
-  { year: 'Year 4', revenue: '$8M', users: '120K', barH: 92 },
-  { year: 'Year 5', revenue: '$15M+', users: '200K', barH: 120 },
+// Planning assumptions, not observed traction or market-research forecasts.
+// Count only separately billed app subscriptions; exclude bundled app access.
+const streams = [
+  { title: 'App subscriptions', detail: '20,000 standalone subscribers × $100/month', revenue: 20_000 * 100 * 12 },
+  { title: 'Premium strategy subscriptions', detail: '10,000 paid strategy subscriptions × $1,000/month', revenue: 10_000 * 1_000 * 12 },
+  { title: 'RIA strategy licensing', detail: '$10B allocated to our strategies × 0.40% annual fee', revenue: 10_000_000_000 * 0.004 },
+  { title: 'B2B FX transaction strategies', detail: '80 business clients × $200,000 annual contract', revenue: 80 * 200_000 },
 ];
+const total = streams.reduce((sum, stream) => sum + stream.revenue, 0);
+const millions = (value: number) => `$${value / 1_000_000}M`;
 
-export default function Slide13() {
+export default function Slide11() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
-    <div
-      className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white"
-      onClick={nextSlide}
-    >
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
-          backgroundSize: '20px 20px',
-        }}
-      />
+    <div className="relative h-full w-full overflow-hidden bg-white text-black" onClick={nextSlide}>
       <GlobeWatermark />
+      <motion.main className="relative z-10 px-20 pt-16" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+        <div className="w-16 h-1.5 bg-black mb-5" />
+        <h1 className="text-6xl font-black tracking-tighter leading-tight">Financials</h1>
+        <p className="text-3xl text-gray-600 font-light mt-3">Four revenue streams across individual and institutional customers</p>
 
-      <div className="relative z-10 px-20 w-full">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-        >
-          {/* ── Standard header bar ── */}
-          <motion.div
-            className="w-16 h-1.5 bg-black mb-6"
-            initial={{ width: 0 }}
-            animate={{ width: 64 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          />
-
-          {/* ── Title ── */}
-          <motion.h1
-            className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-          >
-            Financials
-          </motion.h1>
-
-          {/* ── Subtitle ── */}
-          <motion.p
-            className="text-3xl text-gray-600 mb-8 font-light max-w-4xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-          >
-            Bottom-up growth driven by subscriptions and partner distribution.
-          </motion.p>
-
-          {/* ── Hero stat ── */}
-          <motion.div
-            className="mb-6"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            <span className="text-8xl font-black text-black tracking-tighter leading-none">$15M+</span>
-            <span className="block text-base uppercase tracking-widest text-gray-500 mt-2 font-mono font-bold">
-              Projected Annual Revenue — Year 5
-            </span>
-          </motion.div>
-
-          {/* ── Three Metric Cards (horizontal) ── */}
-          <div className="flex gap-5 mb-6">
-            {[
-              { value: '1.8K → 200K', label: 'Registered Users', sub: 'Actual → Year 5 Target', delay: 0.5 },
-              { value: '5%', label: 'Base-Case Conversion', sub: '10K Paying Subscribers by Year 5', delay: 0.6 },
-              { value: '3', label: 'Revenue Engines', sub: 'Subscriptions · Broker Partnerships · Licensing', delay: 0.7 },
-            ].map((card, i) => (
-              <motion.div
-                key={i}
-                className="flex-1 border-2 border-gray-200 rounded-lg bg-white"
-                style={{ padding: '0.85rem 1.1rem' }}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: card.delay, duration: 0.5 }}
-              >
-                <p className="font-black text-black leading-tight mb-1 text-4xl">{card.value}</p>
-                <p className="uppercase tracking-widest text-gray-400 font-bold mb-0.5 text-xs">{card.label}</p>
-                <p className="text-gray-400 font-light text-xs">{card.sub}</p>
-              </motion.div>
-            ))}
+        <div className="flex items-end gap-10 mt-8 mb-7">
+          <p className="text-[112px] font-black tracking-tighter leading-none">{millions(total)}</p>
+          <div className="pb-2">
+            <p className="text-2xl font-bold uppercase tracking-wide">Year 5 annualized revenue run rate</p>
+            <p className="text-2xl text-gray-600 mt-2">Illustrative target scenario · not a validated forecast</p>
           </div>
+        </div>
 
-          {/* ── Growth Chart — animated area line chart ── */}
-          <motion.div
-            className="border border-gray-100 rounded-lg bg-gray-50/30 mb-6"
-            style={{ padding: '1.5rem 1.5rem' }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-          >
-            <p className="uppercase tracking-widest text-gray-400 font-bold mb-4 text-xs">
-              Projected Annual Revenue Growth
-            </p>
+        <table className="w-full border-collapse text-left" aria-label="Illustrative Year 5 revenue assumptions">
+          <thead className="text-lg uppercase tracking-widest text-gray-500 border-b-2 border-black">
+            <tr><th className="pb-3 w-[35%]">Revenue stream</th><th className="pb-3">Year 5 assumption</th><th className="pb-3 text-right">Annualized revenue</th></tr>
+          </thead>
+          <tbody>
+            {streams.map((stream) => (
+              <tr key={stream.title} className="border-b border-gray-300">
+                <th scope="row" className="py-5 text-[28px] font-bold tracking-tight">{stream.title}</th>
+                <td className="py-5 text-[25px] text-gray-700">{stream.detail}</td>
+                <td className="py-5 text-right text-4xl font-black">{millions(stream.revenue)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-            <div className="relative w-full" style={{ height: '185px' }}>
-              {/* Gridlines */}
-              <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-40" style={{ bottom: '35px', top: '15px' }}>
-                <div className="border-b border-dashed border-gray-200 w-full h-0" />
-                <div className="border-b border-dashed border-gray-200 w-full h-0" />
-                <div className="border-b border-dashed border-gray-200 w-full h-0" />
-                <div className="border-b border-dashed border-gray-200 w-full h-0" />
-              </div>
-
-              {/* SVG Area & Line Chart */}
-              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1000 185" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(0,0,0,0.15)" />
-                    <stop offset="100%" stopColor="rgba(0,0,0,0.0)" />
-                  </linearGradient>
-                </defs>
-
-                {/* Filled Area */}
-                <motion.path
-                  d="M 100 135 L 300 120 L 500 95 L 700 65 L 900 25 L 900 150 L 100 150 Z"
-                  fill="url(#chartGrad)"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.9, duration: 0.5 }}
-                />
-
-                {/* Line */}
-                <motion.path
-                  d="M 100 135 L 300 120 L 500 95 L 700 65 L 900 25"
-                  fill="none"
-                  stroke="black"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
-                />
-
-                {/* Dots */}
-                {[
-                  { x: 100, y: 135 },
-                  { x: 300, y: 120 },
-                  { x: 500, y: 95 },
-                  { x: 700, y: 65 },
-                  { x: 900, y: 25 }
-                ].map((pt, i) => (
-                  <g key={i}>
-                    <motion.circle
-                      cx={pt.x}
-                      cy={pt.y}
-                      r="6"
-                      fill="white"
-                      stroke="black"
-                      strokeWidth="3"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.9 + i * 0.1, duration: 0.3 }}
-                    />
-                  </g>
-                ))}
-              </svg>
-
-              {/* HTML Labels Overlay */}
-              <div className="absolute inset-0 pointer-events-none">
-                {bars.map((bar, i) => {
-                  const xPositions = ['10%', '30%', '50%', '70%', '90%'];
-                  const yOffsets = ['105px', '90px', '65px', '35px', '-5px'];
-                  return (
-                    <div
-                      key={i}
-                      style={{ position: 'absolute', left: xPositions[i], top: 0, bottom: 0, width: '100px', transform: 'translateX(-50%)' }}
-                    >
-                      {/* Revenue Text */}
-                      <div style={{ position: 'absolute', top: yOffsets[i], left: 0, right: 0, display: 'flex', justifyContent: 'center' }}>
-                        <span className="font-black text-black text-sm block tracking-tight">
-                          {bar.revenue}
-                        </span>
-                      </div>
-
-                      {/* Year & Users (Fixed at bottom) */}
-                      <div style={{ position: 'absolute', bottom: '0px', left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <span className="font-bold text-black text-xs">
-                          {bar.year}
-                        </span>
-                        <span className="text-gray-400 font-medium text-[10px] whitespace-nowrap">
-                          {bar.users} users
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.div>
-
-
-          {/* ── Bottom Takeaway ── */}
-          <SlideFooter className="max-w-7xl" delay={1.1}>
-            Base case: 5% paid conversion across subscription tiers, broker partnerships, and platform licensing.
-          </SlideFooter>
-
-        </motion.div>
-      </div>
+        <div className="mt-7 border-l-4 border-black pl-5">
+          <p className="text-xl uppercase tracking-widest font-bold mb-2">Expansion through Year 5</p>
+          <p className="text-[27px] text-gray-700">Forex → futures, crypto, stocks &amp; options · RIA strategy mandates · corporate FX execution &amp; hedging</p>
+        </div>
+        <div className="mt-6 text-[20px] text-gray-600 leading-relaxed">
+          <p>Assumptions to validate: acquisition, retention, pricing and enterprise mandates. Strategy pricing assumes migration to the $1,000/month floor.</p>
+          <p>App revenue excludes bundled access. RIA fees apply only to allocated assets. Before partner commissions and operating costs.</p>
+          <p>Year-end run rate differs from revenue earned during Year 5; asset-based fees vary with allocations and market values.</p>
+        </div>
+      </motion.main>
 
       {/* Navigation dots */}
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">

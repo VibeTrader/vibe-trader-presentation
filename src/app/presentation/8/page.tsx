@@ -79,29 +79,29 @@ export default function Slide9() {
           </motion.p>
 
           {/* Comparison Table */}
-          <div className="max-w-7xl mb-6 bg-white border border-gray-100 rounded-lg p-8 shadow-sm">
+          <div className="w-full mb-6 bg-white border border-gray-100 rounded-lg p-8 shadow-sm">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="border-b border-gray-200">
-                  <th className="py-3.5 px-4 text-left text-sm uppercase tracking-wider text-gray-400 font-bold">Feature</th>
-                  <th className="py-3.5 px-4 text-center text-lg font-bold text-gray-800">MetaTrader</th>
-                  <th className="py-3.5 px-4 text-center text-lg font-bold text-gray-800">TradingView</th>
-                  <th className="py-3.5 px-4 text-center text-lg font-bold text-gray-800">Capitalise.ai</th>
-                  <th className="py-3.5 px-4 text-center text-lg font-bold text-gray-800">TrendSpider</th>
-                  <th className="py-3.5 px-4 text-center text-lg font-bold text-gray-800">Composer</th>
-                  <th className="py-3.5 px-4 text-center text-lg font-black text-white bg-black rounded-t-lg">VibeTrader</th>
+                  <th className="py-4 px-4 text-left text-base uppercase tracking-wider text-gray-400 font-bold">Feature</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">MetaTrader</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">TradingView</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">Capitalise.ai</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">TrendSpider</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">Composer</th>
+                  <th className="py-4 px-4 text-center text-2xl font-black text-white bg-black rounded-t-lg">VibeTrader</th>
                 </tr>
               </thead>
               <tbody>
                 {rows.map((row, idx) => (
                   <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
-                    <td className="py-3.5 px-4 text-lg font-bold text-gray-900">{row.feature}</td>
-                    <td className="py-3.5 px-4 text-center text-xl">{renderValue(row.mt)}</td>
-                    <td className="py-3.5 px-4 text-center text-xl">{renderValue(row.tv)}</td>
-                    <td className="py-3.5 px-4 text-center text-xl">{renderValue(row.cap)}</td>
-                    <td className="py-3.5 px-4 text-center text-xl">{renderValue(row.ts)}</td>
-                    <td className="py-3.5 px-4 text-center text-xl">{renderValue(row.comp)}</td>
-                    <td className="py-3.5 px-4 text-center text-xl font-bold bg-gray-50/50 border-x-2 border-black last:border-b-2">
+                    <td className="py-4 px-4 text-2xl font-bold text-gray-900">{row.feature}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.mt)}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.tv)}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.cap)}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.ts)}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.comp)}</td>
+                    <td className="py-4 px-4 text-center text-3xl font-bold bg-gray-50/50 border-x-2 border-black last:border-b-2">
                       {renderValue(row.vibe, true)}
                     </td>
                   </tr>
@@ -110,13 +110,13 @@ export default function Slide9() {
             </table>
 
             {/* Legend */}
-            <div className="mt-6 text-sm tracking-wider text-gray-400 text-left font-medium uppercase">
+            <div className="mt-6 text-base tracking-wider text-gray-400 text-left font-medium uppercase">
               ✓ Core &middot; ◐ Partial &middot; &mdash; Not core
             </div>
           </div>
 
           {/* Bottom Takeaway */}
-          <SlideFooter className="max-w-7xl" delay={1.0}>
+          <SlideFooter className="w-full" delay={1.0}>
             VibeTrader&rsquo;s advantage is not another AI model. It is the intelligence accumulated across decisions, behavior, strategies, and changing markets.
           </SlideFooter>
         </motion.div>

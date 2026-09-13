@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import type { ReactNode } from 'react';
 
 type SlideFooterProps = {
-  /** Uppercase label above the copy. Pairs with the wordmark on distribution slides. */
+  /** Uppercase label set inline before the copy, so the bar stays one line tall. */
   eyebrow?: string;
   /** Show the VibeTrader wordmark and divider on the left. */
   brand?: boolean;
@@ -63,9 +63,9 @@ export function SlideFooter({
           <div className="h-14 w-px bg-gray-700 shrink-0" />
         </>
       )}
-      <div className={brand ? 'min-w-0' : undefined}>
+      <div className={`${brand ? 'min-w-0 ' : ''}${eyebrow ? 'flex items-baseline gap-6' : ''}`}>
         {eyebrow && (
-          <p className="text-sm uppercase tracking-widest text-gray-400 mb-1.5 font-semibold">{eyebrow}</p>
+          <p className="shrink-0 text-sm uppercase tracking-widest text-gray-400 font-semibold">{eyebrow}</p>
         )}
         {body}
       </div>
