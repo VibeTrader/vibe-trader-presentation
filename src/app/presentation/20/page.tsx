@@ -22,7 +22,7 @@ const rows = [
 ];
 
 export default function Slide20() {
-  const { prevSlide } = useSlideNavigation();
+  const { prevSlide, nextSlide } = useSlideNavigation();
 
   return (
     <div className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white">
@@ -84,6 +84,8 @@ export default function Slide20() {
 
       <button onClick={prevSlide} aria-label="Previous slide"
         className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black z-20">←</button>
+      <button onClick={nextSlide} aria-label="Next slide"
+        className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black z-20">→</button>
     </div>
   );
 }

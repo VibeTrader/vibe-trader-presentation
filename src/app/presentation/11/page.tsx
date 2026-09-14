@@ -8,16 +8,23 @@ import { GlobeWatermark } from '@/components/GlobeWatermark';
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 10;
 
-// Planning assumptions, not observed traction or market-research forecasts.
-// Count only separately billed app subscriptions; exclude bundled app access.
-const streams = [
-  { title: 'App subscriptions', detail: '20,000 standalone subscribers × $100/month', revenue: 20_000 * 100 * 12 },
-  { title: 'Premium strategy subscriptions', detail: '10,000 paid strategy subscriptions × $1,000/month', revenue: 10_000 * 1_000 * 12 },
-  { title: 'RIA strategy licensing', detail: '$10B allocated to our strategies × 0.40% annual fee', revenue: 10_000_000_000 * 0.004 },
-  { title: 'B2B FX transaction strategies', detail: '80 business clients × $200,000 annual contract', revenue: 80 * 200_000 },
+// Illustrative operating assumptions at each year-end, not validated forecasts.
+// App access bundled with a strategy is excluded from app subscriber counts.
+const plan = [
+  { year: 'Year 1', appUsers: 500, strategySubs: 400, strategyPrice: 500, riaAssets: 0, businessClients: 0, milestone: 'Forex launch', detail: 'App + strategy subscriptions' },
+  { year: 'Year 2', appUsers: 2000, strategySubs: 1000, strategyPrice: 800, riaAssets: 0, businessClients: 0, milestone: 'Futures + crypto', detail: 'Scale partner distribution' },
+  { year: 'Year 3', appUsers: 5000, strategySubs: 2500, strategyPrice: 1000, riaAssets: 750_000_000, businessClients: 5, milestone: 'Stocks + RIA pilots', detail: 'First paid corporate FX clients' },
+  { year: 'Year 4', appUsers: 10000, strategySubs: 5500, strategyPrice: 1000, riaAssets: 3_000_000_000, businessClients: 30, milestone: 'Options + institutional growth', detail: 'Expand strategy mandates' },
+  { year: 'Year 5', appUsers: 20000, strategySubs: 10000, strategyPrice: 1000, riaAssets: 10_000_000_000, businessClients: 80, milestone: 'Scale across markets', detail: 'Four established revenue streams' },
 ];
-const total = streams.reduce((sum, stream) => sum + stream.revenue, 0);
-const millions = (value: number) => `$${value / 1_000_000}M`;
+const streams = [
+  { title: 'App subscriptions', shade: '#a3a3a3', values: plan.map(p => p.appUsers * 100 * 12) },
+  { title: 'Premium strategies', shade: '#171717', values: plan.map(p => p.strategySubs * p.strategyPrice * 12) },
+  { title: 'RIA strategy licensing', shade: '#525252', values: plan.map(p => p.riaAssets * 0.004) },
+  { title: 'B2B FX strategies', shade: '#d4d4d4', values: plan.map(p => p.businessClients * 200_000) },
+];
+const totals = plan.map((_, i) => streams.reduce((sum, stream) => sum + stream.values[i], 0));
+const millions = (value: number) => value === 0 ? '—' : `$${Number((value / 1_000_000).toFixed(1))}M`;
 
 export default function Slide11() {
   const { nextSlide, prevSlide } = useSlideNavigation();
@@ -27,41 +34,41 @@ export default function Slide11() {
       <GlobeWatermark />
       <motion.main className="relative z-10 px-20 pt-16" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
         <div className="w-16 h-1.5 bg-black mb-5" />
-        <h1 className="text-6xl font-black tracking-tighter leading-tight">Financials</h1>
-        <p className="text-3xl text-gray-600 font-light mt-3">Four revenue streams across individual and institutional customers</p>
-
-        <div className="flex items-end gap-10 mt-8 mb-7">
-          <p className="text-[112px] font-black tracking-tighter leading-none">{millions(total)}</p>
-          <div className="pb-2">
-            <p className="text-2xl font-bold uppercase tracking-wide">Year 5 annualized revenue run rate</p>
-            <p className="text-2xl text-gray-600 mt-2">Illustrative target scenario · not a validated forecast</p>
+        <div className="flex items-end justify-between">
+          <div>
+            <h1 className="text-6xl font-black tracking-tighter leading-tight">Financials</h1>
+            <p className="text-3xl text-gray-600 font-light mt-3">Five-year growth plan</p>
+          </div>
+          <div className="text-right">
+            <p className="text-8xl font-black tracking-tighter">{millions(totals[4])}</p>
+            <p className="text-2xl text-gray-600 mt-2">Year 5 annualized revenue target</p>
           </div>
         </div>
 
-        <table className="w-full border-collapse text-left" aria-label="Illustrative Year 5 revenue assumptions">
-          <thead className="text-lg uppercase tracking-widest text-gray-500 border-b-2 border-black">
-            <tr><th className="pb-3 w-[35%]">Revenue stream</th><th className="pb-3">Year 5 assumption</th><th className="pb-3 text-right">Annualized revenue</th></tr>
-          </thead>
-          <tbody>
-            {streams.map((stream) => (
-              <tr key={stream.title} className="border-b border-gray-300">
-                <th scope="row" className="py-5 text-[28px] font-bold tracking-tight">{stream.title}</th>
-                <td className="py-5 text-[25px] text-gray-700">{stream.detail}</td>
-                <td className="py-5 text-right text-4xl font-black">{millions(stream.revenue)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="flex gap-10 mt-16" role="img" aria-label="Illustrative year-end annualized revenue: Year 1, 3 million; Year 2, 12 million; Year 3, 40 million; Year 4, 96 million; Year 5, 200 million dollars. Bar heights use a common linear scale.">
+          {plan.map((year, i) => (
+            <div key={year.year} className="flex-1 text-center">
+              <div className="h-[350px] flex flex-col justify-end items-center border-b border-gray-300">
+                <p className="text-4xl font-black mb-4">{millions(totals[i])}</p>
+                <div className="w-[150px] bg-black" style={{ height: `${totals[i] / totals[4] * 270}px` }} />
+              </div>
+              <p className="text-2xl font-bold mt-4">{year.year}</p>
+            </div>
+          ))}
+        </div>
 
-        <div className="mt-7 border-l-4 border-black pl-5">
-          <p className="text-xl uppercase tracking-widest font-bold mb-2">Expansion through Year 5</p>
-          <p className="text-[27px] text-gray-700">Forex → futures, crypto, stocks &amp; options · RIA strategy mandates · corporate FX execution &amp; hedging</p>
+        <div className="mt-14 border-t-2 border-black pt-6">
+          <p className="text-xl uppercase tracking-widest text-gray-500 mb-5">Year 5 revenue mix</p>
+          <div className="grid grid-cols-4 gap-10">
+            {streams.map(stream => (
+              <div key={stream.title}>
+                <p className="text-5xl font-black">{millions(stream.values[4])}</p>
+                <p className="text-[27px] text-gray-700 mt-3">{stream.title}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="mt-6 text-[20px] text-gray-600 leading-relaxed">
-          <p>Assumptions to validate: acquisition, retention, pricing and enterprise mandates. Strategy pricing assumes migration to the $1,000/month floor.</p>
-          <p>App revenue excludes bundled access. RIA fees apply only to allocated assets. Before partner commissions and operating costs.</p>
-          <p>Year-end run rate differs from revenue earned during Year 5; asset-based fees vary with allocations and market values.</p>
-        </div>
+        <p className="mt-12 text-xl text-gray-500">Illustrative targets, subject to validation. Year-end run rate, not revenue earned during the year.</p>
       </motion.main>
 
       {/* Navigation dots */}

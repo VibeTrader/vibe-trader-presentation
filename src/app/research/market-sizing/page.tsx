@@ -4,7 +4,7 @@ import { ResearchSearch } from '@/components/ResearchSearch';
 
 export const metadata: Metadata = {
   title: 'Market Sizing: Research | VibeTrader',
-  description: 'The sources behind the TAM, SAM and SOM figures on slide 5, and how far each one can be defended.',
+  description: 'The sources behind the TAM, SAM and target regions figures on slide 5, and how far each one can be defended.',
 };
 
 const questions = [
@@ -44,22 +44,19 @@ const questions = [
     ],
   },
   {
-    question: 'How is the 6.2M SOM derived?',
+    question: 'Which regions are we targeting?',
     answer:
-      'The SOM is the trader population of the three regions we serve first: roughly 3.2M in Asia-Pacific, 1.5M in North America and 1.5M in Europe. These regional counts trace back to BrokerNotes’ Modern Trader study, which counted 9.6M online traders worldwide and broke them out by region, including 3.2M in Asia and 1.5M in Europe.',
+      'MENA, North America, APAC and Europe. MENA outreach starts with Forex Expo, while North America is the intended first paid advertising market after funding.',
     context:
-      'This is the weakest input on the slide. The study dates from 2018, its regional counts derive from social platform audience data rather than broker records, and it counts online traders across asset classes rather than forex traders specifically. The North America figure of 1.5M appears in secondary summaries of that dataset but not in the published regional appendix we could retrieve. Aggregators that once cited the 9.6M headline now describe it as dated. Treat 6.2M as a directional split of the SAM across our launch regions, and expect a diligence question on it.',
-    sources: [
-      { label: 'BrokerNotes: The Modern Trader, a report on 9.6 million online traders (2018)', href: 'https://www.brokernotes.co/modern-trader' },
-      { label: 'BrokerNotes: Forex traders map, regional trader counts', href: 'https://www.brokernotes.co/forex-traders-map' },
-    ],
+      'These are target geographies, not a measured obtainable market. The former 6.2M estimate was removed because it relied on dated regional counts and did not reflect the current launch plan.',
+    sources: [],
   },
   {
-    question: 'What share of the 6.2M do you expect to capture?',
+    question: 'What is the three-year SOM target?',
     answer:
-      'The SOM states the reachable population, not a capture target. Capture is a planning assumption that belongs with the financials rather than the market slide: 1% of the 6.2M over one to three years would be 62,000 active users, and the revenue plan is built bottom-up from subscriptions and strategy subscriptions rather than from a share of this pool.',
+      'Our planning target is 100,000 users over three years across MENA, North America, APAC and Europe. This is an illustrative operating assumption, not a measured market size or a validated acquisition forecast.',
     context:
-      'Capture rate is not a finding, and no market-sizing source can supply it. It follows from a channel mix, a cost per acquisition and a conversion rate, all of which have to be defended on their own evidence. Read the 6.2M as the population our launch regions put within reach, and press on the acquisition plan for what we expect to convert from it.',
+      'The target needs validation against event leads, partner reach, advertising budgets, conversion and retention. Users are not necessarily active or paying customers; strategy subscriptions may also overlap with app users. The financial slide remains an illustrative planning scenario.',
     sources: [],
   },
   {
@@ -85,7 +82,7 @@ export default function MarketSizingResearchPage() {
           <p className="text-sm uppercase tracking-widest text-gray-500 mb-4">VibeTrader research</p>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-tight">How we sized the market</h1>
           <p className="mt-6 text-lg leading-relaxed text-gray-600">
-            The sources behind the TAM, SAM and SOM on slide 5, how each figure was derived, and where the evidence is
+            The sources behind the TAM, SAM and target regions on slide 5, how each figure was derived, and where the evidence is
             thinner than the number on the slide suggests.
           </p>
           <p className="mt-4 text-sm text-gray-500">Research reviewed September 9, 2026</p>

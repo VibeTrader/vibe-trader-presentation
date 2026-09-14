@@ -14,6 +14,7 @@ export default function Slide16() {
         <div className="w-16 h-1.5 bg-black mb-6" />
         <h1 className="text-6xl font-black tracking-tighter mb-12">FAQ</h1>
         <ul className="space-y-8 text-4xl font-light">
+          <li><Link href="/presentation/21" data-pdf-link="web" className="underline underline-offset-8 decoration-gray-300 hover:decoration-black">How will AI change investing and blur the line between trading and investing?</Link></li>
           <li><Link href="/presentation/20" data-pdf-link="web" className="underline underline-offset-8 decoration-gray-300 hover:decoration-black">How is VibeTrader different from Claude Code or Codex?</Link></li>
           <li><Link href="/presentation/17" data-pdf-link="web" className="underline underline-offset-8 decoration-gray-300 hover:decoration-black">If you have a winning strategy, why sell it?</Link></li>
           <li><Link href="/presentation/19" data-pdf-link="web" className="underline underline-offset-8 decoration-gray-300 hover:decoration-black">Jane Street lost $15B on AI bets. Could your system make a catastrophic mistake?</Link></li>

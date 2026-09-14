@@ -13,7 +13,7 @@ const ACTIVE = 4;
 const market = [
   { label: 'TAM', value: '370M', description: 'Global active self-directed traders across equities, crypto, FX and derivatives' },
   { label: 'SAM', value: '10–15M', description: 'Active retail forex and CFD traders worldwide, driving ~$242B in daily volume' },
-  { label: 'SOM', value: '6.2M', description: 'Active retail forex traders in our three launch regions: APAC, North America and Europe' },
+  { label: 'SOM TARGET', value: '100K', description: '3-year user target across MENA, North America, APAC and Europe. Planning assumption.' },
 ];
 
 export default function Slide4() {
