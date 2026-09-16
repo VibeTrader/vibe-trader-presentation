@@ -13,16 +13,16 @@ const ACTIVE = 3;
 
 const personas = [
   {
-    icon: User,
-    persona: 'Builder',
-    label: 'Self-directed',
-    detail: 'Trades their own ideas. Cannot tell which strategy fits today.',
-  },
-  {
     icon: ShieldCheck,
     persona: 'Subscriber',
     label: 'Wants it done',
     detail: 'Buys tested strategies. $100–$2,500 per month.',
+  },
+  {
+    icon: User,
+    persona: 'Builder',
+    label: 'Self-directed',
+    detail: 'Trades their own ideas. Cannot tell which strategy fits today.',
   },
   {
     icon: GraduationCap,
