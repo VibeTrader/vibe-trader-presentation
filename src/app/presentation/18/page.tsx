@@ -16,7 +16,7 @@ const reasons = [
   },
   {
     title: 'Different customer',
-    description: 'We serve retail forex traders: 2,300+ registered across 100+ countries. Those firms do not build tools for them.',
+    description: 'We serve retail forex traders: 2,300+ registered. Those firms do not build tools for them.',
   },
   {
     title: 'Different edge',

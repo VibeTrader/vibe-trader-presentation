@@ -106,7 +106,7 @@ export default function Slide4() {
           </div>
 
           <SlideFooter className="w-full mt-48" delay={1.0}>
-            <span className="font-bold">Direct / product-led base:</span> <span className="font-bold">2,300+</span> registered traders across 100+ countries on minimal ad spend · English · Spanish · Arabic
+            <span className="font-bold">Direct / product-led base:</span> <span className="font-bold">2,300+</span> registered traders on minimal ad spend · English · Spanish · Arabic
           </SlideFooter>
         </motion.div>
       </div>
