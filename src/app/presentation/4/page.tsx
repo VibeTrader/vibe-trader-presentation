@@ -3,7 +3,7 @@
 import { PRESENTATION_CONFIG } from '@/config/presentation';
 
 import { motion } from 'framer-motion';
-import { User, ShieldCheck, GraduationCap } from 'lucide-react';
+import { Wrench, ShieldCheck, Sparkles } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 import { SlideFooter } from '@/components/SlideFooter';
@@ -11,26 +11,28 @@ import { SlideFooter } from '@/components/SlideFooter';
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 3;
 
-const personas = [
+const modes = [
+  {
+    icon: Wrench,
+    mode: 'Build',
+    title: 'Build & Test Your Own Strategies',
+    detail: 'Turn a trading idea into a strategy, test it, and deploy it through supported broker accounts.',
+  },
   {
     icon: ShieldCheck,
-    persona: 'Subscriber',
-    label: 'Wants it done',
-    detail: 'Buys tested strategies. $100–$2,500 per month.',
+    mode: 'Subscribe',
+    title: 'Access Pre-Tested Strategies',
+    detail: 'Choose pre-tested strategies and subscribe based on account equity.',
   },
   {
-    icon: User,
-    persona: 'Builder',
-    label: 'Self-directed',
-    detail: 'Trades their own ideas. Cannot tell which strategy fits today.',
-  },
-  {
-    icon: GraduationCap,
-    persona: 'Learner',
-    label: 'Community-led',
-    detail: 'Arrives through an academy or IB. Still building discipline.',
+    icon: Sparkles,
+    mode: 'Understand',
+    title: 'AI Decision Intelligence',
+    detail: 'Understand market context, risk and what may matter before making a trading decision.',
   },
 ];
+
+const intelligence = ['Market Intelligence', 'Strategy Intelligence', 'Risk Intelligence', 'Trader Intelligence'];
 
 export default function Slide4() {
   const { nextSlide, prevSlide } = useSlideNavigation();
@@ -64,49 +66,55 @@ export default function Slide4() {
           />
 
           <motion.h1
-            className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight"
+            className="text-6xl font-black text-black mb-12 tracking-tighter leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Who We Serve
+            One Platform. Multiple Ways to Trade.
           </motion.h1>
 
-          <motion.p
-            className="text-3xl text-gray-600 mb-10 font-light max-w-4xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-          >
-            One problem. Three appetites for doing the work.
-          </motion.p>
-
           <div className="grid grid-cols-3 gap-6 mb-8">
-            {personas.map((p, i) => {
-              const Icon = p.icon;
+            {modes.map((m, i) => {
+              const Icon = m.icon;
               return (
                 <motion.div
-                  key={p.persona}
-                  className="border-2 border-gray-200 hover:border-black transition-colors p-7 group"
+                  key={m.mode}
+                  className="border-2 border-gray-200 hover:border-black transition-colors p-8 group"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
                 >
-                  <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors mb-4">
+                  <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors mb-5">
                     <Icon className="w-7 h-7" />
                   </div>
-                  <p className="text-5xl font-black text-black mb-2 leading-none tracking-tighter">
-                    {p.persona}
-                  </p>
-                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-3">{p.label}</p>
-                  <p className="text-lg text-gray-700 font-light leading-snug">{p.detail}</p>
+                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-2">{m.mode}</p>
+                  <p className="text-3xl font-black text-black mb-3 leading-tight tracking-tight">{m.title}</p>
+                  <p className="text-xl text-gray-700 font-light leading-snug">{m.detail}</p>
                 </motion.div>
               );
             })}
           </div>
 
-          <SlideFooter className="w-full mt-48" delay={1.0}>
-            <span className="font-bold">Direct / product-led base:</span> <span className="font-bold">2,300+</span> registered traders on minimal ad spend · English · Spanish · Arabic
+          <motion.div
+            className="flex items-center gap-6 border-2 border-black px-8 py-5 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.85, duration: 0.5 }}
+          >
+            <p className="shrink-0 text-sm uppercase tracking-widest text-gray-500 font-semibold">Intelligence layer</p>
+            <div className="flex flex-1 flex-wrap items-center justify-between gap-y-2 text-xl font-medium text-black">
+              {intelligence.map((item) => (
+                <div key={item} className="flex items-center gap-2.5">
+                  <span className="inline-block h-2 w-2 shrink-0 bg-black" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <SlideFooter className="w-full" delay={1.0}>
+            VibeTrader connects market understanding, strategy creation, pre-tested strategies and deployment in one platform.
           </SlideFooter>
         </motion.div>
       </div>
