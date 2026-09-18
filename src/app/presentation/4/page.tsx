@@ -3,7 +3,7 @@
 import { PRESENTATION_CONFIG } from '@/config/presentation';
 
 import { motion } from 'framer-motion';
-import { Wrench, ShieldCheck, Sparkles } from 'lucide-react';
+import { Users, Activity, Megaphone, Handshake } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 import { SlideFooter } from '@/components/SlideFooter';
@@ -11,28 +11,32 @@ import { SlideFooter } from '@/components/SlideFooter';
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 3;
 
-const modes = [
+const metrics = [
   {
-    icon: Wrench,
-    mode: 'Build',
-    title: 'Build & Test Your Own Strategies',
-    detail: 'Turn a trading idea into a strategy, test it, and deploy it through supported broker accounts.',
+    icon: Users,
+    value: '2,300+',
+    label: 'Registered traders',
+    detail: 'Signed up to the platform.',
   },
   {
-    icon: ShieldCheck,
-    mode: 'Subscribe',
-    title: 'Access Pre-Tested Strategies',
-    detail: 'Choose pre-tested strategies and subscribe based on account equity.',
+    icon: Activity,
+    value: '20',
+    label: 'Live accounts',
+    detail: 'Trading accounts running our strategies around the globe.',
   },
   {
-    icon: Sparkles,
-    mode: 'Understand',
-    title: 'AI Decision Intelligence',
-    detail: 'Understand market context, risk and what may matter before making a trading decision.',
+    icon: Megaphone,
+    value: '5',
+    label: 'Community leaders',
+    detail: 'Onboarded. Each is bringing 100+ paid strategy subscribers in the coming weeks.',
+  },
+  {
+    icon: Handshake,
+    value: '1',
+    label: 'Broker partnership',
+    detail: 'Active with Dupoin. Onboarding its traders now.',
   },
 ];
-
-const intelligence = ['Market Intelligence', 'Strategy Intelligence', 'Risk Intelligence', 'Trader Intelligence'];
 
 export default function Slide4() {
   const { nextSlide, prevSlide } = useSlideNavigation();
@@ -66,56 +70,55 @@ export default function Slide4() {
           />
 
           <motion.h1
-            className="text-6xl font-black text-black mb-12 tracking-tighter leading-tight"
+            className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            One Platform. Multiple Ways to Trade.
+            Traction
           </motion.h1>
 
-          <div className="grid grid-cols-3 gap-6 mb-8">
-            {modes.map((m, i) => {
+          <motion.p
+            className="text-3xl text-gray-600 mb-10 font-light max-w-5xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            Traders are signing up, strategies are live, and partners are bringing paying subscribers.
+          </motion.p>
+
+          <div className="grid grid-cols-4 gap-6 mb-10">
+            {metrics.map((m, i) => {
               const Icon = m.icon;
               return (
                 <motion.div
-                  key={m.mode}
+                  key={m.label}
                   className="border-2 border-gray-200 hover:border-black transition-colors p-8 group"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
                 >
-                  <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors mb-5">
+                  <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors mb-6">
                     <Icon className="w-7 h-7" />
                   </div>
-                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-2">{m.mode}</p>
-                  <p className="text-3xl font-black text-black mb-3 leading-tight tracking-tight">{m.title}</p>
+                  <p className="text-7xl font-black text-black mb-3 leading-none tracking-tighter">{m.value}</p>
+                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-3">{m.label}</p>
                   <p className="text-xl text-gray-700 font-light leading-snug">{m.detail}</p>
                 </motion.div>
               );
             })}
           </div>
 
-          <motion.div
-            className="flex items-center gap-6 border-2 border-black px-8 py-5 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.85, duration: 0.5 }}
-          >
-            <p className="shrink-0 text-sm uppercase tracking-widest text-gray-500 font-semibold">Intelligence layer</p>
-            <div className="flex flex-1 flex-wrap items-center justify-between gap-y-2 text-xl font-medium text-black">
-              {intelligence.map((item) => (
-                <div key={item} className="flex items-center gap-2.5">
-                  <span className="inline-block h-2 w-2 shrink-0 bg-black" />
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <SlideFooter className="w-full" delay={1.0}>
-            VibeTrader connects market understanding, strategy creation, pre-tested strategies and deployment in one platform.
-          </SlideFooter>
+          <SlideFooter
+            className="w-full"
+            eyebrow="How we grow"
+            items={[
+              'Direct: product-led sign-ups',
+              'Communities: 500+ paid subscribers in onboarding',
+              'Brokers: Dupoin live, more to follow',
+            ]}
+            delay={1.0}
+          />
         </motion.div>
       </div>
 
