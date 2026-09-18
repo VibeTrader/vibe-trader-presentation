@@ -11,20 +11,20 @@ const ACTIVE = 17;
 
 const reasons = [
   {
-    title: 'Different game',
-    description: 'Citadel and Jane Street make markets and trade at institutional scale, with billions in capital and custom infrastructure.',
+    title: 'Subscriptions scale with traders',
+    description: 'Trading our own account grows only with our own capital. Falcon subscriptions, $100–$2,500 per month, grow with every trader who joins.',
   },
   {
-    title: 'Different customer',
-    description: 'We serve retail forex traders: 2,300+ registered. Those firms do not build tools for them.',
+    title: 'Recurring revenue, not trading risk',
+    description: 'Monthly subscription revenue is predictable. Trading returns swing with every drawdown.',
   },
   {
-    title: 'Different edge',
-    description: 'Our advantage is not a better model. It is the intelligence accumulated across traders’ decisions, behavior, strategies, and changing markets, backed by 50+ years of combined forex experience.',
+    title: 'Falcon proves the platform',
+    description: 'Falcon shows VibeTrader can produce strategies validated on live accounts. The business is the platform that builds, tests, and runs them for many traders.',
   },
 ];
 
-export default function Slide18() {
+export default function Slide17() {
   const { prevSlide, nextSlide } = useSlideNavigation();
 
   return (
@@ -39,9 +39,9 @@ export default function Slide18() {
       >
         <div className="w-16 h-1.5 bg-black mb-6" />
         <h1 className="text-6xl font-black text-black mb-6 tracking-tighter leading-tight">
-          FAQ: Are You Better Than Citadel or Jane Street?
+          FAQ: If You Have a Winning Strategy, Why Sell It?
         </h1>
-        <p className="text-4xl font-light text-gray-700">We are not competing with them.</p>
+        <p className="text-4xl font-light text-gray-700">Because selling it is the bigger business.</p>
 
         <ul className="mt-16 max-w-6xl list-disc pl-8 space-y-10 text-3xl text-gray-700 leading-relaxed marker:text-black">
           {reasons.map((reason, i) => (
@@ -58,13 +58,13 @@ export default function Slide18() {
         </ul>
 
         <p className="mt-12 text-3xl text-black">
-          <span className="font-bold">Think Formula 1 vs. Toyota:</span>{' '}
-          <span className="font-light">F1 teams have the best engineers in the world. They don’t sell cars to commuters. Toyota does.</span>
+          <span className="font-bold">Think hedge funds:</span>{' '}
+          <span className="font-light">great traders don’t just trade their own savings. They start funds, because other people’s capital is the bigger business.</span>
         </p>
       </motion.div>
 
       <Link
-        href="/presentation/13"
+        href="/presentation/14"
         onClick={(e) => e.stopPropagation()}
         className="absolute bottom-8 left-20 z-30 text-xl underline underline-offset-4"
       >Back to FAQ</Link>
