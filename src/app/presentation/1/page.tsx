@@ -60,16 +60,26 @@ export default function Slide1() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
         >
-          We are building an AI trading harness
+          AI Decision Intelligence for Trading
         </motion.p>
 
         <motion.p
-          className="mb-12 text-2xl text-gray-500 font-light italic"
+          className="mb-10 text-2xl text-gray-500 font-light italic leading-snug"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          Build, test and run trading strategies in one system that keeps learning as markets change.
+          Helping traders understand markets, build or access strategies, and make better trading decisions as conditions change.
+        </motion.p>
+
+        <motion.p
+          className="mb-12 text-2xl font-semibold text-black"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55, duration: 0.8 }}
+        >
+          2,300+ registered traders <span className="text-gray-400 font-normal">•</span> 100+ countries{' '}
+          <span className="text-gray-400 font-normal">•</span> 2 live B2B pilots
         </motion.p>
 
         <motion.div
@@ -79,10 +89,8 @@ export default function Slide1() {
           transition={{ delay: 0.6, duration: 0.8 }}
         >
           <p className="text-xl uppercase tracking-[0.3em] text-gray-500 mb-3">Presented by</p>
-          <p className="text-2xl text-gray-800 font-light">
-            Saranya Amirthalingam <span className="text-gray-400">·</span> CEO
-          </p>
-          <p className="text-xl text-gray-500 font-light">VibeTrader, Inc.</p>
+          <p className="text-2xl text-gray-800 font-light">Saranya Amirthalingam</p>
+          <p className="text-xl text-gray-500 font-light">CEO &amp; Co-Founder, VibeTrader</p>
         </motion.div>
 
         <motion.div
