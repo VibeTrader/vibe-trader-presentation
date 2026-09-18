@@ -2,7 +2,6 @@
 
 import { PRESENTATION_CONFIG } from '@/config/presentation';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
@@ -11,8 +10,8 @@ import { GlobeWatermark } from '@/components/GlobeWatermark';
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 14;
 
-export default function Slide17() {
-  const { prevSlide, nextSlide } = useSlideNavigation();
+export default function Slide18() {
+  const { prevSlide } = useSlideNavigation();
 
   return (
     <div
@@ -47,58 +46,40 @@ export default function Slide17() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            FAQ: How Is VibeTrader Different?
+            FAQ: Can We See the Product?
           </motion.h1>
 
-          <div className="flex items-center gap-16 mt-16">
-            <ul className="flex-1 list-disc pl-8 space-y-10 text-2xl text-gray-700 leading-relaxed marker:text-black">
-              {[
-                {
-                  title: 'Ready to test',
-                  description: 'A built-in trading environment to test strategies immediately.',
-                },
-                {
-                  title: 'Rules + AI',
-                  description: 'Combine fixed trading rules with AI-powered decisions.',
-                },
-                {
-                  title: 'Event-driven trading',
-                  description: 'Build strategies that react to celebrity tweets, breaking news, and economic calendar events.',
-                },
-              ].map((feature, i) => (
-                <motion.li
-                  key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
-                >
-                  <span className="font-bold text-black">{feature.title}:</span>{' '}
-                  <span className="font-light">{feature.description}</span>
-                </motion.li>
-              ))}
-            </ul>
-          <motion.div
-            className="relative w-[1000px] shrink-0 aspect-video overflow-hidden"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.7 }}
+          <motion.p
+            className="text-3xl text-gray-600 mb-10 font-light max-w-4xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
           >
-            <Image
-              src="/event-workflow.png"
-              alt="Illustrative event-driven trading workflow: an event passes through AI and fixed rules before a trade."
-              fill
-              sizes="1000px"
-              className="object-contain"
-              priority
+            See how VibeTrader helps traders make smarter decisions in real time.
+          </motion.p>
+
+          <motion.div
+            className="mb-8 max-w-5xl aspect-video border border-gray-200 bg-black rounded-lg overflow-hidden relative shadow-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.6 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <video
+              src="/100.mp4"
+              className="w-full h-full object-contain"
+              controls
+              autoPlay
+              loop
+              muted
+              playsInline
             />
           </motion.div>
-          </div>
-
         </motion.div>
       </div>
 
       <Link
-        href="/presentation/14"
+        href="/presentation/13"
         onClick={(e) => e.stopPropagation()}
         className="absolute bottom-8 left-20 z-30 text-xl underline underline-offset-4"
       >Back to FAQ</Link>
@@ -127,8 +108,7 @@ export default function Slide17() {
       >
         ←
       </button>
-      <button onClick={nextSlide} aria-label="Next slide: Demo"
-        className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black z-20">→</button>
+
     </div>
   );
 }

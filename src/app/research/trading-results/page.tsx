@@ -3,7 +3,7 @@ import { monthlyResults, myfxbookUrl, resultGroups, resultsPdf } from '@/data/tr
 
 export default function TradingResultsEvidence() {
   return <main className="min-h-screen bg-white text-black p-10"><article className="max-w-5xl mx-auto">
-    <Link href="/presentation/17" className="underline">Back to trading-results slide</Link>
+    <Link href="/presentation/16" className="underline">Back to trading-results slide</Link>
     <h1 className="text-5xl font-bold mt-10 mb-4">Falcon: captured trading statistics</h1>
     <p className="text-xl mb-6">Falcon is listed on Myfxbook as AI ORO GOLD X9. Transcribed from the user-supplied Myfxbook PDF captured September 10, 2026. These are historical snapshot values, not a live feed.</p>
     <p className="mb-6">The PDF contains summary statistics, not individual trade-history rows. Open trades and lots are private. Trading privileges show a check mark; track record and live update show warning icons. No independent verification is implied. Past performance does not guarantee future results.</p>

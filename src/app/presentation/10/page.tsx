@@ -54,7 +54,7 @@ export default function Slide10() {
             <p className="text-[27px] text-gray-700 leading-tight">Stronger than demand for the app alone</p>
           </div>
           <div className="h-[148px] border-[3px] border-gray-400 rounded-xl px-6 flex items-center mb-6">
-            <Link href="/presentation/17" onClick={(event) => event.stopPropagation()} onPointerDown={(event) => event.stopPropagation()} className="block underline decoration-gray-300 underline-offset-4 hover:decoration-black"><h3 className="text-[32px] font-bold leading-tight">8–9 months<br />profitable live results</h3><span className="text-lg text-gray-600">View Falcon results · Slide 17 →</span></Link>
+            <Link href="/presentation/16" onClick={(event) => event.stopPropagation()} onPointerDown={(event) => event.stopPropagation()} className="block underline decoration-gray-300 underline-offset-4 hover:decoration-black"><h3 className="text-[32px] font-bold leading-tight">8–9 months<br />profitable live results</h3><span className="text-lg text-gray-600">View Falcon results · Slide 16 →</span></Link>
           </div>
           <div className="h-[148px] border-[3px] border-gray-400 rounded-xl px-6 py-6">
             <h3 className="text-[31px] font-bold leading-tight mb-2">$100–$2,500/month</h3>
