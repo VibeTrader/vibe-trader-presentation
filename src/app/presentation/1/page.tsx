@@ -60,7 +60,7 @@ export default function Slide1() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
         >
-          AI Decision Intelligence for Trading
+          AI Harness for Trading
         </motion.p>
 
         <motion.p
