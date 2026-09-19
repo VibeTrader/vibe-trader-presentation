@@ -6,16 +6,39 @@ import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 import { SlideFooter } from '@/components/SlideFooter';
+import { FlaskConical, LineChart, ShieldCheck } from 'lucide-react';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 2;
+
+// Each pillar answers one of the questions on slide 2's problem card, in order.
+const pillars = [
+  {
+    Icon: FlaskConical,
+    label: 'Build & test',
+    answers: 'Will this strategy work?',
+    description: 'Describe a strategy in plain words. Test it on years of market history, then deploy.',
+  },
+  {
+    Icon: LineChart,
+    label: 'Understand',
+    answers: 'Is it still working in today’s market?',
+    description: 'Ask AI what is moving your market, from rate decisions to CPI releases, before you trade.',
+  },
+  {
+    Icon: ShieldCheck,
+    label: 'Subscribe',
+    answers: 'Can I trust this?',
+    description: 'Falcon pre-tested strategies, with live results you can check.',
+  },
+];
 
 export default function Slide3() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
     <div
-      className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white"
+      className="relative flex h-full w-full items-start pt-28 overflow-hidden bg-white"
       onClick={nextSlide}
     >
       <div
@@ -47,40 +70,43 @@ export default function Slide3() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            From Trading Ideas to Informed Action
+            Tested strategies, not promises
           </motion.h1>
 
-          <div className="flex items-center gap-16 mt-10 mb-10">
-            <div className="flex-1 space-y-16">
-            {[
-              {
-                label: 'Build and test',
-                description: 'Turning a trading idea into something you can test and deploy requires technical work.',
-                dir: -1,
-              },
-              {
-                label: 'Understand the market',
-                description: 'Charts and news provide information, but interpreting what matters takes time.',
-                dir: 1,
-              },
-            ].map((group) => (
-              <motion.div
-                key={group.label}
-                initial={{ opacity: 0, x: 20 * group.dir }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-              >
-                <h2 className="text-3xl font-bold text-black mb-8">
-                  {group.label}
-                </h2>
-                <p className="text-2xl text-gray-800 font-light leading-relaxed">
-                  {group.description}
-                </p>
-              </motion.div>
-            ))}
+          <motion.p
+            className="text-3xl text-gray-700 font-light leading-snug"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            Build, test or subscribe, with proof before you risk money.
+          </motion.p>
+
+          <div className="flex items-center gap-16 mt-12 mb-12">
+            <div className="flex-1 min-w-0 space-y-10">
+              {pillars.map(({ Icon, label, answers, description }, i) => (
+                <motion.div
+                  key={label}
+                  className="flex gap-6"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 + i * 0.15, duration: 0.6 }}
+                >
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center bg-black text-white">
+                    <Icon className="h-8 w-8" strokeWidth={1.75} />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="mb-2 flex flex-wrap items-baseline gap-x-4">
+                      <h2 className="text-3xl font-bold text-black">{label}</h2>
+                      <p className="text-lg italic text-gray-500">Answers: {answers}</p>
+                    </div>
+                    <p className="text-2xl text-gray-700 font-light leading-snug">{description}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
             <motion.div
-              className="w-[1100px] shrink-0 aspect-video overflow-hidden"
+              className="w-225 shrink-0 aspect-video overflow-hidden"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.7 }}
@@ -89,7 +115,7 @@ export default function Slide3() {
               <video
                 src="/slide_2_V2.mp4"
                 className="w-full h-full object-contain"
-                aria-label="VibeTrader strategy building and trading insights video"
+                aria-label="VibeTrader demo: describe a strategy, test it on market history, publish it"
                 autoPlay
                 loop
                 muted
@@ -99,7 +125,7 @@ export default function Slide3() {
           </div>
 
           <SlideFooter className="w-full" delay={1.0}>
-            VibeTrader combines <span className="font-bold">AI-powered strategy building</span> with <span className="font-bold">AI insights for trading.</span>
+            Traders know what works, and why, <span className="font-bold">before they trade.</span>
           </SlideFooter>
         </motion.div>
       </div>

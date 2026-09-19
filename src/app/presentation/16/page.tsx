@@ -1,59 +1,84 @@
 'use client';
 
 import Link from 'next/link';
-import { monthlyResults, myfxbookUrl } from '@/data/trading-results';
+import { motion } from 'framer-motion';
+import { PRESENTATION_CONFIG } from '@/config/presentation';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
+import { GlobeWatermark } from '@/components/GlobeWatermark';
 
-export default function TradingResultsSlide() {
-  const { totalSlides, prevSlide, nextSlide } = useSlideNavigation();
+const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
+const ACTIVE = 15;
+
+const reasons = [
+  {
+    title: 'Subscriptions scale with traders',
+    description: 'Trading our own account grows only with our own capital. Falcon subscriptions, $100–$2,500 per month, grow with every trader who joins.',
+  },
+  {
+    title: 'Recurring revenue, not trading risk',
+    description: 'Monthly subscription revenue is predictable. Trading returns swing with every drawdown.',
+  },
+  {
+    title: 'Falcon proves the platform',
+    description: 'Falcon shows VibeTrader can produce strategies validated on live accounts. The business is the platform that builds, tests, and runs them for many traders.',
+  },
+];
+
+export default function Slide17() {
+  const { prevSlide, nextSlide } = useSlideNavigation();
+
   return (
-    <div className="relative h-full w-full bg-white px-20 pt-16 text-black overflow-hidden">
-      
-      <h1 className="text-[88px] font-black tracking-tighter leading-none">Falcon</h1>
-      <p className="text-4xl text-gray-600 mt-3">Live trading results</p>
+    <div className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white">
+      <GlobeWatermark />
 
-      <div className="grid grid-cols-3 gap-10 border-b border-gray-300 py-7 mt-8">
-        {[
-          ['+461.95%', 'Reported gain'], ['24.77%', 'Drawdown'], ['77%', 'Win rate'],
-        ].map(([value, label]) => <div key={label}><p className="text-7xl font-black tracking-tight">{value}</p><p className="text-xl text-gray-600 mt-2">{label}</p></div>)}
+      <motion.div
+        className="relative z-10 px-20 w-full"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+      >
+        <div className="w-16 h-1.5 bg-black mb-6" />
+        <h1 className="text-6xl font-black text-black mb-6 tracking-tighter leading-tight">
+          FAQ: If You Have a Winning Strategy, Why Sell It?
+        </h1>
+        <p className="text-4xl font-light text-gray-700">Because selling it is the bigger business.</p>
+
+        <ul className="mt-16 max-w-6xl list-disc pl-8 space-y-10 text-3xl text-gray-700 leading-relaxed marker:text-black">
+          {reasons.map((reason, i) => (
+            <motion.li
+              key={reason.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
+            >
+              <span className="font-bold text-black">{reason.title}:</span>{' '}
+              <span className="font-light">{reason.description}</span>
+            </motion.li>
+          ))}
+        </ul>
+
+        <p className="mt-12 text-3xl text-black">
+          <span className="font-bold">Think hedge funds:</span>{' '}
+          <span className="font-light">great traders don’t just trade their own savings. They start funds, because other people’s capital is the bigger business.</span>
+        </p>
+      </motion.div>
+
+      <Link
+        href="/presentation/12"
+        onClick={(e) => e.stopPropagation()}
+        className="absolute bottom-8 left-20 z-30 text-xl underline underline-offset-4"
+      >Back to FAQ</Link>
+
+      <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
+        {[...Array(TOTAL_SLIDES)].map((_, i) => (
+          <div key={i} className={`h-2 rounded-full ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'}`} />
+        ))}
       </div>
 
-      <div className="grid grid-cols-[2.2fr_1fr] gap-16 mt-8">
-        <section>
-          <h2 className="text-3xl font-bold">Monthly gain, January–July 2026</h2>
-          <div className="relative h-[340px] mt-4" role="img" aria-label={monthlyResults.map(m => `${m.month} ${m.gain}%`).join(', ')}>
-            <div className="absolute top-[235px] w-full border-t border-gray-400" />
-            <div className="flex h-full justify-around">
-              {monthlyResults.map(({month, gain}) => {
-                const height = Math.abs(gain) * 3.3;
-                return <div key={month} className="relative w-[105px] text-center">
-                  <span className="absolute left-0 w-full text-xl font-bold" style={{top: gain >= 0 ? 235 - height - 34 : 235 + height + 6}}>{gain > 0 ? '+' : ''}{gain.toFixed(2)}%</span>
-                  <div className={gain >= 0 ? 'absolute bg-emerald-500 left-5 right-5' : 'absolute bg-red-700 left-5 right-5'} style={{top: gain >= 0 ? 235 - height : 235, height}} />
-                  <span className="absolute bottom-0 left-0 w-full text-xl text-gray-600">{month}</span>
-                </div>;
-              })}
-            </div>
-          </div>
-        </section>
-        <section className="border-l border-gray-300 pl-12 pt-4">
-          <p className="text-6xl font-black tracking-tight">+81.70%</p>
-          <h2 className="text-2xl text-gray-600 mt-3">Absolute gain</h2>
-          <p className="text-6xl font-black tracking-tight mt-12">27.89%</p>
-          <p className="text-2xl text-gray-600 mt-3">Monthly rate reported by Myfxbook</p>
-        </section>
-      </div>
-
-      <div className="mt-10 text-lg text-gray-500 leading-relaxed">
-        <p>Source: Myfxbook account “AI ORO GOLD X9”. PDF captured Sep 10, 2026; last update shown Aug 21.</p>
-        <p>Track record and live update show warning icons. Past performance does not guarantee future results.</p>
-      </div>
-      <div className="flex gap-10 mt-5 text-2xl underline underline-offset-4">
-        <a href={myfxbookUrl} target="_blank" rel="noopener noreferrer">Open Myfxbook account ↗</a>
-      </div>
-      <div className="absolute bottom-8 left-20 flex gap-8 text-xl underline underline-offset-4"><Link href="/presentation/13">Back to FAQ</Link><Link href="/presentation/10">Back to investment slide</Link></div>
-      <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-2">{Array.from({length:totalSlides},(_,i)=><div key={i} className={`h-2 rounded-full ${i===15?'w-8 bg-black':'w-2 bg-gray-300'}`} />)}</div>
-      <button onClick={prevSlide} aria-label="Previous slide" className="absolute left-8 top-1/2 text-gray-400">←</button>
-      <button onClick={nextSlide} aria-label="Next slide" className="absolute right-8 top-1/2 text-gray-400">→</button>
+      <button onClick={prevSlide} aria-label="Previous slide"
+        className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black z-20">←</button>
+      <button onClick={nextSlide} aria-label="Next slide"
+        className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black z-20">→</button>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { PRESENTATION_CONFIG } from '@/config/presentation';
+
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
@@ -8,88 +9,122 @@ import { GlobeWatermark } from '@/components/GlobeWatermark';
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 10;
 
-// Illustrative operating assumptions at each year-end, not validated forecasts.
-// App access bundled with a strategy is excluded from app subscriber counts.
-const plan = [
-  { year: 'Year 1', appUsers: 500, strategySubs: 400, strategyPrice: 500, riaAssets: 0, businessClients: 0, milestone: 'Forex launch', detail: 'App + strategy subscriptions' },
-  { year: 'Year 2', appUsers: 2000, strategySubs: 1000, strategyPrice: 800, riaAssets: 0, businessClients: 0, milestone: 'Futures + crypto', detail: 'Scale partner distribution' },
-  { year: 'Year 3', appUsers: 5000, strategySubs: 2500, strategyPrice: 1000, riaAssets: 750_000_000, businessClients: 5, milestone: 'Stocks + RIA pilots', detail: 'First paid corporate FX clients' },
-  { year: 'Year 4', appUsers: 10000, strategySubs: 5500, strategyPrice: 1000, riaAssets: 3_000_000_000, businessClients: 30, milestone: 'Options + institutional growth', detail: 'Expand strategy mandates' },
-  { year: 'Year 5', appUsers: 20000, strategySubs: 10000, strategyPrice: 1000, riaAssets: 10_000_000_000, businessClients: 80, milestone: 'Scale across markets', detail: 'Four established revenue streams' },
+const exitPath = [
+  'Build the global decision intelligence platform for retail trading',
+  'Potential strategic acquisition by major brokers, trading platforms, or fintech leaders',
 ];
-const streams = [
-  { title: 'App subscriptions', shade: '#a3a3a3', values: plan.map(p => p.appUsers * 100 * 12) },
-  { title: 'Premium strategies', shade: '#171717', values: plan.map(p => p.strategySubs * p.strategyPrice * 12) },
-  { title: 'RIA strategy licensing', shade: '#525252', values: plan.map(p => p.riaAssets * 0.004) },
-  { title: 'B2B FX strategies', shade: '#d4d4d4', values: plan.map(p => p.businessClients * 200_000) },
-];
-const totals = plan.map((_, i) => streams.reduce((sum, stream) => sum + stream.values[i], 0));
-const millions = (value: number) => value === 0 ? '—' : `$${Number((value / 1_000_000).toFixed(1))}M`;
 
-export default function Slide11() {
-  const { nextSlide, prevSlide } = useSlideNavigation();
+export default function Slide12() {
+  const { prevSlide, nextSlide } = useSlideNavigation();
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-white text-black" onClick={nextSlide}>
+    <div className="relative flex h-full w-full items-start pt-24 overflow-hidden bg-white">
+      <div
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
+          backgroundSize: '20px 20px',
+        }}
+      />
+
       <GlobeWatermark />
-      <motion.main className="relative z-10 px-20 pt-16" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
-        <div className="w-16 h-1.5 bg-black mb-5" />
-        <div className="flex items-end justify-between">
-          <div>
-            <h1 className="text-6xl font-black tracking-tighter leading-tight">Financials</h1>
-            <p className="text-3xl text-gray-600 font-light mt-3">Five-year growth plan</p>
-          </div>
-          <div className="text-right">
-            <p className="text-8xl font-black tracking-tighter">{millions(totals[4])}</p>
-            <p className="text-2xl text-gray-600 mt-2">Year 5 annualized revenue target</p>
-          </div>
-        </div>
 
-        <div className="flex gap-10 mt-16" role="img" aria-label="Illustrative year-end annualized revenue: Year 1, 3 million; Year 2, 12 million; Year 3, 40 million; Year 4, 96 million; Year 5, 200 million dollars. Bar heights use a common linear scale.">
-          {plan.map((year, i) => (
-            <div key={year.year} className="flex-1 text-center">
-              <div className="h-[350px] flex flex-col justify-end items-center border-b border-gray-300">
-                <p className="text-4xl font-black mb-4">{millions(totals[i])}</p>
-                <div className="w-[150px] bg-black" style={{ height: `${totals[i] / totals[4] * 270}px` }} />
-              </div>
-              <p className="text-2xl font-bold mt-4">{year.year}</p>
+      <motion.div
+        className="relative z-10 px-20 w-full"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+      >
+        <div className="w-16 h-1.5 bg-black mb-6" />
+        <h1 className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight">
+          Offer &amp; Long-Term Opportunity
+        </h1>
+        <p className="text-3xl text-gray-600 font-light mb-12">
+          Join us in building the intelligence layer for global retail trading.
+        </p>
+
+        <div className="grid grid-cols-2 gap-12">
+          <motion.section
+            aria-label="Investment offer"
+            className="flex h-130 flex-col rounded-xl bg-black p-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            <span className="self-start bg-white px-3 py-1 font-mono text-lg font-bold uppercase tracking-[0.2em] text-black">
+              Investment offer
+            </span>
+            <p className="flex flex-1 items-center text-[132px] font-black leading-none tracking-tight text-white">
+              $1M SAFE
+            </p>
+          </motion.section>
+
+          <motion.section
+            aria-labelledby="exit-heading"
+            className="flex h-130 flex-col rounded-xl border-2 border-gray-200 bg-white p-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.6 }}
+          >
+            <span className="self-start bg-black px-3 py-1 font-mono text-lg font-bold uppercase tracking-[0.2em] text-white">
+              Long-term path
+            </span>
+            <h2 id="exit-heading" className="mt-5 text-4xl font-black tracking-tight text-black">
+              Strategic Exit &amp; Growth
+            </h2>
+            <ul className="mt-5 mb-8 space-y-4 text-2xl font-light leading-snug text-gray-700">
+              {exitPath.map((item) => (
+                <li key={item} className="flex gap-4">
+                  <span aria-hidden="true" className="mt-2.5 h-3 w-3 shrink-0 bg-black" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-auto border-t border-gray-200 pt-6">
+              <p className="font-mono text-base uppercase tracking-[0.2em] text-gray-400">Vision statement</p>
+              <p className="mt-3 text-[26px] font-black leading-snug text-black">
+                Give everyone the financial intelligence to move forward—and, in doing so, move the global economy forward.
+              </p>
             </div>
-          ))}
+          </motion.section>
         </div>
 
-        <div className="mt-14 border-t-2 border-black pt-6">
-          <p className="text-xl uppercase tracking-widest text-gray-500 mb-5">Year 5 revenue mix</p>
-          <div className="grid grid-cols-4 gap-10">
-            {streams.map(stream => (
-              <div key={stream.title}>
-                <p className="text-5xl font-black">{millions(stream.values[4])}</p>
-                <p className="text-[27px] text-gray-700 mt-3">{stream.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <p className="mt-12 text-xl text-gray-500">Illustrative targets, subject to validation. Year-end run rate, not revenue earned during the year.</p>
-      </motion.main>
+        <motion.div
+          className="mt-8 flex items-center justify-between rounded-xl border-2 border-gray-200 bg-gray-50 px-8 py-5"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+        >
+          <p className="text-2xl">
+            <span className="font-black text-black">Saranya Amirthalingam</span>
+            <span className="text-gray-500 font-light"> · CEO, VibeTrader</span>
+          </p>
+          <a
+            href="https://vibetrader.com"
+            onClick={(e) => e.stopPropagation()}
+            className="font-mono text-2xl font-bold text-black hover:underline"
+          >
+            vibetrader.com
+          </a>
+        </motion.div>
+      </motion.div>
 
-      {/* Navigation dots */}
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
-          <motion.div
-            key={i + 1}
-            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'} rounded-full`}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.8 + i * 0.03 }}
-          />
+          <div key={i} className={`h-2 rounded-full ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'}`} />
         ))}
       </div>
 
-      <button onClick={(e) => { e.stopPropagation(); prevSlide(); }}
+      <button
+        onClick={prevSlide}
         className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
-        aria-label="Previous slide">←</button>
-      <button onClick={(e) => { e.stopPropagation(); nextSlide(); }}
+        aria-label="Previous slide"
+      >←</button>
+      <button
+        onClick={nextSlide}
         className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
-        aria-label="Next slide">→</button>
+        aria-label="Next slide: FAQ"
+      >→</button>
     </div>
   );
 }

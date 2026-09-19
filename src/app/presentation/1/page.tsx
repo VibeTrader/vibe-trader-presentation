@@ -69,7 +69,10 @@ export default function Slide1() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          Helping traders understand markets, build or access strategies, and make better trading decisions as conditions change.
+          Traders already ask AI what to trade. Few trust the answer.{' '}
+          <span className="not-italic font-normal text-black">
+            We make AI trading decisions tested, risk-controlled and accountable.
+          </span>
         </motion.p>
 
         <motion.p
@@ -78,8 +81,8 @@ export default function Slide1() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55, duration: 0.8 }}
         >
-          2,300+ registered traders <span className="text-gray-400 font-normal">•</span> 100+ countries{' '}
-          <span className="text-gray-400 font-normal">•</span> 2 live B2B pilots
+          2,300+ traders <span className="text-gray-400 font-normal">•</span> Live broker partner{' '}
+          <span className="text-gray-400 font-normal">•</span> Falcon strategies live
         </motion.p>
 
         <motion.div

@@ -10,25 +10,25 @@ import { SlideFooter } from '@/components/SlideFooter';
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 8;
 
-const ceo = [
-  { text: 'Product strategy, partnerships, and fundraising', style: { paddingBottom: '20px' } },
-  { text: 'Built broker and academy partnerships', style: { paddingBottom: '20px' } },
-  { text: '2,300+ traders · 2 live B2B pilots', style: { paddingBottom: '0px' } },
+const rows = [
+  { feature: 'Market Analysis', mt: '✓', tv: '✓', cap: '✓', ts: '✓', comp: '◐', vibe: '✓' },
+  { feature: 'Strategy Building & Testing', mt: '✓', tv: '✓', cap: '✓', ts: '✓', comp: '✓', vibe: '✓' },
+  { feature: 'Trade Automation', mt: '✓', tv: '◐', cap: '✓', ts: '✓', comp: '✓', vibe: '✓' },
+  { feature: 'Trader Decision Memory', mt: '—', tv: '—', cap: '—', ts: '—', comp: '—', vibe: '✓' },
+  { feature: 'Adaptive Intelligence', mt: '—', tv: '—', cap: '◐', ts: '◐', comp: '◐', vibe: '✓' },
 ];
 
-const cto = [
-  { text: 'Former Amazon engineer', style: { paddingBottom: '20px' } },
-  { text: '15+ years in AI and cloud infrastructure', style: { paddingBottom: '20px' } },
-  { text: 'Built VibeTrader\'s AI platform and MT4/MT5 integrations', style: { paddingBottom: '0px' } },
-];
+const renderValue = (val: string, isVibe = false) => {
+  if (val === '✓') {
+    return <span className={`${isVibe ? 'text-black font-black' : 'text-gray-800 font-semibold'}`}>✓</span>;
+  }
+  if (val === '◐') {
+    return <span className="text-gray-500 font-normal">◐</span>;
+  }
+  return <span className="text-gray-300 font-light">—</span>;
+};
 
-const advisor = [
-  { text: '50+ years combined Forex experience', style: { paddingBottom: '20px' } },
-  { text: 'Built alongside active retail traders', style: { paddingBottom: '20px' } },
-  { text: 'Continuous real-market validation', style: { paddingBottom: '0px' } },
-];
-
-export default function Slide11() {
+export default function Slide9() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
@@ -52,6 +52,7 @@ export default function Slide11() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
+          {/* Header Line */}
           <motion.div
             className="w-16 h-1.5 bg-black mb-6"
             initial={{ width: 0 }}
@@ -60,176 +61,73 @@ export default function Slide11() {
           />
 
           <motion.h1
-            className="text-6xl font-black text-black mb-10 tracking-tighter leading-tight"
+            className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Leadership Team
+            Competitive Advantage
           </motion.h1>
 
-          {/* 3 Columns Grid for Team Cards */}
-          <div className="grid grid-cols-3 gap-8 w-full mb-2">
-            {/* CEO Card */}
-            <motion.div
-              className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
-              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: '32px' }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              {/* Photo Image */}
-              <div
-                className="w-full bg-gray-50 border border-gray-100 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden group-hover:border-gray-200 transition-colors shrink-0"
-                style={{ height: '200px', width: '200px', alignSelf: 'center' }}
-              >
-                <img
-                  src="/saranya mam image.jpg"
-                  alt="Saranya Amirthalingam"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+          <motion.p
+            className="text-3xl text-gray-600 mb-10 font-light max-w-4xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            From Trading Tools to Decision Intelligence
+          </motion.p>
 
-              <h3 className="text-3xl font-black text-black leading-tight mb-4">
-                Saranya Amirthalingam
-              </h3>
-              <p className="text-2xl text-gray-500 font-bold mb-4 mt-2">Co-Founder & CEO</p>
-              <ul className="w-full mt-2">
-                {ceo.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    className="flex items-start gap-3 text-[26px] text-gray-700 font-light leading-relaxed"
-                    style={item.style}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 + i * 0.05, duration: 0.4 }}
-                  >
-                    <span className="mt-3.5 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                    <span>{item.text}</span>
-                  </motion.li>
+          {/* Comparison Table */}
+          <div className="w-full mb-6 bg-white border border-gray-100 rounded-lg p-8 shadow-sm">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="py-4 px-4 text-left text-base uppercase tracking-wider text-gray-400 font-bold">Feature</th>
+                  <th className="py-4 px-4 text-center text-2xl font-black text-white bg-black rounded-t-lg">VibeTrader</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">MetaTrader</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">TradingView</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">Capitalise.ai</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">TrendSpider</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">Composer</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, idx) => (
+                  <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
+                    <td className="py-4 px-4 text-2xl font-bold text-gray-900">{row.feature}</td>
+                    <td className={`py-4 px-4 text-center text-3xl font-bold bg-gray-50/50 border-x-2 border-black ${idx === rows.length - 1 ? 'border-b-2' : ''}`}>
+                      {renderValue(row.vibe, true)}
+                    </td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.mt)}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.tv)}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.cap)}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.ts)}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.comp)}</td>
+                  </tr>
                 ))}
-              </ul>
-            </motion.div>
+              </tbody>
+            </table>
 
-            {/* CTO Card */}
-            <motion.div
-              className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
-              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: '32px' }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45, duration: 0.6 }}
-            >
-              {/* Photo Image */}
-              <div
-                className="w-full bg-gray-50 border border-gray-100 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden group-hover:border-gray-200 transition-colors shrink-0"
-                style={{ height: '200px', width: '200px', alignSelf: 'center' }}
-              >
-                <img
-                  src="/nithya sir image.jpg"
-                  alt="Nithyakumaran Gnanasekar"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <h3 className="text-3xl font-black text-black leading-tight mb-4">
-                Nithyakumaran Gnanasekar
-              </h3>
-              <p className="text-2xl text-gray-500 font-bold mb-4 mt-2">Co-Founder & CTO</p>
-              <ul className="w-full mt-2">
-                {cto.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    className="flex items-start gap-3 text-[26px] text-gray-700 font-light leading-relaxed"
-                    style={item.style}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.55 + i * 0.05, duration: 0.4 }}
-                  >
-                    <span className="mt-3.5 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                    <span>{item.text}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Advisor / Domain Expert Card */}
-            <motion.div
-              className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
-              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: '32px' }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-            >
-              {/* Visual Placeholder */}
-              <div
-                className="w-full bg-gray-50 border border-gray-100 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden group-hover:border-gray-200 transition-colors shrink-0"
-                style={{ height: '200px', width: '200px', alignSelf: 'center' }}
-              >
-                <div className="absolute inset-0 flex flex-col justify-between p-4 bg-gradient-to-br from-gray-50 to-gray-100/50">
-                  <div className="flex justify-between items-center text-[10px] font-mono text-gray-400">
-                    <span>LIVE VIBE SYSTEM</span>
-                    <span className="text-emerald-500 font-bold">+18.4%</span>
-                  </div>
-                  <svg className="w-full h-24 text-emerald-500" viewBox="0 0 100 50" fill="none" preserveAspectRatio="none">
-                    <path
-                      d="M0,45 Q15,40 30,32 T60,25 T90,8 L100,5"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M0,45 Q15,40 30,32 T60,25 T90,8 L100,5 L100,50 L0,50 Z"
-                      fill="url(#chart-grad)"
-                      opacity="0.15"
-                    />
-                    <defs>
-                      <linearGradient id="chart-grad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#10B981" />
-                        <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  <div className="text-[10px] font-mono text-gray-400 uppercase tracking-widest text-center font-bold">
-                    MARKET VALIDATION
-                  </div>
-                </div>
-              </div>
-
-              <h3 className="text-3xl font-black text-black leading-tight mb-4">
-                Trading Expertise
-              </h3>
-              <p className="text-2xl text-gray-500 font-bold mb-4 mt-2">Forex & Market Validation</p>
-              <ul className="w-full mt-2">
-                {advisor.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    className="flex items-start gap-3 text-[26px] text-gray-700 font-light leading-relaxed"
-                    style={item.style}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 + i * 0.05, duration: 0.4 }}
-                  >
-                    <span className="mt-3.5 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                    <span>{item.text}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+            {/* Legend */}
+            <div className="mt-6 text-base tracking-wider text-gray-400 text-left font-medium uppercase">
+              ✓ Core &middot; ◐ Partial &middot; &mdash; Not core
+            </div>
           </div>
 
-          {/* Simplified Bottom Takeaway */}
-          <SlideFooter className="w-full mt-6 mb-6" delay={1.0}>
-            Deep AI engineering + real trading experience.
+          {/* Bottom Takeaway */}
+          <SlideFooter className="w-full" delay={1.0}>
+            VibeTrader&rsquo;s advantage is not another AI model. It is the intelligence accumulated across decisions, behavior, strategies, and changing markets.
           </SlideFooter>
         </motion.div>
       </div>
 
+      {/* Slide Navigation */}
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
           <motion.div
             key={i + 1}
-            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
-              } rounded-full`}
+            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'} rounded-full`}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.8 + i * 0.03 }}
@@ -238,25 +136,15 @@ export default function Slide11() {
       </div>
 
       <button
-        onClick={(e) => {
-          e.stopPropagation();
-          prevSlide();
-        }}
+        onClick={(e) => { e.stopPropagation(); prevSlide(); }}
         className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
         aria-label="Previous slide"
-      >
-        ←
-      </button>
+      >&larr;</button>
       <button
-        onClick={(e) => {
-          e.stopPropagation();
-          nextSlide();
-        }}
+        onClick={(e) => { e.stopPropagation(); nextSlide(); }}
         className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
         aria-label="Next slide"
-      >
-        →
-      </button>
+      >&rarr;</button>
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { PRESENTATION_CONFIG } from '@/config/presentation';
 
 import { motion } from 'framer-motion';
-import { Users, Activity, Megaphone, Handshake } from 'lucide-react';
+import { Users, Activity, Megaphone, Handshake, Building2 } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 import { SlideFooter } from '@/components/SlideFooter';
@@ -11,30 +11,52 @@ import { SlideFooter } from '@/components/SlideFooter';
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 3;
 
-const metrics = [
+// Grouped so live results, the paid conversion and the pipeline are never read as one number.
+const groups = [
   {
-    icon: Users,
-    value: '2,300+',
-    label: 'Registered traders',
-    detail: 'Signed up to the platform.',
+    label: 'Live now',
+    metrics: [
+      {
+        icon: Users,
+        value: '2,300+',
+        label: 'Registered traders',
+        detail: 'Acquired on about $3/day of ad spend.',
+      },
+      {
+        icon: Handshake,
+        value: '1',
+        label: 'Broker partnership',
+        detail: 'Live with Dupoin. Onboarding its traders now.',
+      },
+    ],
   },
   {
-    icon: Activity,
-    value: '20',
-    label: 'Live accounts',
-    detail: 'Trading accounts running our strategies around the globe.',
+    label: 'Converting to paid in October',
+    metrics: [
+      {
+        icon: Activity,
+        value: '20',
+        label: 'Beta strategy accounts',
+        detail: 'Running our strategies live. Falcon pricing is $100–$2,500/month by risk tier.',
+      },
+    ],
   },
   {
-    icon: Megaphone,
-    value: '5',
-    label: 'Community leaders',
-    detail: 'Onboarded. Each is bringing 100+ paid strategy subscribers in the coming weeks.',
-  },
-  {
-    icon: Handshake,
-    value: '1',
-    label: 'Broker partnership',
-    detail: 'Active with Dupoin. Onboarding its traders now.',
+    label: 'Pipeline',
+    metrics: [
+      {
+        icon: Megaphone,
+        value: '500+',
+        label: 'Subscribers in onboarding',
+        detail: 'Through referral partners paid on commission: 5 community leaders and Trading LATAM (academy).',
+      },
+      {
+        icon: Building2,
+        value: '7+',
+        label: 'Broker opportunities',
+        detail: 'In active discussion across multiple markets.',
+      },
+    ],
   },
 ];
 
@@ -43,7 +65,7 @@ export default function Slide4() {
 
   return (
     <div
-      className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white"
+      className="relative flex h-full w-full items-start pt-28 overflow-hidden bg-white"
       onClick={nextSlide}
     >
       <div
@@ -79,43 +101,56 @@ export default function Slide4() {
           </motion.h1>
 
           <motion.p
-            className="text-3xl text-gray-600 mb-10 font-light max-w-5xl"
+            className="text-3xl text-gray-600 mb-10 font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            Traders are signing up, strategies are live, and partners are bringing paying subscribers.
+            2,300+ traders on $3/day of ad spend. Beta strategy accounts start paying in October.
           </motion.p>
 
-          <div className="grid grid-cols-4 gap-6 mb-10">
-            {metrics.map((m, i) => {
-              const Icon = m.icon;
-              return (
-                <motion.div
-                  key={m.label}
-                  className="border-2 border-gray-200 hover:border-black transition-colors p-8 group"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
-                >
-                  <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors mb-6">
-                    <Icon className="w-7 h-7" />
-                  </div>
-                  <p className="text-7xl font-black text-black mb-3 leading-none tracking-tighter">{m.value}</p>
-                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-3">{m.label}</p>
-                  <p className="text-xl text-gray-700 font-light leading-snug">{m.detail}</p>
-                </motion.div>
-              );
-            })}
+          <div className="grid grid-cols-3 gap-8 mb-10">
+            {groups.map((group, gi) => (
+              <motion.div
+                key={group.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + gi * 0.15, duration: 0.5 }}
+              >
+                <p className="text-lg uppercase tracking-[0.2em] text-gray-500 font-semibold border-b-2 border-black pb-3 mb-5">
+                  {group.label}
+                </p>
+                <div className="space-y-5">
+                  {group.metrics.map((m) => {
+                    const Icon = m.icon;
+                    return (
+                      <div
+                        key={m.label}
+                        className="flex gap-6 border-2 border-gray-200 hover:border-black transition-colors p-6 group"
+                      >
+                        <div className="w-14 h-14 shrink-0 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors">
+                          <Icon className="w-7 h-7" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-6xl font-black text-black mb-2 leading-none tracking-tighter">{m.value}</p>
+                          <p className="text-lg uppercase tracking-widest text-gray-500 mb-2">{m.label}</p>
+                          <p className="text-xl text-gray-700 font-light leading-snug">{m.detail}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            ))}
           </div>
 
           <SlideFooter
             className="w-full"
             eyebrow="How we grow"
             items={[
-              'Direct: product-led sign-ups',
-              'Communities: 500+ paid subscribers in onboarding',
-              'Brokers: Dupoin live, more to follow',
+              'Direct: low-cost sign-ups prove demand',
+              'Communities: 100+ subscribers each',
+              'Brokers: 20K–200K traders each',
             ]}
             delay={1.0}
           />
