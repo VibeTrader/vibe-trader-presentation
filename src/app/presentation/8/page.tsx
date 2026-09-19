@@ -95,7 +95,7 @@ export default function Slide11() {
               </h3>
               <p className="text-2xl text-gray-500 font-bold mt-2">Co-Founder & CEO</p>
               <div className="flex items-center h-14 mt-3 mb-2">
-                <img src="/logos/penn-state.svg" alt="Penn State" className="h-5 w-auto" />
+                <img src="/logos/penn-state.svg" alt="Penn State" className="h-14 w-auto" />
               </div>
               <ul className="w-full mt-2">
                 {ceo.map((item, i) => (

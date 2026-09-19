@@ -5,15 +5,19 @@ import { PRESENTATION_CONFIG } from '@/config/presentation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
+import { plan, totals, millions } from '@/config/financial-plan';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 9;
 
-const priorities = [
-  { title: 'Product', body: 'AI intelligence, mobile, security' },
-  { title: 'Growth', body: 'Brokers, academies, affiliates' },
-  { title: 'Team', body: 'Engineering, sales, customer success' },
+const useOfFunds = [
+  { title: 'Marketing', body: 'Reach traders directly and through partners' },
+  { title: 'Sales scale-up', body: 'Close broker, IB and academy deals' },
+  { title: 'Legal', body: 'Contracts and compliance' },
 ];
+
+// Targets come from Year 1 of the five-year plan, the same numbers as Financials (slide 7).
+const yearOne = plan[0];
 
 export default function Slide10() {
   const { nextSlide, prevSlide } = useSlideNavigation();
@@ -23,11 +27,14 @@ export default function Slide10() {
       <h1 className="absolute left-[54px] top-[60px] text-[104px] font-black tracking-tighter leading-none">
         Why Invest Now
       </h1>
+      <p className="absolute left-[54px] top-[180px] text-[30px] text-gray-600 font-light">
+        Pre-seed · <span className="font-bold text-black">$35K raised</span> from friends &amp; family · <span className="font-bold text-black">$1M</span> gives <span className="font-bold text-black">18 months</span> of runway
+      </p>
 
       <motion.div
         className="absolute inset-0"
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}
-        aria-label="Evidence supports the raise, which funds product, growth and team toward target outcomes"
+        aria-label="Evidence supports the raise, which funds marketing, sales and legal toward target outcomes"
       >
         <svg aria-hidden="true" className="absolute inset-0 h-full w-full" viewBox="0 0 1920 1080">
           <defs>
@@ -64,13 +71,14 @@ export default function Slide10() {
 
         <section aria-label="Investment ask" className="absolute left-[580px] top-[498px] w-[314px] h-[204px] rounded-2xl bg-black text-white flex flex-col items-center justify-center">
           <h2 className="text-[94px] font-black tracking-tight leading-none">$1M</h2>
-          <p className="text-[36px] font-bold mt-2">Pre-seed raise</p>
+          <p className="text-[32px] font-bold mt-2">Pre-seed SAFE</p>
+          <p className="text-[22px] text-gray-300 mt-1">18-month runway</p>
         </section>
 
         <section aria-labelledby="priorities-heading" className="absolute left-[1014px] top-[250px] w-[354px]">
-          <h2 id="priorities-heading" className="text-[42px] font-black tracking-tight border-b-2 border-gray-400 pb-4 mb-7">What we build</h2>
+          <h2 id="priorities-heading" className="text-[42px] font-black tracking-tight border-b-2 border-gray-400 pb-4 mb-7">Use of funds</h2>
           <div className="space-y-7">
-            {priorities.map((priority) => (
+            {useOfFunds.map((priority) => (
               <div key={priority.title} className="h-[162px] border-[3px] border-gray-400 rounded-xl px-6 py-5">
                 <h3 className="text-[36px] font-bold leading-tight mb-2">{priority.title}</h3>
                 <p className="text-[27px] text-gray-700 leading-tight">{priority.body}</p>
@@ -80,11 +88,11 @@ export default function Slide10() {
         </section>
 
         <section aria-labelledby="outcomes-heading" className="absolute left-[1484px] top-[250px] w-[384px]">
-          <h2 id="outcomes-heading" className="text-[42px] font-black tracking-tight border-b-2 border-gray-400 pb-4">Target outcomes</h2>
+          <h2 id="outcomes-heading" className="text-[42px] font-black tracking-tight border-b-2 border-gray-400 pb-4">Year 1 targets</h2>
           <div className="mt-[94px] h-[380px] border-[3px] border-gray-400 rounded-xl px-8 py-10 flex flex-col justify-between text-[34px] font-bold leading-tight">
-            <p className="text-[30px] whitespace-nowrap">5,000+ active users</p>
+            <p>{(yearOne.appUsers + yearOne.strategySubs).toLocaleString('en-US')}+ paying traders</p>
+            <p>{millions(totals[0])} revenue run rate</p>
             <p>Commercial broker partnerships</p>
-            <p>Recurring revenue growth</p>
           </div>
         </section>
       </motion.div>

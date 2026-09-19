@@ -5,14 +5,10 @@ import { PRESENTATION_CONFIG } from '@/config/presentation';
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
+import { SocialLinks } from '@/components/SocialLinks';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 10;
-
-const exitPath = [
-  'Build the global decision intelligence platform for retail trading',
-  'Potential strategic acquisition by major brokers, trading platforms, or fintech leaders',
-];
 
 export default function Slide12() {
   const { prevSlide, nextSlide } = useSlideNavigation();
@@ -37,7 +33,7 @@ export default function Slide12() {
       >
         <div className="w-16 h-1.5 bg-black mb-6" />
         <h1 className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight">
-          Offer &amp; Long-Term Opportunity
+          The Offer &amp; Our Vision
         </h1>
         <p className="text-3xl text-gray-600 font-light mb-12">
           Join us in building the intelligence layer for global retail trading.
@@ -46,7 +42,7 @@ export default function Slide12() {
         <div className="grid grid-cols-2 gap-12">
           <motion.section
             aria-label="Investment offer"
-            className="flex h-130 flex-col rounded-xl bg-black p-12"
+            className="flex h-120 flex-col rounded-xl bg-black p-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
@@ -60,37 +56,23 @@ export default function Slide12() {
           </motion.section>
 
           <motion.section
-            aria-labelledby="exit-heading"
-            className="flex h-130 flex-col rounded-xl border-2 border-gray-200 bg-white p-10"
+            aria-labelledby="vision-heading"
+            className="flex h-120 flex-col rounded-xl border-2 border-gray-200 bg-white p-10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.6 }}
           >
             <span className="self-start bg-black px-3 py-1 font-mono text-lg font-bold uppercase tracking-[0.2em] text-white">
-              Long-term path
+              Vision
             </span>
-            <h2 id="exit-heading" className="mt-5 text-4xl font-black tracking-tight text-black">
-              Strategic Exit &amp; Growth
-            </h2>
-            <ul className="mt-5 mb-8 space-y-4 text-2xl font-light leading-snug text-gray-700">
-              {exitPath.map((item) => (
-                <li key={item} className="flex gap-4">
-                  <span aria-hidden="true" className="mt-2.5 h-3 w-3 shrink-0 bg-black" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-auto border-t border-gray-200 pt-6">
-              <p className="font-mono text-base uppercase tracking-[0.2em] text-gray-400">Vision statement</p>
-              <p className="mt-3 text-[26px] font-black leading-snug text-black">
-                Give everyone the financial intelligence to move forward—and, in doing so, move the global economy forward.
-              </p>
-            </div>
+            <p id="vision-heading" className="flex flex-1 items-center text-[44px] font-black leading-tight tracking-tight text-black">
+              Give everyone the financial intelligence to move forward—and, in doing so, move the global economy forward.
+            </p>
           </motion.section>
         </div>
 
         <motion.div
-          className="mt-8 flex items-center justify-between rounded-xl border-2 border-gray-200 bg-gray-50 px-8 py-5"
+          className="mt-8 flex items-center justify-between rounded-xl border-2 border-gray-200 bg-gray-50 px-8 py-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.6 }}
@@ -99,13 +81,25 @@ export default function Slide12() {
             <span className="font-black text-black">Saranya Amirthalingam</span>
             <span className="text-gray-500 font-light"> · CEO, VibeTrader</span>
           </p>
-          <a
-            href="https://vibetrader.com"
-            onClick={(e) => e.stopPropagation()}
-            className="font-mono text-2xl font-bold text-black hover:underline"
-          >
-            vibetrader.com
-          </a>
+          <div className="flex items-center gap-8">
+            <SocialLinks size={30} />
+            <div className="h-8 w-px bg-gray-300" />
+            <a
+              href="https://vibetrader.com"
+              onClick={(e) => e.stopPropagation()}
+              className="font-mono text-2xl font-bold text-black hover:underline"
+            >
+              vibetrader.com
+            </a>
+            <a
+              href="https://vibetrader.com"
+              onClick={(e) => e.stopPropagation()}
+              aria-label="QR code: scan to open vibetrader.com"
+              className="block shrink-0 bg-white p-1.5 border border-gray-200"
+            >
+              <img src="/qr-vibetrader.svg" alt="QR code linking to vibetrader.com" className="h-24 w-24" />
+            </a>
+          </div>
         </motion.div>
       </motion.div>
 
