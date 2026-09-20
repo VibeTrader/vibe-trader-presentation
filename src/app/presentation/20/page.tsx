@@ -84,6 +84,9 @@ export default function Slide21() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
           >
+            <p className="mb-1 text-xl text-gray-600">
+              <span className="font-bold text-black">ForexBotTrader</span> is another internal VibeTrader strategy.
+            </p>
             <p className="mb-3 text-xl font-bold text-black">
               A client’s live account: $1,500 each, Feb 9 → Jul 29, 2026
             </p>

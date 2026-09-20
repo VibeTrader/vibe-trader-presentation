@@ -18,7 +18,7 @@ const { values } = parseArgs({ options: {
   help: { type: 'boolean', short: 'h' },
 } });
 if (values.help) {
-  console.log(`Export slides up to the FAQ slide as a short PDF deck.
+  console.log(`Export every slide, including the FAQ and its answers, as a PDF deck.
 
   npm run export:pdf -- --login
   npm run export:pdf -- --base-url https://your-site.example
@@ -32,7 +32,8 @@ Options:
   --settle-ms N    Animation settling time per slide (default 2500)
 
 Run the app first. Install Chromium with: npx playwright install chromium
-PDFs contain video stills marked with play buttons. Videos, footnotes, research, and FAQ answers link to the public site.`);
+PDFs contain video stills marked with play buttons. FAQ links jump to answer pages inside the PDF;
+videos, footnotes and research link to the public site.`);
   process.exit(0);
 }
 const base = new URL(values['base-url']);
@@ -48,9 +49,8 @@ const output = resolve(root, values.output);
 const authFile = resolve(root, values.auth);
 const config = await readFile(resolve(root, 'src/config/presentation.ts'), 'utf8');
 const first = Number(config.match(/firstSlide:\s*(\d+)/)?.[1]);
-const faqSlides = config.match(/faqSlides:\s*\[([\d,\s]*)\]/)?.[1].split(',').map(Number).filter(Boolean) ?? [];
-// End at the FAQ slide. Its answer slides are public web pages, so the PDF links there instead.
-const last = faqSlides.length ? Math.min(...faqSlides) : Number(config.match(/lastSlide:\s*(\d+)/)?.[1]);
+// Include the FAQ answer slides so FAQ links resolve inside the PDF, not on the hosted site.
+const last = Number(config.match(/lastSlide:\s*(\d+)/)?.[1]);
 if (!first || !last || first > last) throw new Error('Cannot read slide range from presentation config.');
 const pdf = await PDFDocument.create();
 const destinations = new Map();
@@ -102,7 +102,7 @@ try {
     console.log(`Capturing slide ${number}/${last}`);
     await visit(path);
     await page.addStyleTag({ content: `
-      button[aria-label="Previous slide"], button[aria-label="Next slide"],
+      button[aria-label^="Previous slide"], button[aria-label^="Next slide"],
       nextjs-portal, [data-nextjs-toast] { visibility: hidden !important; }
       .fixed.bottom-8, .absolute.bottom-8.left-1\\/2 { visibility: hidden !important; }
     ` });
@@ -179,7 +179,7 @@ try {
     }
   }
   pdf.setTitle('VibeTrader Presentation');
-  pdf.setSubject('Pitch deck. Videos, research sources, and FAQ answers open at pitchdeck.vibetrader.com.');
+  pdf.setSubject('Pitch deck with FAQ answers. Videos and research sources open at pitchdeck.vibetrader.com.');
   await mkdir(dirname(output), { recursive: true });
   await writeFile(output, await pdf.save());
   console.log(`Saved ${pdf.getPageCount()} pages to ${output}`);
