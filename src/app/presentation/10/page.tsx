@@ -5,7 +5,7 @@ import { PRESENTATION_CONFIG } from '@/config/presentation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
-import { plan, totals, millions } from '@/config/financial-plan';
+import { plan, totals, millions, launchPlan } from '@/config/financial-plan';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 9;
@@ -28,7 +28,7 @@ export default function Slide10() {
         Why Invest Now
       </h1>
       <p className="absolute left-[54px] top-[180px] text-[30px] text-gray-600 font-light">
-        Pre-seed · <span className="font-bold text-black">$35K raised</span> from friends &amp; family · <span className="font-bold text-black">$1M</span> gives <span className="font-bold text-black">18 months</span> of runway
+        Pre-seed · <span className="font-bold text-black">$35K raised</span> from friends &amp; family · <span className="font-bold text-black">$1M</span> raise target · <span className="font-bold text-black">18-month</span> runway goal
       </p>
 
       <motion.div
@@ -72,7 +72,7 @@ export default function Slide10() {
         <section aria-label="Investment ask" className="absolute left-[580px] top-[498px] w-[314px] h-[204px] rounded-2xl bg-black text-white flex flex-col items-center justify-center">
           <h2 className="text-[94px] font-black tracking-tight leading-none">$1M</h2>
           <p className="text-[32px] font-bold mt-2">Pre-seed SAFE</p>
-          <p className="text-[22px] text-gray-300 mt-1">18-month runway</p>
+          <p className="text-[22px] text-gray-300 mt-1">18-month runway goal</p>
         </section>
 
         <section aria-labelledby="priorities-heading" className="absolute left-[1014px] top-[250px] w-[354px]">
@@ -89,9 +89,9 @@ export default function Slide10() {
 
         <section aria-labelledby="outcomes-heading" className="absolute left-[1484px] top-[250px] w-[384px]">
           <h2 id="outcomes-heading" className="text-[42px] font-black tracking-tight border-b-2 border-gray-400 pb-4">Year 1 targets</h2>
-          <div className="mt-[94px] h-[380px] border-[3px] border-gray-400 rounded-xl px-8 py-10 flex flex-col justify-between text-[34px] font-bold leading-tight">
-            <p>{(yearOne.appUsers + yearOne.strategySubs).toLocaleString('en-US')}+ paying traders</p>
-            <p>{millions(totals[0])} revenue run rate</p>
+          <div className="mt-[94px] h-[380px] border-[3px] border-gray-400 rounded-xl px-8 py-8 flex flex-col justify-between text-[30px] font-bold leading-tight">
+            <p>{(yearOne.appUsers + yearOne.strategySubs).toLocaleString('en-US')} retail subscriptions</p>
+            <p>{millions(totals[0], 2)} annual run rate<br /><span className="text-xl font-normal">By {launchPlan.checkpoint}</span></p>
             <p>Commercial broker partnerships</p>
           </div>
         </section>

@@ -5,7 +5,8 @@ import { PRESENTATION_CONFIG } from '@/config/presentation';
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
-import { streams, totals, millions } from '@/config/financial-plan';
+import { launchPlan, plan, streams, totals, millions } from '@/config/financial-plan';
+import { billionRange, marketSizing, totalMarket } from '@/config/market-sizing';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 5;
@@ -18,39 +19,39 @@ const yearFive = (title: string) => streams.find((stream) => stream.title === ti
 const segments = [
   {
     buyer: 'Retail forex & CFD traders',
-    tam: { value: '$6.6–9.9B', basis: '10–15M active traders × ~$660/yr' },
-    sam: { value: '$2.0–4.5B', basis: '6.8M measured accounts × our pricing' },
+    tam: { value: billionRange(marketSizing.retail.tam) },
+    sam: { value: billionRange(marketSizing.retail.sam) },
     som: yearFive('App subscriptions') + yearFive('Premium strategies'),
-    source: 'Finance Magnates, Q4 2025',
+    source: 'Launch focus · Accounts: Finance Magnates, Q4 2025',
   },
   {
     buyer: 'RIAs licensing strategies',
-    tam: { value: '$15.4B', basis: '$3.86T in managed accounts (SMAs) × 0.40%' },
-    sam: { value: '$2.6B', basis: '$645B in third-party models × 0.40%' },
+    tam: { value: billionRange([marketSizing.ria.tam]) },
+    sam: { value: billionRange([marketSizing.ria.sam]) },
     som: yearFive('RIA strategy licensing'),
-    source: 'Cerulli, Morningstar 2025',
+    source: 'Future offering · Cerulli / Morningstar, 2025',
   },
   {
     buyer: 'Businesses with FX exposure',
-    tam: { value: '$6.6B', basis: 'Treasury & FX risk software (analyst estimate)' },
-    sam: { value: '$240M', basis: '1,200 large multinationals × $200K' },
+    tam: { value: billionRange([marketSizing.business.tam]) },
+    sam: { value: millions(marketSizing.business.sam) },
     som: yearFive('B2B FX strategies'),
-    source: 'Kyriba, BIS 2025',
+    source: 'Future offering · CMI 2025 / Kyriba 2023',
   },
 ];
 
 // Combined across the three buyers; see /research/market-sizing for the sums.
 const total = {
-  tam: '$29–32B',
-  sam: '$4.8–7.3B',
+  tam: billionRange(totalMarket.tam),
+  sam: billionRange(totalMarket.sam),
   som: millions(totals[4]),
 };
 
 // Nested circles are illustrative, not to scale.
 const circles = [
-  { key: 'tam', label: 'TAM', caption: 'Addressable', size: 620, style: 'bg-gray-100 text-black', labelTop: 56 },
-  { key: 'sam', label: 'SAM', caption: 'Serviceable today', size: 400, style: 'bg-gray-300 text-black', labelTop: 44 },
-  { key: 'som', label: 'SOM', caption: 'Year-5 target', size: 190, style: 'bg-black text-white', labelTop: 0 },
+  { key: 'tam', label: 'TAM', caption: 'Broad opportunity', size: 620, style: 'bg-gray-100 text-black', labelTop: 56 },
+  { key: 'sam', label: 'SAM', caption: 'Modeled estimate', size: 400, style: 'bg-gray-300 text-black', labelTop: 44 },
+  { key: 'som', label: 'SOM', caption: 'Year-5 target', size: 220, style: 'bg-black text-white', labelTop: 0 },
 ] as const;
 
 export default function Slide6() {
@@ -58,7 +59,7 @@ export default function Slide6() {
 
   return (
     <div
-      className="relative flex h-full w-full items-start pt-28 overflow-hidden bg-white"
+      className="relative flex h-full w-full items-start pt-16 overflow-hidden bg-white"
       onClick={nextSlide}
     >
       <div
@@ -94,12 +95,12 @@ export default function Slide6() {
           </motion.h1>
 
           <motion.p
-            className="text-3xl text-gray-600 mb-10 font-light"
+            className="text-3xl text-gray-600 mb-8 font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            Three buyers. $4.8B+ serviceable today; our Year-5 target is {millions(totals[4])}.
+            Retail launch first. RIA and corporate markets are future expansion opportunities.
             <sup className="ml-1 text-base text-gray-500">1</sup>
           </motion.p>
 
@@ -124,7 +125,7 @@ export default function Slide6() {
                   <p className="text-lg uppercase tracking-[0.2em] font-semibold opacity-70">
                     {c.key === 'som' ? c.label : `${c.label} · ${c.caption}`}
                   </p>
-                  <p className={`${c.key === 'som' ? 'text-5xl' : 'text-6xl'} font-black tracking-tighter leading-none mt-2`}>
+                  <p className={`${c.key === 'som' ? 'text-5xl' : 'text-[52px]'} font-black tracking-tighter leading-none mt-2`}>
                     {total[c.key]}
                   </p>
                   {c.key === 'som' && <p className="text-base mt-2 opacity-70">{c.caption}</p>}
@@ -138,7 +139,7 @@ export default function Slide6() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.7, duration: 0.6 }}
             >
-              <p className="text-lg uppercase tracking-[0.2em] text-gray-500 font-semibold mb-4">Three buyers make up the total</p>
+              <p className="text-lg uppercase tracking-[0.2em] text-gray-500 font-semibold mb-4">Annual revenue opportunity and Year 5 targets</p>
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b-2 border-black">
@@ -155,24 +156,32 @@ export default function Slide6() {
                         <p className="text-2xl font-bold text-black leading-tight">{seg.buyer}</p>
                         <p className="text-base text-gray-400 mt-1">{seg.source}</p>
                       </td>
-                      <td className="py-5 text-right text-3xl font-black tracking-tight text-gray-500">{seg.tam.value}</td>
-                      <td className="py-5 pr-6 text-right text-3xl font-black tracking-tight text-gray-700">{seg.sam.value}</td>
+                      <td className="py-5 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-gray-500">{seg.tam.value}</td>
+                      <td className="py-5 pr-6 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-gray-700">{seg.sam.value}</td>
                       <td className="py-5 px-4 text-right text-3xl font-black tracking-tight text-black bg-gray-50">{millions(seg.som)}</td>
                     </tr>
                   ))}
                   <tr className="border-t-2 border-black">
                     <td className="py-5 text-2xl font-black text-black">Total</td>
-                    <td className="py-5 text-right text-3xl font-black tracking-tight text-black">{total.tam}</td>
-                    <td className="py-5 pr-6 text-right text-3xl font-black tracking-tight text-black">{total.sam}</td>
+                    <td className="py-5 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-black">{total.tam}</td>
+                    <td className="py-5 pr-6 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-black">{total.sam}</td>
                     <td className="py-5 px-4 text-right text-3xl font-black tracking-tight text-white bg-black">{total.som}</td>
                   </tr>
                 </tbody>
               </table>
-              <p className="mt-6 text-2xl text-gray-700 font-light leading-snug">
-                The Year-5 target is <span className="font-bold text-black">under 4% of the serviceable market</span>. Assumptions are on the Financials slide.
+              <p className="mt-5 text-2xl text-gray-700 leading-snug">
+                <span className="font-bold text-black">Near-term target: {millions(launchPlan.revenueTarget)} in strategy revenue</span><br />
+                {launchPlan.firstFullYear}. Launch assumptions are on Financials.
+              </p>
+              <p className="mt-3 text-lg text-gray-600 leading-snug">
+                Year 5 requires {(plan[4].strategySubs / marketSizing.strategyAccounts * 100).toFixed(1)}% of the assumed premium-strategy pool.
               </p>
             </motion.div>
           </div>
+          <p className="mt-5 text-lg text-gray-600 leading-snug max-w-[1660px]">
+            Broad proxies, including future products. Retail TAM uses an unverified 10–15M population estimate.
+            SAM removes bundled app fees; geography, eligibility and willingness to pay still need validation. Circles are not to scale.
+          </p>
         </motion.div>
       </div>
 
