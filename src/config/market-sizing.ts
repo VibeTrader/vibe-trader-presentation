@@ -36,6 +36,9 @@ export const totalMarket = {
   sam: marketSizing.retail.sam.map(value => value + marketSizing.ria.sam + marketSizing.business.sam),
 };
 export const billionRange = (values: number[]) => `$${values.map(value => Number((value / 1_000_000_000).toFixed(2))).join('–')}B`;
+// The deck shows one figure per estimate: the median of its low and high bounds.
+export const midpoint = (values: number[]) => values.reduce((sum, value) => sum + value, 0) / values.length;
+export const billions = (value: number) => billionRange([value]);
 
 export const marketSources = {
   accounts: 'https://www.financemagnates.com/forex/analysis/exclusive-cfd-industry-tops-6-million-accounts-can-the-momentum-hold-in-2026/',

@@ -54,3 +54,6 @@ export const earnedStreams = [
 export const earnedTotals = plan.map((_, i) => earnedStreams.reduce((sum, stream) => sum + stream.values[i], 0));
 export const onboardingRevenue = launchPlan.customers * launchPlan.strategyPriceMonthly * launchPlan.onboardingBillingFraction;
 export const millions = (value: number, precision = 1) => value === 0 ? '—' : `$${Number((value / 1_000_000).toFixed(precision))}M`;
+// Slides show forecasts in whole millions: they rest on assumptions, not actuals.
+// The research pages keep the unrounded figures.
+export const roundMillions = (value: number) => millions(value, 0);

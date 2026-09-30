@@ -2,104 +2,211 @@
 
 import { PRESENTATION_CONFIG } from '@/config/presentation';
 
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
-import { plan, totals, millions, launchPlan } from '@/config/financial-plan';
+import { GlobeWatermark } from '@/components/GlobeWatermark';
+import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 9;
 
-const useOfFunds = [
-  { title: 'Marketing', body: 'Reach traders directly and through partners' },
-  { title: 'Sales scale-up', body: 'Close broker, IB and academy deals' },
-  { title: 'Legal', body: 'Contracts and compliance' },
+const ceo = [
+  { text: 'Took over the family textile business in India after her father’s sudden death', style: { paddingBottom: '10px' } },
+  { text: 'Ran tight, profitable operations', style: { paddingBottom: '10px' } },
+  { text: 'Leads growth and partners: 2,300+ traders, live broker partner', style: { paddingBottom: '0px' } },
 ];
 
-// Targets come from Year 1 of the five-year plan, the same numbers as Financials (slide 7).
-const yearOne = plan[0];
+const cto = [
+  { text: '15+ years in AI and software, from neural networks to LLMs', style: { paddingBottom: '10px' } },
+  { text: 'Built a neural-network model for ultra-localized weather prediction', style: { paddingBottom: '10px' } },
+  { text: 'Standardized business operations using GPT\u20112 models', style: { paddingBottom: '10px' } },
+  { text: 'Former Amazon & AWS engineer', style: { paddingBottom: '10px' } },
+  { text: 'Built VibeTrader\'s AI platform and MT4/MT5 integrations', style: { paddingBottom: '0px' } },
+];
 
-export default function Slide10() {
+const advisor = [
+  { text: '2 founders in the US; 10 contract engineers and traders in India', style: { paddingBottom: '10px' } },
+  { text: 'Traders from Gen Z to Gen X, with 50+ years of combined experience', style: { paddingBottom: '10px' } },
+  { text: 'Both founders have traded for 10+ years', style: { paddingBottom: '0px' } },
+];
+
+export default function Slide11() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-white text-black" onClick={nextSlide}>
-      <h1 className="absolute left-[54px] top-[60px] text-[104px] font-black tracking-tighter leading-none">
-        Why Invest Now
-      </h1>
-      <p className="absolute left-[54px] top-[180px] text-[30px] text-gray-600 font-light">
-        Pre-seed · <span className="font-bold text-black">$35K raised</span> from friends &amp; family · <span className="font-bold text-black">$1M</span> raise target · <span className="font-bold text-black">18-month</span> runway goal
-      </p>
+    <div
+      className="relative flex h-full w-full items-start pt-16 overflow-hidden bg-white"
+      onClick={nextSlide}
+    >
+      <div
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
+          backgroundSize: '20px 20px',
+        }}
+      />
 
-      <motion.div
-        className="absolute inset-0"
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}
-        aria-label="Evidence supports the raise, which funds marketing, sales and legal toward target outcomes"
-      >
-        <svg aria-hidden="true" className="absolute inset-0 h-full w-full" viewBox="0 0 1920 1080">
-          <defs>
-            <marker id="investment-flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-              <path d="M 0 0 L 10 5 L 0 10 Z" fill="black" />
-            </marker>
-          </defs>
-          <g fill="none" stroke="black" strokeWidth="3.5" strokeLinejoin="round">
-            <path d="M 450 424 H 498 Q 510 424 510 436 V 784 Q 510 796 498 796 H 450 M 450 606 H 510" />
-            <path d="M 510 606 H 570" markerEnd="url(#investment-flow-arrow)" />
-            <path d="M 894 606 H 950 M 950 424 V 796" />
-            <path d="M 950 424 H 1007" markerEnd="url(#investment-flow-arrow)" />
-            <path d="M 950 606 H 1007" markerEnd="url(#investment-flow-arrow)" />
-            <path d="M 950 796 H 1007" markerEnd="url(#investment-flow-arrow)" />
-            <path d="M 1368 424 H 1400 Q 1412 424 1412 436 V 784 Q 1412 796 1400 796 H 1368 M 1368 606 H 1412" />
-            <path d="M 1412 606 H 1477" markerEnd="url(#investment-flow-arrow)" />
-          </g>
-        </svg>
+      <GlobeWatermark />
 
-        <section aria-labelledby="evidence-heading" className="absolute left-[54px] top-[250px] w-[396px]">
-          <h2 id="evidence-heading" className="text-[42px] font-black tracking-tight border-b-2 border-gray-400 pb-4 mb-7">Evidence today</h2>
-          <div className="h-[188px] border-[3px] border-gray-400 rounded-xl px-6 py-5 mb-6">
-            <h3 className="text-[30px] font-bold leading-tight mb-2">Demand for ready-made strategies</h3>
-            <p className="text-[27px] text-gray-700 leading-tight">Stronger than demand for the app alone</p>
-          </div>
-          <div className="h-[148px] border-[3px] border-gray-400 rounded-xl px-6 flex items-center mb-6">
-            <Link href="/presentation/15" onClick={(event) => event.stopPropagation()} onPointerDown={(event) => event.stopPropagation()} className="block underline decoration-gray-300 underline-offset-4 hover:decoration-black"><h3 className="text-[32px] font-bold leading-tight">8–9 months<br />profitable live results</h3><span className="text-lg text-gray-600">View Falcon results · Slide 15 →</span></Link>
-          </div>
-          <div className="h-[148px] border-[3px] border-gray-400 rounded-xl px-6 py-6">
-            <h3 className="text-[31px] font-bold leading-tight mb-2">$100–$2,500/month</h3>
-            <p className="text-[27px] text-gray-700 leading-tight">Falcon pricing by risk tier</p>
-          </div>
-        </section>
+      <div className="relative z-10 px-20 w-full">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          <motion.div
+            className="w-16 h-1.5 bg-black mb-6"
+            initial={{ width: 0 }}
+            animate={{ width: 64 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          />
 
-        <section aria-label="Investment ask" className="absolute left-[580px] top-[498px] w-[314px] h-[204px] rounded-2xl bg-black text-white flex flex-col items-center justify-center">
-          <h2 className="text-[94px] font-black tracking-tight leading-none">$1M</h2>
-          <p className="text-[32px] font-bold mt-2">Pre-seed SAFE</p>
-          <p className="text-[22px] text-gray-300 mt-1">18-month runway goal</p>
-        </section>
+          <motion.h1
+            className="text-6xl font-black text-black mb-8 tracking-tighter leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            Leadership Team
+          </motion.h1>
 
-        <section aria-labelledby="priorities-heading" className="absolute left-[1014px] top-[250px] w-[354px]">
-          <h2 id="priorities-heading" className="text-[42px] font-black tracking-tight border-b-2 border-gray-400 pb-4 mb-7">Use of funds</h2>
-          <div className="space-y-7">
-            {useOfFunds.map((priority) => (
-              <div key={priority.title} className="h-[162px] border-[3px] border-gray-400 rounded-xl px-6 py-5">
-                <h3 className="text-[36px] font-bold leading-tight mb-2">{priority.title}</h3>
-                <p className="text-[27px] text-gray-700 leading-tight">{priority.body}</p>
+          {/* 3 Columns Grid for Team Cards */}
+          <div className="grid grid-cols-3 gap-8 w-full mb-2">
+            {/* CEO Card */}
+            <motion.div
+              className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
+              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: '32px' }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
+              {/* Photo Image */}
+              <div
+                className="w-full bg-gray-50 border border-gray-100 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden group-hover:border-gray-200 transition-colors shrink-0"
+                style={{ height: '150px', width: '150px', alignSelf: 'center' }}
+              >
+                <img
+                  src="/saranya mam image.jpg"
+                  alt="Saranya Amirthalingam"
+                  className="w-full h-full object-cover"
+                />
               </div>
-            ))}
-          </div>
-        </section>
 
-        <section aria-labelledby="outcomes-heading" className="absolute left-[1484px] top-[250px] w-[384px]">
-          <h2 id="outcomes-heading" className="text-[42px] font-black tracking-tight border-b-2 border-gray-400 pb-4">Year 1 targets</h2>
-          <div className="mt-[94px] h-[380px] border-[3px] border-gray-400 rounded-xl px-8 py-8 flex flex-col justify-between text-[30px] font-bold leading-tight">
-            <p>{(yearOne.appUsers + yearOne.strategySubs).toLocaleString('en-US')} retail subscriptions</p>
-            <p>{millions(totals[0], 2)} annual run rate<br /><span className="text-xl font-normal">By {launchPlan.checkpoint}</span></p>
-            <p>Commercial broker partnerships</p>
-          </div>
-        </section>
-      </motion.div>
+              <h3 className="text-3xl font-black text-black leading-tight mb-1">
+                Saranya Amirthalingam
+              </h3>
+              <div className="flex items-center justify-between gap-4 h-12 mt-2 mb-2">
+                <p className="text-2xl text-gray-500 font-bold">Co-Founder & CEO</p>
+                <img src="/logos/penn-state.svg" alt="Penn State" className="h-12 w-auto" />
+              </div>
+              <ul className="w-full mt-2">
+                {ceo.map((item, i) => (
+                  <motion.li
+                    key={i}
+                    className="flex items-start gap-3 text-2xl text-gray-700 font-light leading-snug"
+                    style={item.style}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 + i * 0.05, duration: 0.4 }}
+                  >
+                    <span className="mt-3 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
+                    <span>{item.text}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
 
-      <p className="absolute left-[54px] bottom-[88px] text-[20px] text-gray-700">
-        Past performance does not guarantee future results.
-      </p>
+            {/* CTO Card */}
+            <motion.div
+              className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
+              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: '32px' }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45, duration: 0.6 }}
+            >
+              {/* Photo Image */}
+              <div
+                className="w-full bg-gray-50 border border-gray-100 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden group-hover:border-gray-200 transition-colors shrink-0"
+                style={{ height: '150px', width: '150px', alignSelf: 'center' }}
+              >
+                <img
+                  src="/nithya sir image.jpg"
+                  alt="Nithyakumaran Gnanasekar"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <h3 className="text-3xl font-black text-black leading-tight mb-1">
+                Nithyakumaran Gnanasekar
+              </h3>
+              <div className="flex items-center justify-between gap-4 h-12 mt-2 mb-2">
+                <p className="text-2xl text-gray-500 font-bold">Co-Founder & CTO</p>
+                <img src="/logos/university-of-cincinnati.png" alt="University of Cincinnati" className="h-12 w-auto" />
+              </div>
+              <ul className="w-full mt-2">
+                {cto.map((item, i) => (
+                  <motion.li
+                    key={i}
+                    className="flex items-start gap-3 text-2xl text-gray-700 font-light leading-snug"
+                    style={item.style}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.55 + i * 0.05, duration: 0.4 }}
+                  >
+                    <span className="mt-3 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
+                    <span>{item.text}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Advisor / Domain Expert Card */}
+            <motion.div
+              className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
+              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: '32px' }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+            >
+              {/* Stat tile */}
+              <div
+                className="bg-black text-white rounded-xl mb-4 flex flex-col items-center justify-center shrink-0"
+                style={{ height: '150px', width: '150px', alignSelf: 'center' }}
+              >
+                <p className="text-7xl font-black tracking-tighter leading-none">12</p>
+                <p className="text-lg mt-2 text-gray-300">people</p>
+              </div>
+
+              <h3 className="text-3xl font-black text-black leading-tight mb-1">
+                Team of 12
+              </h3>
+              <div className="flex items-center justify-between gap-4 h-12 mt-2 mb-2">
+                <p className="text-2xl text-gray-500 font-bold">Engineers + traders</p>
+              </div>
+              <ul className="w-full mt-2">
+                {advisor.map((item, i) => (
+                  <motion.li
+                    key={i}
+                    className="flex items-start gap-3 text-2xl text-gray-700 font-light leading-snug"
+                    style={item.style}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.6 + i * 0.05, duration: 0.4 }}
+                  >
+                    <span className="mt-3 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
+                    <span>{item.text}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          </div>
+
+          {/* Simplified Bottom Takeaway */}
+          <SlideFooter className="w-full mt-6" delay={1.0}>
+            An operator who runs profitable businesses and an engineer who built at Amazon scale, with a team of engineers and traders behind them.
+          </SlideFooter>
+        </motion.div>
+      </div>
 
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (

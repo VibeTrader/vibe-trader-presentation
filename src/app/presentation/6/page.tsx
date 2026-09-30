@@ -3,63 +3,54 @@
 import { PRESENTATION_CONFIG } from '@/config/presentation';
 
 import { motion } from 'framer-motion';
+import { Building2, Network, GraduationCap } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
-import { launchPlan, plan, streams, totals, millions } from '@/config/financial-plan';
-import { billionRange, marketSizing, totalMarket } from '@/config/market-sizing';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 5;
 
-// TAM and SAM use our pricing (slide 5) and fee assumptions; SOM is the Year-5
-// plan from src/config/financial-plan.ts, the same numbers as Financials (slide 7).
-// Calculations and sources are on /research/market-sizing.
-const yearFive = (title: string) => streams.find((stream) => stream.title === title)!.values[4];
-
-const segments = [
+// Bars are a log-scale read on reach per partner, so 200 and 200,000 can sit
+// on the same axis. Schools stay unquantified until we have a cohort size.
+const channels = [
   {
-    buyer: 'Retail forex & CFD traders',
-    tam: { value: billionRange(marketSizing.retail.tam) },
-    sam: { value: billionRange(marketSizing.retail.sam) },
-    som: yearFive('App subscriptions') + yearFive('Premium strategies'),
-    source: 'Launch focus · Accounts: Finance Magnates, Q4 2025',
+    icon: Building2,
+    channel: 'Brokers',
+    label: 'Embedded distribution',
+    status: 'Live',
+    reach: '20K–200K',
+    reachNote: 'traders per broker',
+    bar: 100,
+    stage: 'Dupoin live · 7 in pipeline',
   },
   {
-    buyer: 'RIAs licensing strategies',
-    tam: { value: billionRange([marketSizing.ria.tam]) },
-    sam: { value: billionRange([marketSizing.ria.sam]) },
-    som: yearFive('RIA strategy licensing'),
-    source: 'Future offering · Cerulli / Morningstar, 2025',
+    icon: Network,
+    channel: 'IB partners',
+    label: 'Community-led',
+    status: 'Signing',
+    reach: '200+',
+    reachNote: 'users per IB',
+    bar: 43,
+    stage: 'Contracts signing · onboarding under way',
   },
   {
-    buyer: 'Businesses with FX exposure',
-    tam: { value: billionRange([marketSizing.business.tam]) },
-    sam: { value: millions(marketSizing.business.sam) },
-    som: yearFive('B2B FX strategies'),
-    source: 'Future offering · CMI 2025 / Kyriba 2023',
+    icon: GraduationCap,
+    channel: 'Schools',
+    label: 'Cohort distribution',
+    status: 'Signed',
+    reach: 'Cohort',
+    reachNote: 'students per academy cohort',
+    bar: null,
+    stage: 'Trading LatAm referral signed · no paying users yet',
   },
 ];
 
-// Combined across the three buyers; see /research/market-sizing for the sums.
-const total = {
-  tam: billionRange(totalMarket.tam),
-  sam: billionRange(totalMarket.sam),
-  som: millions(totals[4]),
-};
-
-// Nested circles are illustrative, not to scale.
-const circles = [
-  { key: 'tam', label: 'TAM', caption: 'Broad opportunity', size: 620, style: 'bg-gray-100 text-black', labelTop: 56 },
-  { key: 'sam', label: 'SAM', caption: 'Modeled estimate', size: 400, style: 'bg-gray-300 text-black', labelTop: 44 },
-  { key: 'som', label: 'SOM', caption: 'Year-5 target', size: 220, style: 'bg-black text-white', labelTop: 0 },
-] as const;
-
-export default function Slide6() {
+export default function Slide5() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
     <div
-      className="relative flex h-full w-full items-start pt-16 overflow-hidden bg-white"
+      className="relative flex h-full w-full items-start pt-32 overflow-hidden bg-white"
       onClick={nextSlide}
     >
       <div
@@ -91,111 +82,90 @@ export default function Slide6() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Market Opportunity
+            How We Reach Traders
           </motion.h1>
 
           <motion.p
-            className="text-3xl text-gray-600 mb-8 font-light"
+            className="text-3xl text-gray-600 mb-9 font-light max-w-4xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            Retail launch first. RIA and corporate markets are future expansion opportunities.
-            <sup className="ml-1 text-base text-gray-500">1</sup>
+            Partner-led distribution into audiences that already pay to trade.
           </motion.p>
 
-          <div className="flex items-end gap-16">
-            <motion.div
-              className="relative shrink-0"
-              style={{ width: 640, height: 620 }}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5, duration: 0.7 }}
-              role="img"
-              aria-label={`Total market: TAM ${total.tam}, SAM ${total.sam}, SOM ${total.som} Year-5 target`}
-            >
-              {circles.map((c) => (
-                <div
-                  key={c.key}
-                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full flex flex-col items-center ${c.style} ${
-                    c.key === 'som' ? 'justify-center' : ''
-                  }`}
-                  style={{ width: c.size, height: c.size, paddingTop: c.key === 'som' ? 0 : c.labelTop }}
+          <div className="grid grid-cols-3 gap-6">
+            {channels.map((c, i) => {
+              const Icon = c.icon;
+              const isLive = c.status === 'Live';
+              return (
+                <motion.div
+                  key={c.channel}
+                  className="flex flex-col border-2 border-gray-200 hover:border-black transition-colors p-7 group"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
                 >
-                  <p className="text-lg uppercase tracking-[0.2em] font-semibold opacity-70">
-                    {c.key === 'som' ? c.label : `${c.label} · ${c.caption}`}
-                  </p>
-                  <p className={`${c.key === 'som' ? 'text-5xl' : 'text-[52px]'} font-black tracking-tighter leading-none mt-2`}>
-                    {total[c.key]}
-                  </p>
-                  {c.key === 'som' && <p className="text-base mt-2 opacity-70">{c.caption}</p>}
-                </div>
-              ))}
-            </motion.div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors">
+                      <Icon className="w-7 h-7" />
+                    </div>
+                    <span
+                      className={`px-3 py-1 text-sm font-bold uppercase tracking-[0.15em] ${
+                        isLive ? 'bg-black text-white' : 'border-2 border-gray-300 text-gray-500'
+                      }`}
+                    >
+                      {c.status}
+                    </span>
+                  </div>
 
-            <motion.div
-              className="flex-1 min-w-0"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.7, duration: 0.6 }}
-            >
-              <p className="text-lg uppercase tracking-[0.2em] text-gray-500 font-semibold mb-4">Annual revenue opportunity and Year 5 targets</p>
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="border-b-2 border-black">
-                    <th className="py-3 text-left text-lg uppercase tracking-wider text-gray-400 font-semibold">Buyer</th>
-                    <th className="py-3 text-right text-lg uppercase tracking-wider text-gray-400 font-semibold">TAM</th>
-                    <th className="py-3 pr-6 text-right text-lg uppercase tracking-wider text-gray-400 font-semibold">SAM</th>
-                    <th className="py-3 pl-4 text-right text-lg uppercase tracking-wider text-white font-semibold bg-black px-4">SOM Yr 5</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {segments.map((seg) => (
-                    <tr key={seg.buyer} className="border-b border-gray-200">
-                      <td className="py-5 pr-4">
-                        <p className="text-2xl font-bold text-black leading-tight">{seg.buyer}</p>
-                        <p className="text-base text-gray-400 mt-1">{seg.source}</p>
-                      </td>
-                      <td className="py-5 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-gray-500">{seg.tam.value}</td>
-                      <td className="py-5 pr-6 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-gray-700">{seg.sam.value}</td>
-                      <td className="py-5 px-4 text-right text-3xl font-black tracking-tight text-black bg-gray-50">{millions(seg.som)}</td>
-                    </tr>
-                  ))}
-                  <tr className="border-t-2 border-black">
-                    <td className="py-5 text-2xl font-black text-black">Total</td>
-                    <td className="py-5 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-black">{total.tam}</td>
-                    <td className="py-5 pr-6 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-black">{total.sam}</td>
-                    <td className="py-5 px-4 text-right text-3xl font-black tracking-tight text-white bg-black">{total.som}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <p className="mt-5 text-2xl text-gray-700 leading-snug">
-                <span className="font-bold text-black">Near-term target: {millions(launchPlan.revenueTarget)} in strategy revenue</span><br />
-                {launchPlan.firstFullYear}. Launch assumptions are on Financials.
-              </p>
-              <p className="mt-3 text-lg text-gray-600 leading-snug">
-                Year 5 requires {(plan[4].strategySubs / marketSizing.strategyAccounts * 100).toFixed(1)}% of the assumed premium-strategy pool.
-              </p>
-            </motion.div>
+                  <p className="text-5xl font-black text-black mb-2 leading-none tracking-tighter">
+                    {c.channel}
+                  </p>
+                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-6">{c.label}</p>
+
+                  <p className="text-sm uppercase tracking-widest text-gray-400 mb-2">Reach</p>
+                  <p className="text-3xl font-black text-black leading-none tracking-tight mb-1">{c.reach}</p>
+                  <p className="text-base text-gray-600 font-light mb-3">{c.reachNote}</p>
+                  <div className="h-2.5 w-full bg-gray-100 mb-6">
+                    {c.bar === null ? (
+                      <div
+                        className="h-full w-full"
+                        style={{
+                          backgroundImage:
+                            'repeating-linear-gradient(135deg, #d1d5db 0 6px, transparent 6px 12px)',
+                        }}
+                      />
+                    ) : (
+                      <motion.div
+                        className="h-full bg-black"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${c.bar}%` }}
+                        transition={{ delay: 0.8 + i * 0.1, duration: 0.7, ease: 'easeOut' }}
+                      />
+                    )}
+                  </div>
+
+                  <div className="mt-auto border-t-2 border-gray-100 pt-4">
+                    <p className="text-sm uppercase tracking-widest text-gray-400 mb-1">Status</p>
+                    <p className="text-lg text-black font-light leading-snug">{c.stage}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
-          <p className="mt-5 text-lg text-gray-600 leading-snug max-w-[1660px]">
-            Broad proxies, including future products. Retail TAM uses an unverified 10–15M population estimate.
-            SAM removes bundled app fees; geography, eligibility and willingness to pay still need validation. Circles are not to scale.
-          </p>
+
+          <motion.p
+            className="mt-5 text-base text-gray-400 font-light"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.5 }}
+          >
+            Bars show reach per partner on a log scale. Cohort size for schools is not yet quantified.
+          </motion.p>
+
         </motion.div>
       </div>
-
-      <a
-        href="/research/market-sizing"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Supporting research and sources (opens in a new tab)"
-        onClick={(event) => event.stopPropagation()}
-        onPointerDown={(event) => event.stopPropagation()}
-        className="absolute bottom-24 right-20 z-20 text-base leading-normal text-gray-500 underline decoration-gray-300 underline-offset-4 hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4"
-      >
-        <sup className="mr-1 text-xs">1</sup> Supporting research &amp; sources
-      </a>
 
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (

@@ -1,84 +1,114 @@
 'use client';
 
+import { PRESENTATION_CONFIG } from '@/config/presentation';
+
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { PRESENTATION_CONFIG } from '@/config/presentation';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 15;
 
-const reasons = [
-  {
-    title: 'Subscriptions scale with traders',
-    description: 'Trading our own account grows only with our own capital. Falcon subscriptions, $100–$2,500 per month, grow with every trader who joins.',
-  },
-  {
-    title: 'Recurring revenue, not trading risk',
-    description: 'Monthly subscription revenue is predictable. Trading returns swing with every drawdown.',
-  },
-  {
-    title: 'Falcon proves the platform',
-    description: 'Falcon shows VibeTrader can produce strategies validated on live accounts. The business is the platform that builds, tests, and runs them for many traders.',
-  },
-];
-
-export default function Slide17() {
-  const { prevSlide, nextSlide } = useSlideNavigation();
+export default function Slide18() {
+  const { prevSlide } = useSlideNavigation();
 
   return (
-    <div className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white">
+    <div
+      className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white"
+    >
+      <div
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
+          backgroundSize: '20px 20px',
+        }}
+      />
+
       <GlobeWatermark />
 
-      <motion.div
-        className="relative z-10 px-20 w-full"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      >
-        <div className="w-16 h-1.5 bg-black mb-6" />
-        <h1 className="text-6xl font-black text-black mb-6 tracking-tighter leading-tight">
-          FAQ: If You Have a Winning Strategy, Why Sell It?
-        </h1>
-        <p className="text-4xl font-light text-gray-700">Because selling it is the bigger business.</p>
+      <div className="relative z-10 px-20 w-full">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          <motion.div
+            className="w-16 h-1.5 bg-black mb-6"
+            initial={{ width: 0 }}
+            animate={{ width: 64 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          />
 
-        <ul className="mt-16 max-w-6xl list-disc pl-8 space-y-10 text-3xl text-gray-700 leading-relaxed marker:text-black">
-          {reasons.map((reason, i) => (
-            <motion.li
-              key={reason.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
-            >
-              <span className="font-bold text-black">{reason.title}:</span>{' '}
-              <span className="font-light">{reason.description}</span>
-            </motion.li>
-          ))}
-        </ul>
+          <motion.h1
+            className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            FAQ: Can We See the Product?
+          </motion.h1>
 
-        <p className="mt-12 text-3xl text-black">
-          <span className="font-bold">Think hedge funds:</span>{' '}
-          <span className="font-light">great traders don’t just trade their own savings. They start funds, because other people’s capital is the bigger business.</span>
-        </p>
-      </motion.div>
+          <motion.p
+            className="text-3xl text-gray-600 mb-10 font-light max-w-4xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            See how VibeTrader helps traders make smarter decisions in real time.
+          </motion.p>
+
+          <motion.div
+            className="mb-8 max-w-5xl aspect-video border border-gray-200 bg-black rounded-lg overflow-hidden relative shadow-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.6 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <video
+              src="/100.mp4"
+              className="w-full h-full object-contain"
+              controls
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+          </motion.div>
+        </motion.div>
+      </div>
 
       <Link
-        href="/presentation/12"
+        href="/presentation/14"
         onClick={(e) => e.stopPropagation()}
         className="absolute bottom-8 left-20 z-30 text-xl underline underline-offset-4"
       >Back to FAQ</Link>
 
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
-          <div key={i} className={`h-2 rounded-full ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'}`} />
+          <motion.div
+            key={i + 1}
+            className={`h-2 transition-all duration-300 ${
+              i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
+            } rounded-full`}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.8 + i * 0.03 }}
+          />
         ))}
       </div>
 
-      <button onClick={prevSlide} aria-label="Previous slide"
-        className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black z-20">←</button>
-      <button onClick={nextSlide} aria-label="Next slide"
-        className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black z-20">→</button>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          prevSlide();
+        }}
+        className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
+        aria-label="Previous slide"
+      >
+        ←
+      </button>
+
     </div>
   );
 }

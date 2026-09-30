@@ -2,18 +2,18 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ResearchSearch } from '@/components/ResearchSearch';
 import { plan, totals, earnedStreams, earnedTotals, launchPlan, millions } from '@/config/financial-plan';
-import { billionRange, marketSizing, marketSources, totalMarket } from '@/config/market-sizing';
+import { billionRange, billions, marketSizing, marketSources, midpoint, totalMarket } from '@/config/market-sizing';
 
 export const metadata: Metadata = {
   title: 'Market Sizing: Research | VibeTrader',
-  description: 'How the dollar market figures on slide 6 are calculated, the sources behind them, and how far each one can be defended.',
+  description: 'How the dollar market figures on slide 8 are calculated, the sources behind them, and how far each one can be defended.',
 };
 
 const questions = [
   {
     id: 'tam',
     question: 'What does the combined TAM represent?',
-    answer: `The workbook estimates ${billionRange(totalMarket.tam)} in annual revenue opportunity across three buyer groups. Retail uses an assumed 10–15 million people at $660 per year, giving ${billionRange(marketSizing.retail.tam)}. RIA licensing applies a 0.40% fee to $3.86 trillion of SMA assets, giving $15.44 billion. The business component uses a $6.6 billion estimate for the broader treasury-management market.`,
+    answer: `The workbook estimates ${billionRange(totalMarket.tam)} in annual revenue opportunity across three buyer groups. Retail uses an assumed 10–15 million people at $660 per year, giving ${billionRange(marketSizing.retail.tam)}. Slide 8 shows the midpoints: ${billions(midpoint(totalMarket.tam))} combined and ${billions(midpoint(marketSizing.retail.tam))} retail. RIA licensing applies a 0.40% fee to $3.86 trillion of SMA assets, giving $15.44 billion. The business component uses a $6.6 billion estimate for the broader treasury-management market.`,
     context: 'The 10–15 million retail population is an unverified deck assumption, not an established industry consensus. The retail revenue assumption originates from an account-based model, while the population is expressed as people. SMA assets include many unrelated investment strategies, and treasury software and services extend beyond VibeTrader’s FX offering. These are broad proxies of different scopes, not proof of additive attainable demand.',
     sources: [
       { label: 'Cerulli: $3.86T in SMA assets, Q1 2025', href: marketSources.sma },
@@ -23,7 +23,7 @@ const questions = [
   {
     id: 'retail-sam',
     question: 'How is the retail SAM calculated, including bundled app access?',
-    answer: `Finance Magnates counted 6.787 million active CFD accounts in Q4 2025. The lower estimate is 6.787M × $25 × 12 = $2.0361 billion. The upper estimate assumes an app mix of 80% at $25, 15% at $99 and 5% at $200, averaging $44.85/month. It also assumes 1% of accounts buy a strategy at $1,000/month. Because strategies include app access, those 67,870 accounts are removed from separately billed app subscriptions. The adjusted upper estimate is $4.430675766 billion, producing the ${billionRange(marketSizing.retail.sam)} range shown on slide 6.`,
+    answer: `Finance Magnates counted 6.787 million active CFD accounts in Q4 2025. The lower estimate is 6.787M × $25 × 12 = $2.0361 billion. The upper estimate assumes an app mix of 80% at $25, 15% at $99 and 5% at $200, averaging $44.85/month. It also assumes 1% of accounts buy a strategy at $1,000/month. Because strategies include app access, those 67,870 accounts are removed from separately billed app subscriptions. The adjusted upper estimate is $4.430675766 billion, producing a ${billionRange(marketSizing.retail.sam)} range. Slide 8 shows its midpoint, ${billions(midpoint(marketSizing.retail.sam))}.`,
     context: `The bundle correction removes ${millions(marketSizing.bundledAppOverlap, 2)} of duplicate app fees. Accounts are not unique people or confirmed buyers. The tier mix, strategy adoption and $1,000 market price are assumptions. The $500 average used for the launch forecast is a separate assumption. Geography, platform support, customer eligibility and willingness to pay still need to narrow the serviceable pool.`,
     sources: [
       { label: 'Finance Magnates: active CFD accounts in Q4 2025', href: marketSources.accounts },
@@ -51,8 +51,8 @@ const questions = [
   },
   {
     id: 'combined-sam',
-    question: 'Why does the slide now show $4.86–7.25 billion SAM?',
-    answer: `The lower bound adds $2.0361 billion retail, $2.58 billion RIA and $240 million business, for $4.8561 billion. The upper bound adds the bundle-adjusted $4.430675766 billion retail estimate to those same institutional components, for $7.250675766 billion. Slide 6 displays ${billionRange(totalMarket.sam)}. At one decimal place, the lower bound rounds to $4.9 billion.`,
+    question: `Why does slide 8 show ${billions(midpoint(totalMarket.sam))} SAM?`,
+    answer: `The lower bound adds $2.0361 billion retail, $2.58 billion RIA and $240 million business, for $4.8561 billion. The upper bound adds the bundle-adjusted $4.430675766 billion retail estimate to those same institutional components, for $7.250675766 billion. Slide 8 displays the midpoint of that ${billionRange(totalMarket.sam)} range, ${billions(midpoint(totalMarket.sam))}.`,
     context: 'The former upper calculation billed app access on strategy accounts twice. The former $4.8 billion lower headline did not use normal rounding. Fixing these calculations does not validate the underlying serviceability assumptions. RIA and corporate opportunities are future expansion, so the combined figure is no longer labeled “serviceable today.”',
     sources: [],
   },
@@ -90,14 +90,14 @@ export default function MarketSizingResearchPage() {
   return (
     <main className="min-h-screen bg-white text-gray-950 px-6 py-12 sm:px-12 sm:py-16">
       <div className="mx-auto max-w-3xl">
-        <Link href="/presentation/6" className="text-sm text-gray-600 underline underline-offset-4 hover:text-black">
-          Back to slide 6
+        <Link href="/presentation/8" className="text-sm text-gray-600 underline underline-offset-4 hover:text-black">
+          Back to slide 8
         </Link>
         <header className="mt-12 mb-12">
           <p className="text-sm uppercase tracking-widest text-gray-500 mb-4">VibeTrader research</p>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-tight">How we sized the market</h1>
           <p className="mt-6 text-lg leading-relaxed text-gray-600">
-            The sources behind the market figures on slide 6, how each figure was derived, and where the evidence is
+            The sources behind the market figures on slide 8, how each figure was derived, and where the evidence is
             thinner than the number on the slide suggests.
           </p>
           <p className="mt-4 text-sm text-gray-500">Reconciled to the evidence workbook September 30, 2026</p>

@@ -11,24 +11,20 @@ import { FlaskConical, LineChart, ShieldCheck } from 'lucide-react';
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 2;
 
-// Each pillar answers one of the questions on slide 2's problem card, in order.
 const pillars = [
   {
     Icon: FlaskConical,
     label: 'Build & test',
-    answers: 'Will this strategy work?',
     description: 'Describe a strategy in plain words. Test it on years of market history, then deploy.',
   },
   {
     Icon: LineChart,
     label: 'Understand',
-    answers: 'Is it still working in today’s market?',
     description: 'Ask AI what is moving your market, from rate decisions to CPI releases, before you trade.',
   },
   {
     Icon: ShieldCheck,
     label: 'Subscribe',
-    answers: 'Can I trust this?',
     description: 'Falcon pre-tested strategies, with live results you can check.',
   },
 ];
@@ -84,7 +80,7 @@ export default function Slide3() {
 
           <div className="flex items-center gap-16 mt-12 mb-12">
             <div className="flex-1 min-w-0 space-y-10">
-              {pillars.map(({ Icon, label, answers, description }, i) => (
+              {pillars.map(({ Icon, label, description }, i) => (
                 <motion.div
                   key={label}
                   className="flex gap-6"
@@ -96,10 +92,7 @@ export default function Slide3() {
                     <Icon className="h-8 w-8" strokeWidth={1.75} />
                   </div>
                   <div className="min-w-0">
-                    <div className="mb-2 flex flex-wrap items-baseline gap-x-4">
-                      <h2 className="text-3xl font-bold text-black">{label}</h2>
-                      <p className="text-lg italic text-gray-500">Answers: {answers}</p>
-                    </div>
+                    <h2 className="mb-2 text-3xl font-bold text-black">{label}</h2>
                     <p className="text-2xl text-gray-700 font-light leading-snug">{description}</p>
                   </div>
                 </motion.div>

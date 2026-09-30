@@ -5,16 +5,37 @@ import { PRESENTATION_CONFIG } from '@/config/presentation';
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
-import { SocialLinks } from '@/components/SocialLinks';
+import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 10;
 
-export default function Slide12() {
-  const { prevSlide, nextSlide } = useSlideNavigation();
+const rows = [
+  { feature: 'Market Analysis', mt: '✓', tv: '✓', cap: '✓', ts: '✓', comp: '◐', vibe: '✓' },
+  { feature: 'Strategy Building & Testing', mt: '✓', tv: '✓', cap: '✓', ts: '✓', comp: '✓', vibe: '✓' },
+  { feature: 'Trade Automation', mt: '✓', tv: '◐', cap: '✓', ts: '✓', comp: '✓', vibe: '✓' },
+  { feature: 'Trader Decision Memory', mt: '—', tv: '—', cap: '—', ts: '—', comp: '—', vibe: '✓' },
+  { feature: 'Adaptive Intelligence', mt: '—', tv: '—', cap: '◐', ts: '◐', comp: '◐', vibe: '✓' },
+];
+
+const renderValue = (val: string, isVibe = false) => {
+  if (val === '✓') {
+    return <span className={`${isVibe ? 'text-black font-black' : 'text-gray-800 font-semibold'}`}>✓</span>;
+  }
+  if (val === '◐') {
+    return <span className="text-gray-500 font-normal">◐</span>;
+  }
+  return <span className="text-gray-300 font-light">—</span>;
+};
+
+export default function Slide9() {
+  const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
-    <div className="relative flex h-full w-full items-start pt-24 overflow-hidden bg-white">
+    <div
+      className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white"
+      onClick={nextSlide}
+    >
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
@@ -25,100 +46,105 @@ export default function Slide12() {
 
       <GlobeWatermark />
 
-      <motion.div
-        className="relative z-10 px-20 w-full"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      >
-        <div className="w-16 h-1.5 bg-black mb-6" />
-        <h1 className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight">
-          The Offer &amp; Our Vision
-        </h1>
-        <p className="text-3xl text-gray-600 font-light mb-12">
-          Join us in building the intelligence layer for global retail trading.
-        </p>
-
-        <div className="grid grid-cols-2 gap-12">
-          <motion.section
-            aria-label="Investment offer"
-            className="flex h-120 flex-col rounded-xl bg-black p-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            <span className="self-start bg-white px-3 py-1 font-mono text-lg font-bold uppercase tracking-[0.2em] text-black">
-              Investment offer
-            </span>
-            <p className="flex flex-1 items-center text-[132px] font-black leading-none tracking-tight text-white">
-              $1M SAFE
-            </p>
-          </motion.section>
-
-          <motion.section
-            aria-labelledby="vision-heading"
-            className="flex h-120 flex-col rounded-xl border-2 border-gray-200 bg-white p-10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45, duration: 0.6 }}
-          >
-            <span className="self-start bg-black px-3 py-1 font-mono text-lg font-bold uppercase tracking-[0.2em] text-white">
-              Vision
-            </span>
-            <p id="vision-heading" className="flex flex-1 items-center text-[44px] font-black leading-tight tracking-tight text-black">
-              Give everyone the financial intelligence to move forward—and, in doing so, move the global economy forward.
-            </p>
-          </motion.section>
-        </div>
-
+      <div className="relative z-10 px-20 w-full">
         <motion.div
-          className="mt-8 flex items-center justify-between rounded-xl border-2 border-gray-200 bg-gray-50 px-8 py-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          <p className="text-2xl">
-            <span className="font-black text-black">Saranya Amirthalingam</span>
-            <span className="text-gray-500 font-light"> · CEO, VibeTrader</span>
-          </p>
-          <div className="flex items-center gap-8">
-            <SocialLinks size={30} />
-            <div className="h-8 w-px bg-gray-300" />
-            <a
-              href="https://vibetrader.com"
-              onClick={(e) => e.stopPropagation()}
-              className="font-mono text-2xl font-bold text-black hover:underline"
-            >
-              vibetrader.com
-            </a>
-            <a
-              href="https://vibetrader.com"
-              onClick={(e) => e.stopPropagation()}
-              aria-label="QR code: scan to open vibetrader.com"
-              className="block shrink-0 bg-white p-1.5 border border-gray-200"
-            >
-              <img src="/qr-vibetrader.svg" alt="QR code linking to vibetrader.com" className="h-24 w-24" />
-            </a>
-          </div>
-        </motion.div>
-      </motion.div>
+          {/* Header Line */}
+          <motion.div
+            className="w-16 h-1.5 bg-black mb-6"
+            initial={{ width: 0 }}
+            animate={{ width: 64 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          />
 
+          <motion.h1
+            className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            Competitive Advantage
+          </motion.h1>
+
+          <motion.p
+            className="text-3xl text-gray-600 mb-10 font-light max-w-4xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            From Trading Tools to Decision Intelligence
+          </motion.p>
+
+          {/* Comparison Table */}
+          <div className="w-full mb-6 bg-white border border-gray-100 rounded-lg p-8 shadow-sm">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="py-4 px-4 text-left text-base uppercase tracking-wider text-gray-400 font-bold">Feature</th>
+                  <th className="py-4 px-4 text-center text-2xl font-black text-white bg-black rounded-t-lg">VibeTrader</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">MetaTrader</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">TradingView</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">Capitalise.ai</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">TrendSpider</th>
+                  <th className="py-4 px-4 text-center text-2xl font-bold text-gray-800">Composer</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, idx) => (
+                  <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
+                    <td className="py-4 px-4 text-2xl font-bold text-gray-900">{row.feature}</td>
+                    <td className={`py-4 px-4 text-center text-3xl font-bold bg-gray-50/50 border-x-2 border-black ${idx === rows.length - 1 ? 'border-b-2' : ''}`}>
+                      {renderValue(row.vibe, true)}
+                    </td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.mt)}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.tv)}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.cap)}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.ts)}</td>
+                    <td className="py-4 px-4 text-center text-3xl">{renderValue(row.comp)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Legend */}
+            <div className="mt-6 text-base tracking-wider text-gray-400 text-left font-medium uppercase">
+              ✓ Core &middot; ◐ Partial &middot; &mdash; Not core
+            </div>
+          </div>
+
+          {/* Bottom Takeaway */}
+          <SlideFooter className="w-full" delay={1.0}>
+            VibeTrader&rsquo;s advantage is not another AI model. It is the intelligence accumulated across decisions, behavior, strategies, and changing markets.
+          </SlideFooter>
+        </motion.div>
+      </div>
+
+      {/* Slide Navigation */}
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
-          <div key={i} className={`h-2 rounded-full ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'}`} />
+          <motion.div
+            key={i + 1}
+            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'} rounded-full`}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.8 + i * 0.03 }}
+          />
         ))}
       </div>
 
       <button
-        onClick={prevSlide}
+        onClick={(e) => { e.stopPropagation(); prevSlide(); }}
         className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
         aria-label="Previous slide"
-      >←</button>
+      >&larr;</button>
       <button
-        onClick={nextSlide}
+        onClick={(e) => { e.stopPropagation(); nextSlide(); }}
         className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
-        aria-label="Next slide: FAQ"
-      >→</button>
+        aria-label="Next slide"
+      >&rarr;</button>
     </div>
   );
 }

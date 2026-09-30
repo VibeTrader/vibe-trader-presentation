@@ -5,35 +5,62 @@ import { PRESENTATION_CONFIG } from '@/config/presentation';
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
-import { SlideFooter } from '@/components/SlideFooter';
+import { launchPlan, plan, streams, totals, millions, roundMillions } from '@/config/financial-plan';
+import { billions, marketSizing, midpoint, totalMarket } from '@/config/market-sizing';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 7;
 
-const ceo = [
-  { text: 'Took over the family textile business in India after her father’s sudden death', style: { paddingBottom: '14px' } },
-  { text: 'Ran tight, profitable operations', style: { paddingBottom: '14px' } },
-  { text: 'Leads growth and partners: 2,300+ traders, live broker partner', style: { paddingBottom: '0px' } },
+// TAM and SAM use our pricing (slide 7) and fee assumptions; SOM is the Year-5
+// plan from src/config/financial-plan.ts, the same numbers as Financials (slide 9).
+// Calculations, sources and the low–high ranges are on /research/market-sizing;
+// ranged estimates show their midpoint here.
+const yearFive = (title: string) => streams.find((stream) => stream.title === title)!.values[4];
+
+const segments = [
+  {
+    buyer: 'Retail forex & CFD traders',
+    tam: { value: billions(midpoint(marketSizing.retail.tam)) },
+    sam: { value: billions(midpoint(marketSizing.retail.sam)) },
+    som: yearFive('App subscriptions') + yearFive('Premium strategies'),
+    source: 'Launch focus · Accounts: Finance Magnates, Q4 2025',
+  },
+  {
+    buyer: 'RIAs licensing strategies',
+    tam: { value: billions(marketSizing.ria.tam) },
+    sam: { value: billions(marketSizing.ria.sam) },
+    som: yearFive('RIA strategy licensing'),
+    source: 'Future offering · Cerulli / Morningstar, 2025',
+  },
+  {
+    buyer: 'Businesses with FX exposure',
+    tam: { value: billions(marketSizing.business.tam) },
+    sam: { value: millions(marketSizing.business.sam) },
+    som: yearFive('B2B FX strategies'),
+    source: 'Future offering · CMI 2025 / Kyriba 2023',
+  },
 ];
 
-const cto = [
-  { text: '15+ years in AI and software, from neural networks to LLMs', style: { paddingBottom: '14px' } },
-  { text: 'Former Amazon & AWS engineer', style: { paddingBottom: '14px' } },
-  { text: 'Built VibeTrader\'s AI platform and MT4/MT5 integrations', style: { paddingBottom: '0px' } },
-];
+// Combined across the three buyers; see /research/market-sizing for the sums.
+const total = {
+  tam: billions(midpoint(totalMarket.tam)),
+  sam: billions(midpoint(totalMarket.sam)),
+  som: roundMillions(totals[4]),
+};
 
-const advisor = [
-  { text: '2 founders in the US; 10 contract engineers and traders in India', style: { paddingBottom: '14px' } },
-  { text: 'Traders from Gen Z to Gen X, with 50+ years of combined experience', style: { paddingBottom: '14px' } },
-  { text: 'Both founders have traded for 10+ years', style: { paddingBottom: '0px' } },
-];
+// Nested circles are illustrative, not to scale.
+const circles = [
+  { key: 'tam', label: 'TAM', caption: 'Broad opportunity', size: 620, style: 'bg-gray-100 text-black', labelTop: 56 },
+  { key: 'sam', label: 'SAM', caption: 'Modeled estimate', size: 400, style: 'bg-gray-300 text-black', labelTop: 44 },
+  { key: 'som', label: 'SOM', caption: 'Year-5 target', size: 220, style: 'bg-black text-white', labelTop: 0 },
+] as const;
 
-export default function Slide11() {
+export default function Slide6() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
     <div
-      className="relative flex h-full w-full items-start pt-28 overflow-hidden bg-white"
+      className="relative flex h-full w-full items-start pt-16 overflow-hidden bg-white"
       onClick={nextSlide}
     >
       <div
@@ -60,149 +87,109 @@ export default function Slide11() {
           />
 
           <motion.h1
-            className="text-6xl font-black text-black mb-10 tracking-tighter leading-tight"
+            className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Leadership Team
+            Market Opportunity
           </motion.h1>
 
-          {/* 3 Columns Grid for Team Cards */}
-          <div className="grid grid-cols-3 gap-8 w-full mb-2">
-            {/* CEO Card */}
-            <motion.div
-              className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
-              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: '32px' }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              {/* Photo Image */}
-              <div
-                className="w-full bg-gray-50 border border-gray-100 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden group-hover:border-gray-200 transition-colors shrink-0"
-                style={{ height: '170px', width: '170px', alignSelf: 'center' }}
-              >
-                <img
-                  src="/saranya mam image.jpg"
-                  alt="Saranya Amirthalingam"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+          <motion.p
+            className="text-3xl text-gray-600 mb-8 font-light"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            Retail launch first. RIA and corporate markets are future expansion opportunities.
+            <sup className="ml-1 text-base text-gray-500">1</sup>
+          </motion.p>
 
-              <h3 className="text-3xl font-black text-black leading-tight mb-4">
-                Saranya Amirthalingam
-              </h3>
-              <p className="text-2xl text-gray-500 font-bold mt-2">Co-Founder & CEO</p>
-              <div className="flex items-center h-14 mt-3 mb-2">
-                <img src="/logos/penn-state.svg" alt="Penn State" className="h-14 w-auto" />
-              </div>
-              <ul className="w-full mt-2">
-                {ceo.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    className="flex items-start gap-3 text-[26px] text-gray-700 font-light leading-snug"
-                    style={item.style}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 + i * 0.05, duration: 0.4 }}
-                  >
-                    <span className="mt-3 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                    <span>{item.text}</span>
-                  </motion.li>
-                ))}
-              </ul>
+          <div className="flex items-end gap-16">
+            <motion.div
+              className="relative shrink-0"
+              style={{ width: 640, height: 620 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5, duration: 0.7 }}
+              role="img"
+              aria-label={`Total market: TAM ${total.tam}, SAM ${total.sam}, SOM ${total.som} Year-5 target`}
+            >
+              {circles.map((c) => (
+                <div
+                  key={c.key}
+                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full flex flex-col items-center ${c.style} ${
+                    c.key === 'som' ? 'justify-center' : ''
+                  }`}
+                  style={{ width: c.size, height: c.size, paddingTop: c.key === 'som' ? 0 : c.labelTop }}
+                >
+                  <p className="text-lg uppercase tracking-[0.2em] font-semibold opacity-70">
+                    {c.key === 'som' ? c.label : `${c.label} · ${c.caption}`}
+                  </p>
+                  <p className={`${c.key === 'som' ? 'text-5xl' : 'text-[52px]'} font-black tracking-tighter leading-none mt-2`}>
+                    {total[c.key]}
+                  </p>
+                  {c.key === 'som' && <p className="text-base mt-2 opacity-70">{c.caption}</p>}
+                </div>
+              ))}
             </motion.div>
 
-            {/* CTO Card */}
             <motion.div
-              className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
-              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: '32px' }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45, duration: 0.6 }}
+              className="flex-1 min-w-0"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
             >
-              {/* Photo Image */}
-              <div
-                className="w-full bg-gray-50 border border-gray-100 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden group-hover:border-gray-200 transition-colors shrink-0"
-                style={{ height: '170px', width: '170px', alignSelf: 'center' }}
-              >
-                <img
-                  src="/nithya sir image.jpg"
-                  alt="Nithyakumaran Gnanasekar"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <h3 className="text-3xl font-black text-black leading-tight mb-4">
-                Nithyakumaran Gnanasekar
-              </h3>
-              <p className="text-2xl text-gray-500 font-bold mt-2">Co-Founder & CTO</p>
-              <div className="flex items-center h-14 mt-3 mb-2">
-                <img src="/logos/university-of-cincinnati.png" alt="University of Cincinnati" className="h-14 w-auto" />
-              </div>
-              <ul className="w-full mt-2">
-                {cto.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    className="flex items-start gap-3 text-[26px] text-gray-700 font-light leading-snug"
-                    style={item.style}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.55 + i * 0.05, duration: 0.4 }}
-                  >
-                    <span className="mt-3 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                    <span>{item.text}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Advisor / Domain Expert Card */}
-            <motion.div
-              className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
-              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: '32px' }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-            >
-              {/* Stat tile */}
-              <div
-                className="bg-black text-white rounded-xl mb-4 flex flex-col items-center justify-center shrink-0"
-                style={{ height: '170px', width: '170px', alignSelf: 'center' }}
-              >
-                <p className="text-7xl font-black tracking-tighter leading-none">12</p>
-                <p className="text-lg mt-2 text-gray-300">people</p>
-              </div>
-
-              <h3 className="text-3xl font-black text-black leading-tight mb-4">
-                Team of 12
-              </h3>
-              <p className="text-2xl text-gray-500 font-bold mb-4 mt-2">Engineers + traders</p>
-              <ul className="w-full mt-2">
-                {advisor.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    className="flex items-start gap-3 text-[26px] text-gray-700 font-light leading-snug"
-                    style={item.style}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 + i * 0.05, duration: 0.4 }}
-                  >
-                    <span className="mt-3 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                    <span>{item.text}</span>
-                  </motion.li>
-                ))}
-              </ul>
+              <p className="text-lg uppercase tracking-[0.2em] text-gray-500 font-semibold mb-4">Annual revenue opportunity and Year 5 targets</p>
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b-2 border-black">
+                    <th className="py-3 text-left text-lg uppercase tracking-wider text-gray-400 font-semibold">Buyer</th>
+                    <th className="py-3 text-right text-lg uppercase tracking-wider text-gray-400 font-semibold">TAM</th>
+                    <th className="py-3 pr-6 text-right text-lg uppercase tracking-wider text-gray-400 font-semibold">SAM</th>
+                    <th className="py-3 pl-4 text-right text-lg uppercase tracking-wider text-white font-semibold bg-black px-4">SOM Yr 5</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {segments.map((seg) => (
+                    <tr key={seg.buyer} className="border-b border-gray-200">
+                      <td className="py-5 pr-4">
+                        <p className="text-2xl font-bold text-black leading-tight">{seg.buyer}</p>
+                        <p className="text-base text-gray-400 mt-1">{seg.source}</p>
+                      </td>
+                      <td className="py-5 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-gray-500">{seg.tam.value}</td>
+                      <td className="py-5 pr-6 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-gray-700">{seg.sam.value}</td>
+                      <td className="py-5 px-4 text-right text-3xl font-black tracking-tight text-black bg-gray-50">{roundMillions(seg.som)}</td>
+                    </tr>
+                  ))}
+                  <tr className="border-t-2 border-black">
+                    <td className="py-5 text-2xl font-black text-black">Total</td>
+                    <td className="py-5 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-black">{total.tam}</td>
+                    <td className="py-5 pr-6 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-black">{total.sam}</td>
+                    <td className="py-5 px-4 text-right text-3xl font-black tracking-tight text-white bg-black">{total.som}</td>
+                  </tr>
+                </tbody>
+              </table>
             </motion.div>
           </div>
-
-          {/* Simplified Bottom Takeaway */}
-          <SlideFooter className="w-full mt-6" delay={1.0}>
-            An operator who runs profitable businesses and an engineer who built at Amazon scale, with a team of engineers and traders behind them.
-          </SlideFooter>
+          <p className="mt-5 text-lg text-gray-600 leading-snug max-w-[1660px]">
+            Midpoints of low and high estimates; ranges are in the research notes. Broad proxies, including future products.
+            Retail TAM uses an unverified 10–15M population estimate. Geography, eligibility and willingness to pay still need validation. Circles are not to scale.
+          </p>
         </motion.div>
       </div>
+
+      <a
+        href="/research/market-sizing"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Supporting research and sources (opens in a new tab)"
+        onClick={(event) => event.stopPropagation()}
+        onPointerDown={(event) => event.stopPropagation()}
+        className="absolute bottom-24 right-20 z-20 text-base leading-normal text-gray-500 underline decoration-gray-300 underline-offset-4 hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4"
+      >
+        <sup className="mr-1 text-xs">1</sup> Supporting research &amp; sources
+      </a>
 
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (

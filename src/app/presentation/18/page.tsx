@@ -11,20 +11,20 @@ const ACTIVE = 17;
 
 const reasons = [
   {
-    title: 'A different kind of loss',
-    description: 'Jane Street’s July loss came from concentrated AI-stock bets on its own balance sheet, including a stake in an AI hedge fund.',
+    title: 'Subscriptions scale with traders',
+    description: 'Trading our own account grows only with our own capital. Falcon subscriptions, $100–$2,500 per month, grow with every trader who joins.',
   },
   {
-    title: 'Risk stays in each account',
-    description: 'Strategies run on each trader’s own broker account, with capital limits by tier and position sizes set from balance, risk per trade, and stop loss.',
+    title: 'Recurring revenue, not trading risk',
+    description: 'Monthly subscription revenue is predictable. Trading returns swing with every drawdown.',
   },
   {
-    title: 'AI works inside fixed rules',
-    description: 'AI decisions pass through fixed trading rules before any trade. Falcon strategies are pre-tested and validated on live accounts.',
+    title: 'Falcon proves the platform',
+    description: 'Falcon shows VibeTrader can produce strategies validated on live accounts. The business is the platform that builds, tests, and runs them for many traders.',
   },
 ];
 
-export default function Slide19() {
+export default function Slide17() {
   const { prevSlide, nextSlide } = useSlideNavigation();
 
   return (
@@ -39,9 +39,9 @@ export default function Slide19() {
       >
         <div className="w-16 h-1.5 bg-black mb-6" />
         <h1 className="text-6xl font-black text-black mb-6 tracking-tighter leading-tight">
-          FAQ: Could Your System Make a $15B Mistake?
+          FAQ: If You Have a Winning Strategy, Why Sell It?
         </h1>
-        <p className="text-4xl font-light text-gray-700">No system can promise zero losses. Ours limits how large one mistake can get.</p>
+        <p className="text-4xl font-light text-gray-700">Because selling it is the bigger business.</p>
 
         <ul className="mt-16 max-w-6xl list-disc pl-8 space-y-10 text-3xl text-gray-700 leading-relaxed marker:text-black">
           {reasons.map((reason, i) => (
@@ -58,17 +58,13 @@ export default function Slide19() {
         </ul>
 
         <p className="mt-12 text-3xl text-black">
-          <span className="font-bold">Think circuit breakers:</span>{' '}
-          <span className="font-light">they don’t stop an appliance from failing. They stop one failure from burning the house down.</span>
-        </p>
-
-        <p className="mt-8 text-lg text-gray-500">
-          Source: Bloomberg, “Jane Street Lost $15 Billion in Its First Down Month in a Decade,” Aug 14, 2026. Past performance does not guarantee future results.
+          <span className="font-bold">Think hedge funds:</span>{' '}
+          <span className="font-light">great traders don’t just trade their own savings. They start funds, because other people’s capital is the bigger business.</span>
         </p>
       </motion.div>
 
       <Link
-        href="/presentation/12"
+        href="/presentation/14"
         onClick={(e) => e.stopPropagation()}
         className="absolute bottom-8 left-20 z-30 text-xl underline underline-offset-4"
       >Back to FAQ</Link>
