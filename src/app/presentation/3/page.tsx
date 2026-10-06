@@ -66,17 +66,9 @@ export default function Slide3() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Tested strategies, not promises
+            From Trading Ideas to Informed Action
           </motion.h1>
 
-          <motion.p
-            className="text-3xl text-gray-700 font-light leading-snug"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-          >
-            Build, test or subscribe, with proof before you risk money.
-          </motion.p>
 
           <div className="flex items-center gap-16 mt-12 mb-12">
             <div className="flex-1 min-w-0 space-y-10">

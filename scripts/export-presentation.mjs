@@ -8,9 +8,12 @@ import { chromium } from 'playwright';
 import { PDFDocument, PDFName, PDFString } from 'pdf-lib';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const hostedSite = 'https://pitchdeck.vibetrader.com';
 const { values } = parseArgs({ options: {
   'base-url': { type: 'string', default: 'http://localhost:3000' },
+  format: { type: 'string', default: 'both' },
   output: { type: 'string', default: 'output/pdf/vibetrader-presentation.pdf' },
+  'web-output': { type: 'string', default: 'output/pdf/vibetrader-presentation-web-faq.pdf' },
   auth: { type: 'string', default: '.playwright-mcp/pdf-auth.json' },
   login: { type: 'boolean', default: false },
   'video-time': { type: 'string', default: '2' },
@@ -18,43 +21,61 @@ const { values } = parseArgs({ options: {
   help: { type: 'boolean', short: 'h' },
 } });
 if (values.help) {
-  console.log(`Export every slide, including the FAQ and its answers, as a PDF deck.
+  console.log(`Export the presentation as PDF decks.
 
   npm run export:pdf -- --login
+  npm run export:pdf -- --format web
   npm run export:pdf -- --base-url https://your-site.example
 
+Formats:
+  full   Every slide is a page, including the FAQ and its answers. FAQ links jump inside the PDF.
+  web    Ends at the FAQ slide. FAQ questions link to the answers at ${hostedSite}.
+  both   Write both PDFs from one capture (default)
+
 Options:
-  --login          Open Chromium for sign-in, save session, then export
-  --auth PATH      Private Playwright session file (default .playwright-mcp/pdf-auth.json)
-  --base-url URL   Running presentation (default http://localhost:3000)
-  --output PATH    Output PDF (default output/pdf/vibetrader-presentation.pdf)
-  --video-time N   Video still-frame time in seconds (default 2)
-  --settle-ms N    Animation settling time per slide (default 2500)
+  --format NAME      full, web or both (default both)
+  --output PATH      Full PDF (default output/pdf/vibetrader-presentation.pdf)
+  --web-output PATH  Web-FAQ PDF (default output/pdf/vibetrader-presentation-web-faq.pdf)
+  --login            Open Chromium for sign-in, save session, then export
+  --auth PATH        Private Playwright session file (default .playwright-mcp/pdf-auth.json)
+  --base-url URL     Running presentation (default http://localhost:3000)
+  --video-time N     Video still-frame time in seconds (default 2)
+  --settle-ms N      Animation settling time per slide (default 2500)
 
 Run the app first. Install Chromium with: npx playwright install chromium
-PDFs contain video stills marked with play buttons. FAQ links jump to answer pages inside the PDF;
-videos, footnotes and research link to the public site.`);
+PDFs contain video stills marked with play buttons. Videos, footnotes and research link to the public site.`);
   process.exit(0);
 }
+const formats = values.format === 'both' ? ['full', 'web'] : [values.format];
+if (!formats.every(format => ['full', 'web'].includes(format))) throw new Error('Format must be full, web or both.');
 const base = new URL(values['base-url']);
 if (!['http:', 'https:'].includes(base.protocol)) throw new Error('Base URL must use HTTP or HTTPS.');
 const hostedUrl = href => {
   const url = new URL(href, base);
-  return new URL(url.pathname + url.search + url.hash, 'https://pitchdeck.vibetrader.com').href;
+  return new URL(url.pathname + url.search + url.hash, hostedSite).href;
 };
 const videoTime = Number(values['video-time']);
 const settleMs = Number(values['settle-ms']);
 if (![videoTime, settleMs].every(n => Number.isFinite(n) && n >= 0)) throw new Error('Video time and settle time must be nonnegative numbers.');
-const output = resolve(root, values.output);
+const outputs = { full: resolve(root, values.output), web: resolve(root, values['web-output']) };
 const authFile = resolve(root, values.auth);
 const config = await readFile(resolve(root, 'src/config/presentation.ts'), 'utf8');
 const first = Number(config.match(/firstSlide:\s*(\d+)/)?.[1]);
-// Include the FAQ answer slides so FAQ links resolve inside the PDF, not on the hosted site.
 const last = Number(config.match(/lastSlide:\s*(\d+)/)?.[1]);
 if (!first || !last || first > last) throw new Error('Cannot read slide range from presentation config.');
-const pdf = await PDFDocument.create();
-const destinations = new Map();
-const pendingLinks = [];
+const faqSlides = (config.match(/faqSlides:\s*\[([^\]]*)\]/)?.[1] ?? '').split(',').map(Number).filter(Boolean);
+if (formats.includes('web') && !faqSlides.length) throw new Error('Cannot read faqSlides from presentation config.');
+// The first FAQ slide lists the questions. The web format keeps it and leaves the answers on the hosted site.
+const faqIndex = Math.min(...faqSlides);
+const includes = {
+  full: () => true,
+  web: number => !faqSlides.includes(number) || number === faqIndex,
+};
+const subjects = {
+  full: 'Pitch deck with FAQ answers. Videos and research sources open at pitchdeck.vibetrader.com.',
+  web: 'Pitch deck. FAQ answers, videos and research sources open at pitchdeck.vibetrader.com.',
+};
+const slides = [];
 let browser;
 
 try {
@@ -98,6 +119,7 @@ try {
   }
 
   for (let number = first; number <= last; number++) {
+    if (!formats.some(format => includes[format](number))) continue;
     const path = `/presentation/${number}`;
     console.log(`Capturing slide ${number}/${last}`);
     await visit(path);
@@ -151,38 +173,60 @@ try {
       return [{ href: video ? a.currentSrc || a.src : a.href, web: video || a.dataset.pdfLink === 'web',
         x: r.x, y: r.y, width: r.width, height: r.height }];
     }));
-    const png = await page.screenshot({ animations: 'disabled' });
-    const image = await pdf.embedPng(png);
-    const sheet = pdf.addPage([1440, 810]);
-    sheet.drawImage(image, { x: 0, y: 0, width: 1440, height: 810 });
-    destinations.set(path, sheet.ref);
-    for (const link of links) {
-      const href = link.web ? hostedUrl(link.href) : link.href;
-      const annotation = pdf.context.obj({ Type: 'Annot', Subtype: 'Link', Border: [0, 0, 0],
-        Rect: [link.x * .75, 810 - (link.y + link.height) * .75, (link.x + link.width) * .75, 810 - link.y * .75],
-        A: { S: 'URI', URI: PDFString.of(href) } });
-      sheet.node.addAnnot(pdf.context.register(annotation));
-      if (!link.web) pendingLinks.push({ annotation, href });
+    const heading = (await page.locator('h1').first().innerText()).trim();
+    slides.push({ number, path, heading, links, png: await page.screenshot({ animations: 'disabled' }) });
+  }
+
+  // Web-FAQ links only work if the hosted site numbers its slides like this build. Warn before sending a broken PDF.
+  if (formats.includes('web')) {
+    for (const slide of slides.filter(slide => faqSlides.includes(slide.number) && slide.number !== faqIndex)) {
+      const url = new URL(slide.path, hostedSite).href;
+      const heading = await page.goto(url, { waitUntil: 'domcontentloaded' })
+        .then(response => response?.ok() ? page.locator('h1').first().innerText() : `HTTP ${response?.status()}`)
+        .catch(error => error.message);
+      if (heading.trim() !== slide.heading) {
+        console.warn(`Warning: ${url} shows "${heading.trim()}", not "${slide.heading}". Deploy main before sending the web-FAQ PDF.`);
+      }
     }
   }
 
-  // Links to exported slides jump within the PDF. Footnotes, research, and FAQ answers open on the website.
-  for (const { annotation, href } of pendingLinks) {
-    const url = new URL(href, base);
-    const destination = url.origin === base.origin ? destinations.get(url.pathname.replace(/\/$/, '')) : undefined;
-    if (destination) {
-      annotation.delete(PDFName.of('A'));
-      annotation.set(PDFName.of('Dest'), pdf.context.obj([destination, 'Fit']));
-    } else if (url.origin === base.origin) {
-      // Keep links to unappended resources usable outside the local dev server.
-      annotation.set(PDFName.of('A'), pdf.context.obj({ S: 'URI', URI: PDFString.of(hostedUrl(url.href)) }));
+  for (const format of formats) {
+    const pdf = await PDFDocument.create();
+    const destinations = new Map();
+    const pendingLinks = [];
+    for (const { path, links, png } of slides.filter(slide => includes[format](slide.number))) {
+      const image = await pdf.embedPng(png);
+      const sheet = pdf.addPage([1440, 810]);
+      sheet.drawImage(image, { x: 0, y: 0, width: 1440, height: 810 });
+      destinations.set(path, sheet.ref);
+      for (const link of links) {
+        const href = link.web ? hostedUrl(link.href) : link.href;
+        const annotation = pdf.context.obj({ Type: 'Annot', Subtype: 'Link', Border: [0, 0, 0],
+          Rect: [link.x * .75, 810 - (link.y + link.height) * .75, (link.x + link.width) * .75, 810 - link.y * .75],
+          A: { S: 'URI', URI: PDFString.of(href) } });
+        sheet.node.addAnnot(pdf.context.register(annotation));
+        if (!link.web) pendingLinks.push({ annotation, href });
+      }
     }
+
+    // Links to slides in this PDF jump within it. Footnotes, research, and slides left out open on the website.
+    for (const { annotation, href } of pendingLinks) {
+      const url = new URL(href, base);
+      const destination = url.origin === base.origin ? destinations.get(url.pathname.replace(/\/$/, '')) : undefined;
+      if (destination) {
+        annotation.delete(PDFName.of('A'));
+        annotation.set(PDFName.of('Dest'), pdf.context.obj([destination, 'Fit']));
+      } else if (url.origin === base.origin) {
+        // Keep links to unappended resources usable outside the local dev server.
+        annotation.set(PDFName.of('A'), pdf.context.obj({ S: 'URI', URI: PDFString.of(hostedUrl(url.href)) }));
+      }
+    }
+    pdf.setTitle('VibeTrader Presentation');
+    pdf.setSubject(subjects[format]);
+    await mkdir(dirname(outputs[format]), { recursive: true });
+    await writeFile(outputs[format], await pdf.save());
+    console.log(`Saved ${pdf.getPageCount()} pages (${format}) to ${outputs[format]}`);
   }
-  pdf.setTitle('VibeTrader Presentation');
-  pdf.setSubject('Pitch deck with FAQ answers. Videos and research sources open at pitchdeck.vibetrader.com.');
-  await mkdir(dirname(output), { recursive: true });
-  await writeFile(output, await pdf.save());
-  console.log(`Saved ${pdf.getPageCount()} pages to ${output}`);
 } finally {
   await browser?.close();
 }

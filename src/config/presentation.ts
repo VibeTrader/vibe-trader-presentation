@@ -7,6 +7,7 @@ export const PRESENTATION_CONFIG = {
   firstSlide: 1,
 
   // FAQ slides are public so PDF readers can open them without signing in.
-  // The PDF export ends at the first FAQ slide; the answers open on the website.
+  // The full PDF export includes every FAQ slide. The web-FAQ export ends at the
+  // first FAQ slide, and its questions open the answers on the website.
   faqSlides: [14, 15, 16, 17, 18, 19, 20, 21, 22],
 };

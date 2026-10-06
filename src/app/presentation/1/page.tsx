@@ -81,7 +81,7 @@ export default function Slide1() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55, duration: 0.8 }}
         >
-          2,300+ traders <span className="text-gray-400 font-normal">•</span> Live broker partner{' '}
+          2,500+ traders <span className="text-gray-400 font-normal">•</span> Live broker partner{' '}
           <span className="text-gray-400 font-normal">•</span> Falcon strategies live
         </motion.p>
 

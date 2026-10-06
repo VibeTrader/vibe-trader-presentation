@@ -13,7 +13,7 @@ const ACTIVE = 9;
 const ceo = [
   { text: 'Took over the family textile business in India after her father’s sudden death', style: { paddingBottom: '10px' } },
   { text: 'Ran tight, profitable operations', style: { paddingBottom: '10px' } },
-  { text: 'Leads growth and partners: 2,300+ traders, live broker partner', style: { paddingBottom: '0px' } },
+  { text: 'Leads growth and partners: 2,500+ traders, live broker partner', style: { paddingBottom: '0px' } },
 ];
 
 const cto = [
@@ -21,7 +21,6 @@ const cto = [
   { text: 'Built a neural-network model for ultra-localized weather prediction', style: { paddingBottom: '10px' } },
   { text: 'Standardized business operations using GPT\u20112 models', style: { paddingBottom: '10px' } },
   { text: 'Former Amazon & AWS engineer', style: { paddingBottom: '10px' } },
-  { text: 'Built VibeTrader\'s AI platform and MT4/MT5 integrations', style: { paddingBottom: '0px' } },
 ];
 
 const advisor = [
@@ -35,7 +34,7 @@ export default function Slide11() {
 
   return (
     <div
-      className="relative flex h-full w-full items-start pt-16 overflow-hidden bg-white"
+      className="relative flex h-full w-full items-start pt-12 overflow-hidden bg-white"
       onClick={nextSlide}
     >
       <div
@@ -62,7 +61,7 @@ export default function Slide11() {
           />
 
           <motion.h1
-            className="text-6xl font-black text-black mb-8 tracking-tighter leading-tight"
+            className="text-6xl font-black text-black mb-6 tracking-tighter leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
@@ -75,7 +74,7 @@ export default function Slide11() {
             {/* CEO Card */}
             <motion.div
               className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
-              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: '32px' }}
+              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '20px', paddingLeft: '32px', paddingRight: '32px' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
@@ -119,7 +118,7 @@ export default function Slide11() {
             {/* CTO Card */}
             <motion.div
               className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
-              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: '32px' }}
+              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '20px', paddingLeft: '32px', paddingRight: '32px' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.45, duration: 0.6 }}
@@ -163,7 +162,7 @@ export default function Slide11() {
             {/* Advisor / Domain Expert Card */}
             <motion.div
               className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
-              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '32px', paddingLeft: '32px', paddingRight: '32px' }}
+              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '20px', paddingLeft: '32px', paddingRight: '32px' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
@@ -201,8 +200,24 @@ export default function Slide11() {
             </motion.div>
           </div>
 
+          {/* Legal counsel */}
+          <motion.div
+            className="flex items-center gap-8 border-2 border-gray-200 rounded-lg bg-white px-8 py-4 mt-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+          >
+            <p className="text-lg uppercase tracking-widest text-gray-500 shrink-0">Legal counsel</p>
+            <p className="text-2xl text-black shrink-0">
+              <span className="font-black">Orrick</span> · Dan Ullman, Partner
+            </p>
+            <p className="text-2xl text-gray-700 font-light leading-snug">
+              Former CFTC Associate Director of Enforcement · 16 years at the US retail forex regulator
+            </p>
+          </motion.div>
+
           {/* Simplified Bottom Takeaway */}
-          <SlideFooter className="w-full mt-6" delay={1.0}>
+          <SlideFooter className="w-full mt-5" delay={1.0}>
             An operator who runs profitable businesses and an engineer who built at Amazon scale, with a team of engineers and traders behind them.
           </SlideFooter>
         </motion.div>

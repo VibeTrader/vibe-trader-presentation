@@ -28,11 +28,27 @@ To export the hosted deck:
 npm run export:pdf -- --base-url https://pitchdeck.vibetrader.com --login
 ```
 
-Default output: `output/pdf/vibetrader-presentation.pdf`.
+Each export captures the slides once and writes two PDFs:
 
-The script reads the first and last slide numbers from `src/config/presentation.ts`. It captures every slide in order, including the FAQ and its answer slides, and appends the research page as printable A4 pages. Slide pages keep their 16:9 layout. Slide visuals are rasterized at 1920 × 1080 to preserve canvas graphics and the presentation layout; research text remains searchable.
+| Format | Output | FAQ answers |
+|---|---|---|
+| `full` | `output/pdf/vibetrader-presentation.pdf` | Every slide is a page. FAQ questions jump to answer pages inside the PDF. |
+| `web` | `output/pdf/vibetrader-presentation-web-faq.pdf` | The PDF ends at the FAQ slide. FAQ questions open the answers at `https://pitchdeck.vibetrader.com/presentation/<n>`. |
 
-FAQ links to other slides become internal PDF page links. Research links jump to the appended research pages. External sources remain clickable. Search controls are omitted from the static research appendix.
+To write only one of them:
+
+```sh
+npm run export:pdf -- --format full
+npm run export:pdf -- --format web
+```
+
+`--output` and `--web-output` change the two file paths.
+
+The script reads the slide range and `faqSlides` from `src/config/presentation.ts`. The first FAQ slide is the question list. The web format keeps it and leaves out the remaining FAQ slides. Any other link to a left-out slide, such as "View Falcon results", also opens on the website. Slide pages keep their 16:9 layout and are rasterized at 1920 × 1080 to preserve canvas graphics and the presentation layout.
+
+The web-FAQ links use the slide numbers deployed at `pitchdeck.vibetrader.com`, which deploys from `main`. Before writing that PDF, the script opens each hosted FAQ answer and checks that its heading matches the local slide. On a mismatch it prints a warning. Deploy `main`, then export again before sending the PDF.
+
+Research pages are not appended. Research links, footnotes and external sources open on the website.
 
 Videos become still-frame thumbnails at exactly the video element's position and dimensions. Clicking anywhere on a thumbnail opens `https://pitchdeck.vibetrader.com/<asset-name>`, with spaces URL-encoded. The exporter does not upload assets: they must already exist on the hosted site. Video decoding failures stop export rather than silently producing blank thumbnails.
 

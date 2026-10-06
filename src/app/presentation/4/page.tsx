@@ -18,7 +18,7 @@ const groups = [
     metrics: [
       {
         icon: Users,
-        value: '2,300+',
+        value: '2,500+',
         label: 'Registered traders',
         detail: 'Acquired on about $3/day of ad spend.',
       },
@@ -106,7 +106,7 @@ export default function Slide4() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            2,300+ traders on $3/day of ad spend. Beta strategy accounts start paying in October.
+            2,500+ traders on $3/day of ad spend. Beta strategy accounts start paying in October.
           </motion.p>
 
           <div className="grid grid-cols-3 gap-8 mb-10">
