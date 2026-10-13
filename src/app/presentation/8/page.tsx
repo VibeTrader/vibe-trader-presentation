@@ -3,64 +3,61 @@
 import { PRESENTATION_CONFIG } from '@/config/presentation';
 
 import { motion } from 'framer-motion';
+import { CreditCard, ShieldCheck, Landmark, Building2 } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
-import { launchPlan, plan, streams, totals, millions, roundMillions } from '@/config/financial-plan';
-import { billions, marketSizing, midpoint, totalMarket } from '@/config/market-sizing';
+import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 7;
 
-// TAM and SAM use our pricing (slide 7) and fee assumptions; SOM is the Year-5
-// plan from src/config/financial-plan.ts, the same numbers as Financials (slide 9).
-// Calculations, sources and the low–high ranges are on /research/market-sizing;
-// ranged estimates show their midpoint here.
-const yearFive = (title: string) => streams.find((stream) => stream.title === title)!.values[4];
-
-const segments = [
+// Now and Next streams match the revenue lines in the market slide (slide 9) and the five-year plan.
+const now = [
   {
-    buyer: 'Retail forex & CFD traders',
-    tam: { value: billions(midpoint(marketSizing.retail.tam)) },
-    sam: { value: billions(midpoint(marketSizing.retail.sam)) },
-    som: yearFive('App subscriptions') + yearFive('Premium strategies'),
-    source: 'Launch focus · Accounts: Finance Magnates, Q4 2025',
+    icon: CreditCard,
+    title: 'App subscriptions',
+    price: '$25 / $99 / $200',
+    unit: 'per month',
+    body: 'AI market intelligence, strategy building, testing and deployment.',
   },
   {
-    buyer: 'RIAs licensing strategies',
-    tam: { value: billions(marketSizing.ria.tam) },
-    sam: { value: billions(marketSizing.ria.sam) },
-    som: yearFive('RIA strategy licensing'),
-    source: 'Future offering · Cerulli / Morningstar, 2025',
-  },
-  {
-    buyer: 'Businesses with FX exposure',
-    tam: { value: billions(marketSizing.business.tam) },
-    sam: { value: millions(marketSizing.business.sam) },
-    som: yearFive('B2B FX strategies'),
-    source: 'Future offering · CMI 2025 / Kyriba 2023',
+    icon: ShieldCheck,
+    title: 'Premium strategies',
+    price: '$100–$2,500',
+    unit: 'per month, by account equity',
+    body: 'Subscriptions to pre-tested strategies such as Falcon, running on live accounts.',
   },
 ];
 
-// Combined across the three buyers; see /research/market-sizing for the sums.
-const total = {
-  tam: billions(midpoint(totalMarket.tam)),
-  sam: billions(midpoint(totalMarket.sam)),
-  som: roundMillions(totals[4]),
-};
+const next = [
+  {
+    icon: Landmark,
+    title: 'RIA strategy licensing',
+    price: '0.40%',
+    unit: 'a year on assets allocated',
+    body: 'Advisers license our strategies for their clients’ portfolios.',
+  },
+  {
+    icon: Building2,
+    title: 'Business FX strategies',
+    price: '~$200K',
+    unit: 'a year per company',
+    body: 'Strategies for companies that convert and hedge foreign currency.',
+  },
+];
 
-// Nested circles are illustrative, not to scale.
-const circles = [
-  { key: 'tam', label: 'TAM', caption: 'Broad opportunity', size: 620, style: 'bg-gray-100 text-black', labelTop: 56 },
-  { key: 'sam', label: 'SAM', caption: 'Modeled estimate', size: 400, style: 'bg-gray-300 text-black', labelTop: 44 },
-  { key: 'som', label: 'SOM', caption: 'Year-5 target', size: 220, style: 'bg-black text-white', labelTop: 0 },
-] as const;
+// Row-major order so each grid row's two cards share a height and stay aligned.
+const rows = now.flatMap((stream, i) => [
+  { ...stream, stage: 'now' as const },
+  { ...next[i], stage: 'next' as const },
+]);
 
-export default function Slide6() {
+export default function Slide5() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
     <div
-      className="relative flex h-full w-full items-start pt-16 overflow-hidden bg-white"
+      className="relative flex h-full w-full items-start pt-28 overflow-hidden bg-white"
       onClick={nextSlide}
     >
       <div
@@ -92,104 +89,77 @@ export default function Slide6() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Market Opportunity
+            Business Model
           </motion.h1>
 
           <motion.p
-            className="text-3xl text-gray-600 mb-8 font-light"
+            className="text-3xl text-gray-600 mb-10 font-light"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            Retail launch first. RIA and corporate markets are future expansion opportunities.
-            <sup className="ml-1 text-base text-gray-500">1</sup>
+            Recurring subscriptions today. Strategy licensing next.
           </motion.p>
 
-          <div className="flex items-end gap-16">
+          <div className="grid grid-cols-2 gap-x-10 gap-y-6 mb-8">
             <motion.div
-              className="relative shrink-0"
-              style={{ width: 640, height: 620 }}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5, duration: 0.7 }}
-              role="img"
-              aria-label={`Total market: TAM ${total.tam}, SAM ${total.sam}, SOM ${total.som} Year-5 target`}
+              className="flex items-center gap-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.45, duration: 0.5 }}
             >
-              {circles.map((c) => (
-                <div
-                  key={c.key}
-                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full flex flex-col items-center ${c.style} ${
-                    c.key === 'som' ? 'justify-center' : ''
-                  }`}
-                  style={{ width: c.size, height: c.size, paddingTop: c.key === 'som' ? 0 : c.labelTop }}
-                >
-                  <p className="text-lg uppercase tracking-[0.2em] font-semibold opacity-70">
-                    {c.key === 'som' ? c.label : `${c.label} · ${c.caption}`}
-                  </p>
-                  <p className={`${c.key === 'som' ? 'text-5xl' : 'text-[52px]'} font-black tracking-tighter leading-none mt-2`}>
-                    {total[c.key]}
-                  </p>
-                  {c.key === 'som' && <p className="text-base mt-2 opacity-70">{c.caption}</p>}
-                </div>
-              ))}
+              <span className="h-2.5 w-2.5 rounded-full bg-black animate-pulse" />
+              <h2 className="text-2xl uppercase tracking-[0.2em] text-black font-bold">Now</h2>
             </motion.div>
 
             <motion.div
-              className="flex-1 min-w-0"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.7, duration: 0.6 }}
+              className="flex items-center gap-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.65, duration: 0.5 }}
             >
-              <p className="text-lg uppercase tracking-[0.2em] text-gray-500 font-semibold mb-4">Annual revenue opportunity and Year 5 targets</p>
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="border-b-2 border-black">
-                    <th className="py-3 text-left text-lg uppercase tracking-wider text-gray-400 font-semibold">Buyer</th>
-                    <th className="py-3 text-right text-lg uppercase tracking-wider text-gray-400 font-semibold">TAM</th>
-                    <th className="py-3 pr-6 text-right text-lg uppercase tracking-wider text-gray-400 font-semibold">SAM</th>
-                    <th className="py-3 pl-4 text-right text-lg uppercase tracking-wider text-white font-semibold bg-black px-4">SOM Yr 5</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {segments.map((seg) => (
-                    <tr key={seg.buyer} className="border-b border-gray-200">
-                      <td className="py-5 pr-4">
-                        <p className="text-2xl font-bold text-black leading-tight">{seg.buyer}</p>
-                        <p className="text-base text-gray-400 mt-1">{seg.source}</p>
-                      </td>
-                      <td className="py-5 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-gray-500">{seg.tam.value}</td>
-                      <td className="py-5 pr-6 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-gray-700">{seg.sam.value}</td>
-                      <td className="py-5 px-4 text-right text-3xl font-black tracking-tight text-black bg-gray-50">{roundMillions(seg.som)}</td>
-                    </tr>
-                  ))}
-                  <tr className="border-t-2 border-black">
-                    <td className="py-5 text-2xl font-black text-black">Total</td>
-                    <td className="py-5 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-black">{total.tam}</td>
-                    <td className="py-5 pr-6 text-right text-[27px] whitespace-nowrap font-black tracking-tight text-black">{total.sam}</td>
-                    <td className="py-5 px-4 text-right text-3xl font-black tracking-tight text-white bg-black">{total.som}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <span className="h-2.5 w-2.5 rounded-full bg-gray-400" />
+              <h2 className="text-2xl uppercase tracking-[0.2em] text-gray-500 font-bold">Next</h2>
             </motion.div>
+
+            {rows.map((cell, i) => {
+              const Icon = cell.icon;
+              const isNow = cell.stage === 'now';
+              return (
+                <motion.div
+                  key={cell.title}
+                  className={`h-full border-2 p-8 flex gap-6 items-start transition-colors hover:border-black ${
+                    isNow ? 'border-gray-200 bg-white' : 'border-gray-100 bg-gray-50/60'
+                  }`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: (isNow ? 0.5 : 0.7) + Math.floor(i / 2) * 0.08, duration: 0.5 }}
+                >
+                  <div
+                    className={`w-14 h-14 flex items-center justify-center shrink-0 ${
+                      isNow ? 'bg-black text-white' : 'bg-white text-black border border-gray-300'
+                    }`}
+                  >
+                    <Icon className="w-7 h-7" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-3xl font-bold text-black mb-3 leading-tight">{cell.title}</h3>
+                    <p className={`text-5xl font-black tracking-tighter leading-none ${isNow ? 'text-black' : 'text-gray-700'}`}>
+                      {cell.price}
+                    </p>
+                    <p className="text-lg text-gray-500 mt-2 mb-3">{cell.unit}</p>
+                    <p className="text-xl text-gray-600 font-light leading-snug">{cell.body}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
-          <p className="mt-5 text-lg text-gray-600 leading-snug max-w-[1660px]">
-            Midpoints of low and high estimates; ranges are in the research notes. Broad proxies, including future products.
-            Retail TAM uses an unverified 10–15M population estimate. Geography, eligibility and willingness to pay still need validation. Circles are not to scale.
-          </p>
+
+          <SlideFooter className="w-full" delay={1.0}>
+            <span className="font-bold">Partners</span> (brokers, IBs and academies) bring traders on commission. <span className="font-bold">Strategies</span> carry the higher price and the stronger demand.
+          </SlideFooter>
         </motion.div>
       </div>
-
-      <a
-        href="/research/market-sizing"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Supporting research and sources (opens in a new tab)"
-        onClick={(event) => event.stopPropagation()}
-        onPointerDown={(event) => event.stopPropagation()}
-        className="absolute bottom-24 right-20 z-20 text-base leading-normal text-gray-500 underline decoration-gray-300 underline-offset-4 hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4"
-      >
-        <sup className="mr-1 text-xs">1</sup> Supporting research &amp; sources
-      </a>
 
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (

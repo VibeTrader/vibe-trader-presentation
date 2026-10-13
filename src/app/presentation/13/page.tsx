@@ -2,123 +2,138 @@
 
 import { PRESENTATION_CONFIG } from '@/config/presentation';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
-import { GlobeWatermark } from '@/components/GlobeWatermark';
-import { SocialLinks } from '@/components/SocialLinks';
+import { plan, totals, roundMillions, launchPlan } from '@/config/financial-plan';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 12;
 
-export default function Slide12() {
-  const { prevSlide, nextSlide } = useSlideNavigation();
+const useOfFunds = [
+  { title: 'Marketing', body: 'Reach traders directly and through partners' },
+  { title: 'Sales scale-up', body: 'Close broker, IB and academy deals' },
+  { title: 'Legal', body: 'Contracts and compliance' },
+];
+
+// Targets come from Year 1 of the five-year plan, the same numbers as Financials (slide 10).
+const yearOne = plan[0];
+
+export default function Slide10() {
+  const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
-    <div className="relative flex h-full w-full items-start pt-24 overflow-hidden bg-white">
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
-          backgroundSize: '20px 20px',
-        }}
-      />
-
-      <GlobeWatermark />
+    <div className="relative h-full w-full overflow-hidden bg-white text-black" onClick={nextSlide}>
+      <h1 className="absolute left-[54px] top-[60px] text-[104px] font-black tracking-tighter leading-none">
+        Why Invest Now
+      </h1>
+      <p className="absolute left-[54px] top-[180px] text-[30px] text-gray-600 font-light">
+        Pre-seed · <span className="font-bold text-black">$35K raised</span> from friends &amp; family · <span className="font-bold text-black">$1M</span> raise target · <span className="font-bold text-black">18-month</span> runway goal
+      </p>
 
       <motion.div
-        className="relative z-10 px-20 w-full"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="absolute inset-0"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}
+        aria-label="Evidence supports the raise, which funds marketing, sales and legal toward target outcomes"
       >
-        <div className="w-16 h-1.5 bg-black mb-6" />
-        <h1 className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight">
-          The Offer &amp; Our Vision
-        </h1>
-        <p className="text-3xl text-gray-600 font-light mb-12">
-          Join us in building the intelligence layer for global retail trading.
-        </p>
+        <svg aria-hidden="true" className="absolute inset-0 h-full w-full" viewBox="0 0 1920 1080">
+          <defs>
+            <marker id="investment-flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 Z" fill="black" />
+            </marker>
+          </defs>
+          <g fill="none" stroke="black" strokeWidth="3.5" strokeLinejoin="round">
+            <path d="M 450 424 H 498 Q 510 424 510 436 V 784 Q 510 796 498 796 H 450 M 450 606 H 510" />
+            <path d="M 510 606 H 570" markerEnd="url(#investment-flow-arrow)" />
+            <path d="M 894 606 H 950 M 950 424 V 796" />
+            <path d="M 950 424 H 1007" markerEnd="url(#investment-flow-arrow)" />
+            <path d="M 950 606 H 1007" markerEnd="url(#investment-flow-arrow)" />
+            <path d="M 950 796 H 1007" markerEnd="url(#investment-flow-arrow)" />
+            <path d="M 1368 424 H 1400 Q 1412 424 1412 436 V 784 Q 1412 796 1400 796 H 1368 M 1368 606 H 1412" />
+            <path d="M 1412 606 H 1477" markerEnd="url(#investment-flow-arrow)" />
+          </g>
+        </svg>
 
-        <div className="grid grid-cols-2 gap-12">
-          <motion.section
-            aria-label="Investment offer"
-            className="flex h-120 flex-col rounded-xl bg-black p-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            <span className="self-start bg-white px-3 py-1 font-mono text-lg font-bold uppercase tracking-[0.2em] text-black">
-              Investment offer
-            </span>
-            <p className="flex flex-1 items-center text-[132px] font-black leading-none tracking-tight text-white">
-              $1M SAFE
-            </p>
-          </motion.section>
-
-          <motion.section
-            aria-labelledby="vision-heading"
-            className="flex h-120 flex-col rounded-xl border-2 border-gray-200 bg-white p-10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45, duration: 0.6 }}
-          >
-            <span className="self-start bg-black px-3 py-1 font-mono text-lg font-bold uppercase tracking-[0.2em] text-white">
-              Vision
-            </span>
-            <p id="vision-heading" className="flex flex-1 items-center text-[44px] font-black leading-tight tracking-tight text-black">
-              Give everyone the financial intelligence to move forward—and, in doing so, move the global economy forward.
-            </p>
-          </motion.section>
-        </div>
-
-        <motion.div
-          className="mt-8 flex items-center justify-between rounded-xl border-2 border-gray-200 bg-gray-50 px-8 py-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-        >
-          <p className="text-2xl">
-            <span className="font-black text-black">Saranya Amirthalingam</span>
-            <span className="text-gray-500 font-light"> · CEO, VibeTrader</span>
-          </p>
-          <div className="flex items-center gap-8">
-            <SocialLinks size={30} />
-            <div className="h-8 w-px bg-gray-300" />
-            <a
-              href="https://vibetrader.com"
-              onClick={(e) => e.stopPropagation()}
-              className="font-mono text-2xl font-bold text-black hover:underline"
-            >
-              vibetrader.com
-            </a>
-            <a
-              href="https://vibetrader.com"
-              onClick={(e) => e.stopPropagation()}
-              aria-label="QR code: scan to open vibetrader.com"
-              className="block shrink-0 bg-white p-1.5 border border-gray-200"
-            >
-              <img src="/qr-vibetrader.svg" alt="QR code linking to vibetrader.com" className="h-24 w-24" />
-            </a>
+        <section aria-labelledby="evidence-heading" className="absolute left-[54px] top-[250px] w-[396px]">
+          <h2 id="evidence-heading" className="text-[42px] font-black tracking-tight border-b-2 border-gray-400 pb-4 mb-7">Evidence today</h2>
+          <div className="h-[188px] border-[3px] border-gray-400 rounded-xl px-6 py-5 mb-6">
+            <h3 className="text-[30px] font-bold leading-tight mb-2">Demand for ready-made strategies</h3>
+            <p className="text-[27px] text-gray-700 leading-tight">Stronger than demand for the app alone</p>
           </div>
-        </motion.div>
+          <div className="h-[148px] border-[3px] border-gray-400 rounded-xl px-6 flex items-center mb-6">
+            <Link href="/presentation/4" onClick={(event) => event.stopPropagation()} onPointerDown={(event) => event.stopPropagation()} className="block underline decoration-gray-300 underline-offset-4 hover:decoration-black"><h3 className="text-[32px] font-bold leading-tight">+461.95% gain<br />real-money account</h3><span className="text-lg text-gray-600">Myfxbook, Jan–Jul 2026 · Slide 4 →</span></Link>
+          </div>
+          <div className="h-[148px] border-[3px] border-gray-400 rounded-xl px-6 py-6">
+            <h3 className="text-[31px] font-bold leading-tight mb-2">$100–$2,500/month</h3>
+            <p className="text-[27px] text-gray-700 leading-tight">Falcon pricing by risk tier</p>
+          </div>
+        </section>
+
+        <section aria-label="Investment ask" className="absolute left-[580px] top-[498px] w-[314px] h-[204px] rounded-2xl bg-black text-white flex flex-col items-center justify-center">
+          <h2 className="text-[94px] font-black tracking-tight leading-none">$1M</h2>
+          <p className="text-[32px] font-bold mt-2">Pre-seed SAFE</p>
+          <p className="text-[22px] text-gray-300 mt-1">18-month runway goal</p>
+        </section>
+
+        <section aria-labelledby="priorities-heading" className="absolute left-[1014px] top-[250px] w-[354px]">
+          <h2 id="priorities-heading" className="text-[42px] font-black tracking-tight border-b-2 border-gray-400 pb-4 mb-7">Use of funds</h2>
+          <div className="space-y-7">
+            {useOfFunds.map((priority) => (
+              <div key={priority.title} className="h-[162px] border-[3px] border-gray-400 rounded-xl px-6 py-5">
+                <h3 className="text-[36px] font-bold leading-tight mb-2">{priority.title}</h3>
+                <p className="text-[27px] text-gray-700 leading-tight">{priority.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="outcomes-heading" className="absolute left-[1484px] top-[250px] w-[384px]">
+          <h2 id="outcomes-heading" className="text-[42px] font-black tracking-tight border-b-2 border-gray-400 pb-4">Year 1 targets</h2>
+          <div className="mt-[94px] h-[380px] border-[3px] border-gray-400 rounded-xl px-8 py-8 flex flex-col justify-between text-[30px] font-bold leading-tight">
+            <p>{(yearOne.appUsers + yearOne.strategySubs).toLocaleString('en-US')} retail subscriptions</p>
+            <p>{roundMillions(totals[0])} annual run rate<br /><span className="text-xl font-normal">By {launchPlan.checkpoint}</span></p>
+            <p>Commercial broker partnerships</p>
+          </div>
+        </section>
       </motion.div>
+
+      <p className="absolute left-[54px] bottom-[88px] text-[20px] text-gray-700">
+        Past performance does not guarantee future results.
+      </p>
 
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
-          <div key={i} className={`h-2 rounded-full ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'}`} />
+          <motion.div
+            key={i + 1}
+            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
+              } rounded-full`}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.8 + i * 0.03 }}
+          />
         ))}
       </div>
 
       <button
-        onClick={prevSlide}
+        onClick={(e) => {
+          e.stopPropagation();
+          prevSlide();
+        }}
         className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
         aria-label="Previous slide"
-      >←</button>
+      >
+        ←
+      </button>
       <button
-        onClick={nextSlide}
+        onClick={(e) => {
+          e.stopPropagation();
+          nextSlide();
+        }}
         className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
-        aria-label="Next slide: FAQ"
-      >→</button>
+        aria-label="Next slide"
+      >
+        →
+      </button>
     </div>
   );
 }

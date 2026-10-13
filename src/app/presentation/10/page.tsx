@@ -1,234 +1,117 @@
 'use client';
 
 import { PRESENTATION_CONFIG } from '@/config/presentation';
-
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
-import { SlideFooter } from '@/components/SlideFooter';
+import { plan, streams, totals, launchPlan, roundMillions } from '@/config/financial-plan';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 9;
 
-const ceo = [
-  { text: 'Took over the family textile business in India after her father’s sudden death', style: { paddingBottom: '10px' } },
-  { text: 'Ran tight, profitable operations', style: { paddingBottom: '10px' } },
-  { text: 'Leads growth and partners: 2,500+ traders, live broker partner', style: { paddingBottom: '0px' } },
+// Revenue regrouped by the three buyers on the market slide (slide 9).
+const byTitle = (title: string) => streams.find((stream) => stream.title === title)!.values;
+const buyers = [
+  { label: 'Retail traders', shade: 'bg-black', values: plan.map((_, i) => byTitle('App subscriptions')[i] + byTitle('Premium strategies')[i]) },
+  { label: 'RIAs', shade: 'bg-gray-500', values: byTitle('RIA strategy licensing') },
+  { label: 'Businesses', shade: 'bg-gray-300', values: byTitle('B2B FX strategies') },
 ];
+const BAR_MAX_PX = 200;
+const assets = (value: number) => `$${value / 1_000_000_000}B RIA assets`;
+// Year 1 build-up (earned revenue, app revenue, onboarding month, churn) is on
+// /research/market-sizing#launch-forecast; the slide keeps only the headline math.
 
-const cto = [
-  { text: '15+ years in AI and software, from neural networks to LLMs', style: { paddingBottom: '10px' } },
-  { text: 'Built a neural-network model for ultra-localized weather prediction', style: { paddingBottom: '10px' } },
-  { text: 'Standardized business operations using GPT\u20112 models', style: { paddingBottom: '10px' } },
-  { text: 'Former Amazon & AWS engineer', style: { paddingBottom: '10px' } },
-];
-
-const advisor = [
-  { text: '2 founders in the US; 10 contract engineers and traders in India', style: { paddingBottom: '10px' } },
-  { text: 'Traders from Gen Z to Gen X, with 50+ years of combined experience', style: { paddingBottom: '10px' } },
-  { text: 'Both founders have traded for 10+ years', style: { paddingBottom: '0px' } },
-];
-
-export default function Slide11() {
+export default function Slide7() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
-    <div
-      className="relative flex h-full w-full items-start pt-12 overflow-hidden bg-white"
-      onClick={nextSlide}
-    >
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
-          backgroundSize: '20px 20px',
-        }}
-      />
-
+    <div className="relative h-full w-full overflow-hidden bg-white text-black" onClick={nextSlide}>
       <GlobeWatermark />
-
-      <div className="relative z-10 px-20 w-full">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-        >
-          <motion.div
-            className="w-16 h-1.5 bg-black mb-6"
-            initial={{ width: 0 }}
-            animate={{ width: 64 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          />
-
-          <motion.h1
-            className="text-6xl font-black text-black mb-6 tracking-tighter leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-          >
-            Leadership Team
-          </motion.h1>
-
-          {/* 3 Columns Grid for Team Cards */}
-          <div className="grid grid-cols-3 gap-8 w-full mb-2">
-            {/* CEO Card */}
-            <motion.div
-              className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
-              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '20px', paddingLeft: '32px', paddingRight: '32px' }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              {/* Photo Image */}
-              <div
-                className="w-full bg-gray-50 border border-gray-100 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden group-hover:border-gray-200 transition-colors shrink-0"
-                style={{ height: '150px', width: '150px', alignSelf: 'center' }}
-              >
-                <img
-                  src="/saranya mam image.jpg"
-                  alt="Saranya Amirthalingam"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <h3 className="text-3xl font-black text-black leading-tight mb-1">
-                Saranya Amirthalingam
-              </h3>
-              <div className="flex items-center justify-between gap-4 h-12 mt-2 mb-2">
-                <p className="text-2xl text-gray-500 font-bold">Co-Founder & CEO</p>
-                <img src="/logos/penn-state.svg" alt="Penn State" className="h-12 w-auto" />
-              </div>
-              <ul className="w-full mt-2">
-                {ceo.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    className="flex items-start gap-3 text-2xl text-gray-700 font-light leading-snug"
-                    style={item.style}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 + i * 0.05, duration: 0.4 }}
-                  >
-                    <span className="mt-3 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                    <span>{item.text}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* CTO Card */}
-            <motion.div
-              className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
-              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '20px', paddingLeft: '32px', paddingRight: '32px' }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45, duration: 0.6 }}
-            >
-              {/* Photo Image */}
-              <div
-                className="w-full bg-gray-50 border border-gray-100 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden group-hover:border-gray-200 transition-colors shrink-0"
-                style={{ height: '150px', width: '150px', alignSelf: 'center' }}
-              >
-                <img
-                  src="/nithya sir image.jpg"
-                  alt="Nithyakumaran Gnanasekar"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <h3 className="text-3xl font-black text-black leading-tight mb-1">
-                Nithyakumaran Gnanasekar
-              </h3>
-              <div className="flex items-center justify-between gap-4 h-12 mt-2 mb-2">
-                <p className="text-2xl text-gray-500 font-bold">Co-Founder & CTO</p>
-                <img src="/logos/university-of-cincinnati.png" alt="University of Cincinnati" className="h-12 w-auto" />
-              </div>
-              <ul className="w-full mt-2">
-                {cto.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    className="flex items-start gap-3 text-2xl text-gray-700 font-light leading-snug"
-                    style={item.style}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.55 + i * 0.05, duration: 0.4 }}
-                  >
-                    <span className="mt-3 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                    <span>{item.text}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Advisor / Domain Expert Card */}
-            <motion.div
-              className="border-2 border-gray-200 rounded-lg bg-white group hover:border-black transition-colors flex flex-col"
-              style={{ minHeight: '440px', paddingTop: '24px', paddingBottom: '20px', paddingLeft: '32px', paddingRight: '32px' }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-            >
-              {/* Stat tile */}
-              <div
-                className="bg-black text-white rounded-xl mb-4 flex flex-col items-center justify-center shrink-0"
-                style={{ height: '150px', width: '150px', alignSelf: 'center' }}
-              >
-                <p className="text-7xl font-black tracking-tighter leading-none">12</p>
-                <p className="text-lg mt-2 text-gray-300">people</p>
-              </div>
-
-              <h3 className="text-3xl font-black text-black leading-tight mb-1">
-                Team of 12
-              </h3>
-              <div className="flex items-center justify-between gap-4 h-12 mt-2 mb-2">
-                <p className="text-2xl text-gray-500 font-bold">Engineers + traders</p>
-              </div>
-              <ul className="w-full mt-2">
-                {advisor.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    className="flex items-start gap-3 text-2xl text-gray-700 font-light leading-snug"
-                    style={item.style}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 + i * 0.05, duration: 0.4 }}
-                  >
-                    <span className="mt-3 inline-block h-2.5 w-2.5 shrink-0 bg-black" />
-                    <span>{item.text}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+      <motion.main className="relative z-10 px-20 pt-16" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+        <div className="w-16 h-1.5 bg-black mb-5" />
+        <div className="flex items-end justify-between">
+          <div>
+            <h1 className="text-6xl font-black tracking-tighter leading-tight">Financials</h1>
+            <p className="text-3xl text-gray-600 font-light mt-3">Launch in {launchPlan.onboardingMonth}. First full year ends {launchPlan.checkpoint}.</p>
           </div>
+          <div className="text-right">
+            <p className="text-8xl font-black tracking-tighter">{roundMillions(launchPlan.revenueTarget)}</p>
+            <p className="text-2xl text-gray-600 mt-2">First full-year revenue target</p>
+            <p className="text-xl text-gray-500 mt-1">{launchPlan.customers} customers × ${launchPlan.strategyPriceMonthly}/month</p>
+          </div>
+        </div>
 
-          {/* Legal counsel */}
-          <motion.div
-            className="flex items-center gap-8 border-2 border-gray-200 rounded-lg bg-white px-8 py-4 mt-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-          >
-            <p className="text-lg uppercase tracking-widest text-gray-500 shrink-0">Legal counsel</p>
-            <p className="text-2xl text-black shrink-0">
-              <span className="font-black">Orrick</span> · Dan Ullman, Partner
-            </p>
-            <p className="text-2xl text-gray-700 font-light leading-snug">
-              Former CFTC Associate Director of Enforcement · 16 years at the US retail forex regulator
-            </p>
-          </motion.div>
+        <div className="mt-10 flex items-center justify-between">
+          <h2 className="text-2xl font-bold">Five-year annual revenue run rate</h2>
+          <div className="flex gap-8 text-xl text-gray-600">
+            {buyers.map((b) => (
+              <span key={b.label} className="flex items-center gap-2">
+                <span className={`inline-block h-4 w-4 ${b.shade}`} />
+                {b.label}
+              </span>
+            ))}
+          </div>
+        </div>
 
-          {/* Simplified Bottom Takeaway */}
-          <SlideFooter className="w-full mt-5" delay={1.0}>
-            An operator who runs profitable businesses and an engineer who built at Amazon scale, with a team of engineers and traders behind them.
-          </SlideFooter>
-        </motion.div>
-      </div>
+        <div
+          className="flex gap-10 mt-4"
+          role="img"
+          aria-label={`Illustrative year-end annualized revenue: ${plan.map((p, i) => `${p.year} ${roundMillions(totals[i])}`).join(', ')}. Bar heights use a common linear scale.`}
+        >
+          {plan.map((year, i) => (
+            <div key={year.year} className="flex-1 text-center">
+              <div className="h-65 flex flex-col justify-end items-center border-b border-gray-300">
+                <p className="text-4xl font-black mb-3">{roundMillions(totals[i])}</p>
+                <motion.div
+                  className="w-[150px] flex flex-col-reverse origin-bottom"
+                  style={{ height: (totals[i] / totals[4]) * BAR_MAX_PX }}
+                  initial={{ scaleY: 0 }}
+                  animate={{ scaleY: 1 }}
+                  transition={{ delay: 0.4 + i * 0.1, duration: 0.6 }}
+                >
+                  {buyers.map((b) => (
+                    <div key={b.label} className={b.shade} style={{ height: `${(b.values[i] / totals[i]) * 100}%` }} />
+                  ))}
+                </motion.div>
+              </div>
+              <p className="text-2xl font-bold mt-3">{year.year}</p>
+              <p className="text-lg text-gray-600 mt-1">{(year.appUsers + year.strategySubs).toLocaleString('en-US')} retail subscriptions</p>
+              <p className="text-lg text-gray-500">
+                {year.riaAssets === 0 && year.businessClients === 0
+                  ? 'Retail only'
+                  : `${assets(year.riaAssets)} · ${year.businessClients} companies`}
+              </p>
+            </div>
+          ))}
+        </div>
 
+        <div className="mt-8 border-t-2 border-black pt-5">
+          <p className="text-lg uppercase tracking-widest text-gray-500 mb-3">Year 5 annual run rate: {roundMillions(totals[4])} target</p>
+          <div className="grid grid-cols-4 gap-10">
+            {streams.map(stream => (
+              <div key={stream.title}>
+                <p className="text-5xl font-black">{roundMillions(stream.values[4])}</p>
+                <p className="text-2xl text-gray-700 mt-2">{stream.title}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <p className="mt-6 text-lg text-gray-500">
+          Forecasts, not actuals. Years 2–5 keep earlier deck targets; costs, profitability and runway are not yet validated.{' '}
+          <a href="/research/market-sizing#launch-forecast" target="_blank" rel="noopener noreferrer"
+            onClick={event => event.stopPropagation()} onPointerDown={event => event.stopPropagation()}
+            className="underline underline-offset-4 hover:text-black">
+            Forecast assumptions and evidence ↗
+          </a>
+        </p>
+      </motion.main>
+
+      {/* Navigation dots */}
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
           <motion.div
             key={i + 1}
-            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
-              } rounded-full`}
+            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'} rounded-full`}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.8 + i * 0.03 }}
@@ -236,26 +119,12 @@ export default function Slide11() {
         ))}
       </div>
 
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          prevSlide();
-        }}
+      <button onClick={(e) => { e.stopPropagation(); prevSlide(); }}
         className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
-        aria-label="Previous slide"
-      >
-        ←
-      </button>
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          nextSlide();
-        }}
+        aria-label="Previous slide">←</button>
+      <button onClick={(e) => { e.stopPropagation(); nextSlide(); }}
         className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
-        aria-label="Next slide"
-      >
-        →
-      </button>
+        aria-label="Next slide">→</button>
     </div>
   );
 }

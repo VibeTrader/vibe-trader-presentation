@@ -7,8 +7,8 @@ const isProtectedRoute = createRouteMatcher([
   "/admin(.*)",
 ]);
 
-const isPublicFaqRoute = createRouteMatcher(
-  PRESENTATION_CONFIG.faqSlides.map((slide) => `/presentation/${slide}`),
+const isPublicSlideRoute = createRouteMatcher(
+  [...PRESENTATION_CONFIG.faqSlides, ...PRESENTATION_CONFIG.publicSlides].map((slide) => `/presentation/${slide}`),
 );
 
 const isAdminRoute = createRouteMatcher([
@@ -19,7 +19,7 @@ export default clerkMiddleware(async (auth, req) => {
   const { userId, sessionClaims } = await auth();
   
   // Protect routes that require authentication
-  if (isProtectedRoute(req) && !isPublicFaqRoute(req)) {
+  if (isProtectedRoute(req) && !isPublicSlideRoute(req)) {
     await auth.protect();
   }
 

@@ -9,5 +9,8 @@ export const PRESENTATION_CONFIG = {
   // FAQ slides are public so PDF readers can open them without signing in.
   // The full PDF export includes every FAQ slide. The web-FAQ export ends at the
   // first FAQ slide, and its questions open the answers on the website.
-  faqSlides: [14, 15, 16, 17, 18, 19, 20, 21, 22],
+  faqSlides: [15, 16, 17, 18, 19, 20, 21, 22],
+
+  // Pitch slides that are also public, so the FAQ and research pages can link to them.
+  publicSlides: [4],
 };

@@ -3,61 +3,54 @@
 import { PRESENTATION_CONFIG } from '@/config/presentation';
 
 import { motion } from 'framer-motion';
-import { CreditCard, ShieldCheck, Landmark, Building2 } from 'lucide-react';
+import { Building2, Network, GraduationCap } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
-import { SlideFooter } from '@/components/SlideFooter';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 6;
 
-// Now and Next streams match the revenue lines in the market slide (slide 8) and the five-year plan.
-const now = [
-  {
-    icon: CreditCard,
-    title: 'App subscriptions',
-    price: '$25 / $99 / $200',
-    unit: 'per month',
-    body: 'AI market intelligence, strategy building, testing and deployment.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Premium strategies',
-    price: '$100–$2,500',
-    unit: 'per month, by account equity',
-    body: 'Subscriptions to pre-tested strategies such as Falcon, running on live accounts.',
-  },
-];
-
-const next = [
-  {
-    icon: Landmark,
-    title: 'RIA strategy licensing',
-    price: '0.40%',
-    unit: 'a year on assets allocated',
-    body: 'Advisers license our strategies for their clients’ portfolios.',
-  },
+// Bars are a log-scale read on reach per partner, so 200 and 200,000 can sit
+// on the same axis. Schools stay unquantified until we have a cohort size.
+const channels = [
   {
     icon: Building2,
-    title: 'Business FX strategies',
-    price: '~$200K',
-    unit: 'a year per company',
-    body: 'Strategies for companies that convert and hedge foreign currency.',
+    channel: 'Brokers',
+    label: 'Embedded distribution',
+    status: 'Live',
+    reach: '20K–200K',
+    reachNote: 'traders per broker',
+    bar: 100,
+    stage: 'Dupoin live · 7 in pipeline',
+  },
+  {
+    icon: Network,
+    channel: 'IB partners',
+    label: 'Community-led',
+    status: 'Signing',
+    reach: '200+',
+    reachNote: 'users per IB',
+    bar: 43,
+    stage: 'Contracts signing · onboarding under way',
+  },
+  {
+    icon: GraduationCap,
+    channel: 'Schools',
+    label: 'Cohort distribution',
+    status: 'Signed',
+    reach: 'Cohort',
+    reachNote: 'students per academy cohort',
+    bar: null,
+    stage: 'Trading LatAm referral signed · no paying users yet',
   },
 ];
-
-// Row-major order so each grid row's two cards share a height and stay aligned.
-const rows = now.flatMap((stream, i) => [
-  { ...stream, stage: 'now' as const },
-  { ...next[i], stage: 'next' as const },
-]);
 
 export default function Slide5() {
   const { nextSlide, prevSlide } = useSlideNavigation();
 
   return (
     <div
-      className="relative flex h-full w-full items-start pt-28 overflow-hidden bg-white"
+      className="relative flex h-full w-full items-start pt-32 overflow-hidden bg-white"
       onClick={nextSlide}
     >
       <div
@@ -89,75 +82,88 @@ export default function Slide5() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Business Model
+            How We Reach Traders
           </motion.h1>
 
           <motion.p
-            className="text-3xl text-gray-600 mb-10 font-light"
+            className="text-3xl text-gray-600 mb-9 font-light max-w-4xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            Recurring subscriptions today. Strategy licensing next.
+            Partner-led distribution into audiences that already pay to trade.
           </motion.p>
 
-          <div className="grid grid-cols-2 gap-x-10 gap-y-6 mb-8">
-            <motion.div
-              className="flex items-center gap-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.45, duration: 0.5 }}
-            >
-              <span className="h-2.5 w-2.5 rounded-full bg-black animate-pulse" />
-              <h2 className="text-2xl uppercase tracking-[0.2em] text-black font-bold">Now</h2>
-            </motion.div>
-
-            <motion.div
-              className="flex items-center gap-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.65, duration: 0.5 }}
-            >
-              <span className="h-2.5 w-2.5 rounded-full bg-gray-400" />
-              <h2 className="text-2xl uppercase tracking-[0.2em] text-gray-500 font-bold">Next</h2>
-            </motion.div>
-
-            {rows.map((cell, i) => {
-              const Icon = cell.icon;
-              const isNow = cell.stage === 'now';
+          <div className="grid grid-cols-3 gap-6">
+            {channels.map((c, i) => {
+              const Icon = c.icon;
+              const isLive = c.status === 'Live';
               return (
                 <motion.div
-                  key={cell.title}
-                  className={`h-full border-2 p-8 flex gap-6 items-start transition-colors hover:border-black ${
-                    isNow ? 'border-gray-200 bg-white' : 'border-gray-100 bg-gray-50/60'
-                  }`}
+                  key={c.channel}
+                  className="flex flex-col border-2 border-gray-200 hover:border-black transition-colors p-7 group"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: (isNow ? 0.5 : 0.7) + Math.floor(i / 2) * 0.08, duration: 0.5 }}
+                  transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
                 >
-                  <div
-                    className={`w-14 h-14 flex items-center justify-center shrink-0 ${
-                      isNow ? 'bg-black text-white' : 'bg-white text-black border border-gray-300'
-                    }`}
-                  >
-                    <Icon className="w-7 h-7" />
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-14 h-14 bg-black text-white flex items-center justify-center group-hover:bg-gray-700 transition-colors">
+                      <Icon className="w-7 h-7" />
+                    </div>
+                    <span
+                      className={`px-3 py-1 text-sm font-bold uppercase tracking-[0.15em] ${
+                        isLive ? 'bg-black text-white' : 'border-2 border-gray-300 text-gray-500'
+                      }`}
+                    >
+                      {c.status}
+                    </span>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-3xl font-bold text-black mb-3 leading-tight">{cell.title}</h3>
-                    <p className={`text-5xl font-black tracking-tighter leading-none ${isNow ? 'text-black' : 'text-gray-700'}`}>
-                      {cell.price}
-                    </p>
-                    <p className="text-lg text-gray-500 mt-2 mb-3">{cell.unit}</p>
-                    <p className="text-xl text-gray-600 font-light leading-snug">{cell.body}</p>
+
+                  <p className="text-5xl font-black text-black mb-2 leading-none tracking-tighter">
+                    {c.channel}
+                  </p>
+                  <p className="text-lg uppercase tracking-widest text-gray-500 mb-6">{c.label}</p>
+
+                  <p className="text-sm uppercase tracking-widest text-gray-400 mb-2">Reach</p>
+                  <p className="text-3xl font-black text-black leading-none tracking-tight mb-1">{c.reach}</p>
+                  <p className="text-base text-gray-600 font-light mb-3">{c.reachNote}</p>
+                  <div className="h-2.5 w-full bg-gray-100 mb-6">
+                    {c.bar === null ? (
+                      <div
+                        className="h-full w-full"
+                        style={{
+                          backgroundImage:
+                            'repeating-linear-gradient(135deg, #d1d5db 0 6px, transparent 6px 12px)',
+                        }}
+                      />
+                    ) : (
+                      <motion.div
+                        className="h-full bg-black"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${c.bar}%` }}
+                        transition={{ delay: 0.8 + i * 0.1, duration: 0.7, ease: 'easeOut' }}
+                      />
+                    )}
+                  </div>
+
+                  <div className="mt-auto border-t-2 border-gray-100 pt-4">
+                    <p className="text-sm uppercase tracking-widest text-gray-400 mb-1">Status</p>
+                    <p className="text-lg text-black font-light leading-snug">{c.stage}</p>
                   </div>
                 </motion.div>
               );
             })}
           </div>
 
-          <SlideFooter className="w-full" delay={1.0}>
-            <span className="font-bold">Partners</span> (brokers, IBs and academies) bring traders on commission. <span className="font-bold">Strategies</span> carry the higher price and the stronger demand.
-          </SlideFooter>
+          <motion.p
+            className="mt-5 text-base text-gray-400 font-light"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.5 }}
+          >
+            Bars show reach per partner on a log scale. Cohort size for schools is not yet quantified.
+          </motion.p>
+
         </motion.div>
       </div>
 
