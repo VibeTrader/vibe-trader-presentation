@@ -6,11 +6,9 @@ export const PRESENTATION_CONFIG = {
   // Optional: define first slide if you want to start from something other than 1
   firstSlide: 1,
 
-  // FAQ slides are public so PDF readers can open them without signing in.
+  // FAQ slides are excluded from the short PDF export; all slides are public.
   // The full PDF export includes every FAQ slide. The web export ends at the
   // closing slide, which links to the FAQ on the website.
   faqSlides: [16, 17, 18, 19, 20, 21, 22, 23],
 
-  // Pitch slides that are also public, so the FAQ and research pages can link to them.
-  publicSlides: [4],
 };

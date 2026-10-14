@@ -11,21 +11,15 @@ In another terminal, install the export browser and export:
 
 ```sh
 npx playwright install chromium
-npm run export:pdf -- --login
-```
-
-Sign in in the Chromium window. Once the slides are visible, press Enter in the terminal. The script saves a private browser session under `.playwright-mcp/` (already ignored by Git), then exports. Keep that session file private. No authentication bypass is added to the app.
-
-Later exports can reuse the session:
-
-```sh
 npm run export:pdf
 ```
+
+The pitch deck is public. No sign-in, saved browser session, or Clerk configuration is required.
 
 To export the hosted deck:
 
 ```sh
-npm run export:pdf -- --base-url https://pitchdeck.vibetrader.com --login
+npm run export:pdf -- --base-url https://pitchdeck.vibetrader.com
 ```
 
 Each export captures the slides once and writes two PDFs:
@@ -59,4 +53,4 @@ npm run export:pdf -- --video-time 5 --settle-ms 4000 --output output/pdf/invest
 npm run export:pdf -- --help
 ```
 
-`--video-time` chooses the video frame in seconds. Shorter videos use their last available frame. A `data-pdf-time="12"` attribute on one `<video>` overrides it for that video. Elements with a `data-pdf-hide` attribute, such as the cover's Begin button, are hidden in the PDF. `--settle-ms` allows entrance animations to finish before capture. Review the finished PDF after changing animations or slide layouts. Run with `--login` again if the saved session expires.
+`--video-time` chooses the video frame in seconds. Shorter videos use their last available frame. A `data-pdf-time="12"` attribute on one `<video>` overrides it for that video. Elements with a `data-pdf-hide` attribute, such as the cover's Begin button, are hidden in the PDF. `--settle-ms` allows entrance animations to finish before capture. Review the finished PDF after changing animations or slide layouts.
