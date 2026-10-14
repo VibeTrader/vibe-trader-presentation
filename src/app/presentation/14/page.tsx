@@ -3,57 +3,18 @@
 import { PRESENTATION_CONFIG } from '@/config/presentation';
 
 import { motion } from 'framer-motion';
-import { Cpu, MessageSquare, Cloud, Gauge } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { GlobeWatermark } from '@/components/GlobeWatermark';
-import { SlideFooter } from '@/components/SlideFooter';
+import Link from 'next/link';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 13;
 
-// NVIDIA's Capital Connect template asks for current or planned NVIDIA use in business terms,
-// and warns against overstated relationship claims. Inception membership is the only one made here.
-// The language-model card makes no claim about the hardware Azure OpenAI or OpenRouter run on.
-const today = [
-  {
-    icon: Cpu,
-    title: 'Our own models on NVIDIA GPUs',
-    body: 'We train, backtest and serve our own trading models on NVIDIA GPU cloud instances.',
-  },
-  {
-    icon: MessageSquare,
-    title: 'Language models for every trader question',
-    body: 'Our market-analysis agents call models through Azure OpenAI and OpenRouter, so compute grows with users.',
-  },
-];
-
-const planned = [
-  {
-    icon: Cloud,
-    title: 'DGX Cloud and Inception credits',
-    body: 'Train larger strategy models and run more backtests on each strategy before release.',
-  },
-  {
-    icon: Gauge,
-    title: 'TensorRT-LLM and Triton',
-    body: 'Serve our own models faster, at a lower cost per trader question.',
-  },
-];
-
-// Row-major order so each grid row's two cards share a height and stay aligned.
-const rows = today.flatMap((item, i) => [
-  { ...item, stage: 'today' as const },
-  { ...planned[i], stage: 'planned' as const },
-]);
-
 export default function Slide14() {
-  const { nextSlide, prevSlide } = useSlideNavigation();
+  const { prevSlide, nextSlide } = useSlideNavigation();
 
   return (
-    <div
-      className="relative flex h-full w-full items-start pt-28 overflow-hidden bg-white"
-      onClick={nextSlide}
-    >
+    <div className="relative flex h-full w-full items-start pt-24 overflow-hidden bg-white">
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
@@ -64,126 +25,116 @@ export default function Slide14() {
 
       <GlobeWatermark />
 
-      <div className="relative z-10 px-20 w-full">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-        >
-          <motion.div
-            className="w-16 h-1.5 bg-black mb-6"
-            initial={{ width: 0 }}
-            animate={{ width: 64 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          />
+      <motion.div
+        className="relative z-10 px-20 w-full"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+      >
+        <div className="w-16 h-1.5 bg-black mb-6" />
+        <h1 className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight">
+          The Offer &amp; Our Vision
+        </h1>
+        <p className="text-3xl text-gray-600 font-light mb-12">
+          Join us in building the intelligence layer for global retail trading.
+        </p>
 
-          <motion.h1
-            className="text-6xl font-black text-black mb-3 tracking-tighter leading-tight"
+        <div className="grid grid-cols-2 gap-12">
+          <motion.section
+            aria-label="Investment offer"
+            className="flex h-120 flex-col rounded-xl bg-black p-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
           >
-            NVIDIA And Inception
-          </motion.h1>
+            <span className="self-start bg-white px-3 py-1 font-mono text-lg font-bold uppercase tracking-[0.2em] text-black">
+              Investment offer
+            </span>
+            <p className="flex flex-1 items-center text-[132px] font-black leading-none tracking-tight text-white">
+              $1M SAFE
+            </p>
+            <p className="text-2xl font-light text-gray-300">
+              Next step: a 30-minute call with Saranya ·{' '}
+              <Link
+                href="/presentation/15"
+                onClick={(e) => e.stopPropagation()}
+                className="text-white underline decoration-gray-500 underline-offset-4 hover:decoration-white"
+              >
+                Investor FAQ →
+              </Link>
+            </p>
+          </motion.section>
 
-          <motion.p
-            className="text-3xl text-gray-600 mb-10 font-light"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
+          <motion.section
+            aria-labelledby="vision-heading"
+            className="flex h-120 flex-col rounded-xl border-2 border-gray-200 bg-white p-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.6 }}
           >
-            We already run our models on NVIDIA GPUs. Inception helps us scale that.
-          </motion.p>
+            <span className="self-start bg-black px-3 py-1 font-mono text-lg font-bold uppercase tracking-[0.2em] text-white">
+              Vision
+            </span>
+            <p id="vision-heading" className="flex flex-1 items-center text-[44px] font-black leading-tight tracking-tight text-black">
+              Give everyone the financial intelligence to move forward—and, in doing so, move the global economy forward.
+            </p>
+          </motion.section>
+        </div>
 
-          <div className="grid grid-cols-2 gap-x-10 gap-y-6 mb-8">
-            <motion.div
-              className="flex items-center gap-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.45, duration: 0.5 }}
+        <motion.div
+          className="mt-8 flex items-center justify-between rounded-xl border-2 border-gray-200 bg-gray-50 px-8 py-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+        >
+          <p className="text-2xl">
+            <span className="font-black text-black">Saranya Amirthalingam</span>
+            <span className="text-gray-500 font-light"> · CEO, VibeTrader</span>
+          </p>
+          <div className="flex items-center gap-8">
+            <a
+              href="mailto:invest@vibetrader.com"
+              onClick={(e) => e.stopPropagation()}
+              className="font-mono text-2xl font-bold text-black hover:underline"
             >
-              <span className="h-2.5 w-2.5 rounded-full bg-black animate-pulse" />
-              <h2 className="text-2xl uppercase tracking-[0.2em] text-black font-bold">Today</h2>
-            </motion.div>
-
-            <motion.div
-              className="flex items-center gap-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.65, duration: 0.5 }}
+              invest@vibetrader.com
+            </a>
+            <div className="h-8 w-px bg-gray-300" />
+            <a
+              href="https://vibetrader.com"
+              onClick={(e) => e.stopPropagation()}
+              className="font-mono text-2xl font-bold text-black hover:underline"
             >
-              <span className="h-2.5 w-2.5 rounded-full bg-gray-400" />
-              <h2 className="text-2xl uppercase tracking-[0.2em] text-gray-500 font-bold">Planned with Inception</h2>
-            </motion.div>
-
-            {rows.map((cell, i) => {
-              const Icon = cell.icon;
-              const isToday = cell.stage === 'today';
-              return (
-                <motion.div
-                  key={cell.title}
-                  className={`h-full border-2 p-8 flex gap-6 items-start transition-colors hover:border-black ${
-                    isToday ? 'border-gray-200 bg-white' : 'border-gray-100 bg-gray-50/60'
-                  }`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: (isToday ? 0.5 : 0.7) + Math.floor(i / 2) * 0.08, duration: 0.5 }}
-                >
-                  <div
-                    className={`w-14 h-14 flex items-center justify-center shrink-0 ${
-                      isToday ? 'bg-black text-white' : 'bg-white text-black border border-gray-300'
-                    }`}
-                  >
-                    <Icon className="w-7 h-7" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-3xl font-bold text-black mb-3 leading-tight">{cell.title}</h3>
-                    <p className="text-2xl text-gray-600 font-light leading-snug">{cell.body}</p>
-                  </div>
-                </motion.div>
-              );
-            })}
+              vibetrader.com
+            </a>
+            <a
+              href="https://vibetrader.com"
+              onClick={(e) => e.stopPropagation()}
+              aria-label="QR code: scan to open vibetrader.com"
+              className="block shrink-0 bg-white p-1.5 border border-gray-200"
+            >
+              <img src="/qr-vibetrader.svg" alt="QR code linking to vibetrader.com" className="h-24 w-24" />
+            </a>
           </div>
-
-          <SlideFooter className="w-full" delay={1.0}>
-            <span className="font-bold">Why it matters:</span> more strategies tested per dollar before traders risk money, and a lower AI cost per trader as we grow.
-          </SlideFooter>
         </motion.div>
-      </div>
+      </motion.div>
 
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">
         {[...Array(TOTAL_SLIDES)].map((_, i) => (
-          <motion.div
-            key={i + 1}
-            className={`h-2 transition-all duration-300 ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'
-              } rounded-full`}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.8 + i * 0.03 }}
-          />
+          <div key={i} className={`h-2 rounded-full ${i === ACTIVE ? 'w-8 bg-black' : 'w-2 bg-gray-300'}`} />
         ))}
       </div>
 
       <button
-        onClick={(e) => {
-          e.stopPropagation();
-          prevSlide();
-        }}
+        onClick={prevSlide}
         className="absolute left-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
         aria-label="Previous slide"
-      >
-        ←
-      </button>
+      >←</button>
       <button
-        onClick={(e) => {
-          e.stopPropagation();
-          nextSlide();
-        }}
+        onClick={nextSlide}
         className="absolute right-8 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black transition-colors z-20"
-        aria-label="Next slide"
-      >
-        →
-      </button>
+        aria-label="Next slide: FAQ"
+      >→</button>
     </div>
   );
 }
