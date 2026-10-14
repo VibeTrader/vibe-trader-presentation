@@ -149,7 +149,7 @@ export default function Slide4() {
             eyebrow="How we grow"
             items={[
               'Direct: low-cost sign-ups prove demand',
-              'Communities: 100+ subscribers each',
+              'Communities: 200+ users each',
               'Brokers: 20K–200K traders each',
             ]}
             delay={1.0}

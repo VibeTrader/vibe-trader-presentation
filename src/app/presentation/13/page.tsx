@@ -6,15 +6,21 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { plan, totals, roundMillions, launchPlan } from '@/config/financial-plan';
+import { falconMonths } from '@/data/trading-results';
 
 const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 12;
 
+// Share of the $1M raise (founder split, October 2026).
 const useOfFunds = [
-  { title: 'Marketing', body: 'Reach traders directly and through partners' },
-  { title: 'Sales scale-up', body: 'Close broker, IB and academy deals' },
-  { title: 'Legal', body: 'Contracts and compliance' },
+  { title: 'Marketing', share: 60, body: 'Reach traders directly and through partners' },
+  { title: 'Sales', share: 25, body: 'Close broker, IB and academy deals' },
+  { title: 'Legal', share: 15, body: 'Contracts and compliance' },
 ];
+
+// The same months as the slide 4 chart.
+const positiveMonths = falconMonths.filter((m) => m.gain > 0).length;
+const falconPeriod = `${falconMonths[0].month}–${falconMonths[falconMonths.length - 1].month} 2026`;
 
 // Targets come from Year 1 of the five-year plan, the same numbers as Financials (slide 10).
 const yearOne = plan[0];
@@ -61,7 +67,7 @@ export default function Slide10() {
             <p className="text-[27px] text-gray-700 leading-tight">Stronger than demand for the app alone</p>
           </div>
           <div className="h-[148px] border-[3px] border-gray-400 rounded-xl px-6 flex items-center mb-6">
-            <Link href="/presentation/4" onClick={(event) => event.stopPropagation()} onPointerDown={(event) => event.stopPropagation()} className="block underline decoration-gray-300 underline-offset-4 hover:decoration-black"><h3 className="text-[32px] font-bold leading-tight">+461.95% gain<br />real-money account</h3><span className="text-lg text-gray-600">Myfxbook, Jan–Jul 2026 · Slide 4 →</span></Link>
+            <Link href="/presentation/4" onClick={(event) => event.stopPropagation()} onPointerDown={(event) => event.stopPropagation()} className="block underline decoration-gray-300 underline-offset-4 hover:decoration-black"><h3 className="text-[32px] font-bold leading-tight">{positiveMonths} of {falconMonths.length} months<br />positive</h3><span className="text-lg text-gray-600">Falcon, {falconPeriod} · Slide 4 →</span></Link>
           </div>
           <div className="h-[148px] border-[3px] border-gray-400 rounded-xl px-6 py-6">
             <h3 className="text-[31px] font-bold leading-tight mb-2">$100–$2,500/month</h3>
@@ -80,7 +86,7 @@ export default function Slide10() {
           <div className="space-y-7">
             {useOfFunds.map((priority) => (
               <div key={priority.title} className="h-[162px] border-[3px] border-gray-400 rounded-xl px-6 py-5">
-                <h3 className="text-[36px] font-bold leading-tight mb-2">{priority.title}</h3>
+                <h3 className="flex justify-between text-[36px] font-bold leading-tight mb-2"><span>{priority.title}</span><span>{priority.share}%</span></h3>
                 <p className="text-[27px] text-gray-700 leading-tight">{priority.body}</p>
               </div>
             ))}

@@ -73,6 +73,9 @@ export const secondAccountMonthly = [
   // October is in progress (month to date on Oct 7), so the deck chart leaves it out until the month closes.
   { month: 'Oct', gain: -8.95, partial: true },
 ];
+// The deck's Falcon record: Jan–Jul from the first account, Aug–Sep from the second, shown as one record
+// until the team publishes a combined Myfxbook portfolio. October is in progress and left out.
+export const falconMonths = [...monthlyResults, ...secondAccountMonthly.filter(m => ['Aug', 'Sep'].includes(m.month))];
 export const secondAccountRows = [
   ['Strategy', 'Falcon (internal name on Myfxbook: AI ORO GOLD X9 STD)'],
   ['Account', 'Real (USD), VT Markets, 1:500, MetaTrader 4'],

@@ -99,6 +99,7 @@ export default function Slide3() {
             >
               <video
                 src="/slide_2_V2.mp4"
+                data-pdf-time="27"
                 className="w-full h-full object-contain"
                 aria-label="VibeTrader demo: describe a strategy, test it on market history, publish it"
                 autoPlay

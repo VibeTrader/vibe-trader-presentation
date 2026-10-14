@@ -37,7 +37,7 @@ export default function Slide7() {
           <div className="text-right">
             <p className="text-8xl font-black tracking-tighter">{roundMillions(launchPlan.revenueTarget)}</p>
             <p className="text-2xl text-gray-600 mt-2">First full-year revenue target</p>
-            <p className="text-xl text-gray-500 mt-1">{launchPlan.customers} customers × ${launchPlan.strategyPriceMonthly}/month</p>
+            <p className="text-xl text-gray-500 mt-1">{launchPlan.customers} strategy customers × ${launchPlan.strategyPriceMonthly}/month</p>
           </div>
         </div>
 

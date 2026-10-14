@@ -33,7 +33,7 @@ Each export captures the slides once and writes two PDFs:
 | Format | Output | FAQ answers |
 |---|---|---|
 | `full` | `output/pdf/vibetrader-presentation.pdf` | Every slide is a page. FAQ questions jump to answer pages inside the PDF. |
-| `web` | `output/pdf/vibetrader-presentation-web-faq.pdf` | The PDF ends at the FAQ slide. FAQ questions open the answers at `https://pitchdeck.vibetrader.com/presentation/<n>`. |
+| `web` | `output/pdf/vibetrader-presentation-web-faq.pdf` | The PDF ends at the closing slide, which links to the FAQ at `https://pitchdeck.vibetrader.com/presentation/<n>`. This keeps the deck within NVIDIA Capital Connect's 15-slide limit. |
 
 To write only one of them:
 
@@ -44,9 +44,9 @@ npm run export:pdf -- --format web
 
 `--output` and `--web-output` change the two file paths.
 
-The script reads the slide range and `faqSlides` from `src/config/presentation.ts`. The first FAQ slide is the question list. The web format keeps it and leaves out the remaining FAQ slides. Any other link to a left-out slide, such as "View Falcon results", also opens on the website. Slide pages keep their 16:9 layout and are rasterized at 1920 × 1080 to preserve canvas graphics and the presentation layout.
+The script reads the slide range and `faqSlides` from `src/config/presentation.ts`. The web format leaves out every FAQ slide, including the question list. Any other link to a left-out slide, such as "View Falcon results", also opens on the website. Slide pages keep their 16:9 layout and are rasterized at 1920 × 1080 to preserve canvas graphics and the presentation layout.
 
-The web-FAQ links use the slide numbers deployed at `pitchdeck.vibetrader.com`, which deploys from `main`. Before writing that PDF, the script opens each hosted FAQ answer and checks that its heading matches the local slide. On a mismatch it prints a warning. Deploy `main`, then export again before sending the PDF.
+The web PDF's FAQ links use the slide numbers deployed at `pitchdeck.vibetrader.com`, which deploys from `main`. Before writing that PDF, the script opens each hosted FAQ slide and checks that its heading matches the local slide. On a mismatch it prints a warning. Deploy `main`, then export again before sending the PDF.
 
 Research pages are not appended. Research links, footnotes and external sources open on the website.
 
@@ -59,4 +59,4 @@ npm run export:pdf -- --video-time 5 --settle-ms 4000 --output output/pdf/invest
 npm run export:pdf -- --help
 ```
 
-`--video-time` chooses the video frame in seconds. Shorter videos use their last available frame. `--settle-ms` allows entrance animations to finish before capture. Review the finished PDF after changing animations or slide layouts. Run with `--login` again if the saved session expires.
+`--video-time` chooses the video frame in seconds. Shorter videos use their last available frame. A `data-pdf-time="12"` attribute on one `<video>` overrides it for that video. Elements with a `data-pdf-hide` attribute, such as the cover's Begin button, are hidden in the PDF. `--settle-ms` allows entrance animations to finish before capture. Review the finished PDF after changing animations or slide layouts. Run with `--login` again if the saved session expires.

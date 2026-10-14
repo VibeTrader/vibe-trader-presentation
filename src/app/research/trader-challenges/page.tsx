@@ -9,6 +9,15 @@ export const metadata: Metadata = {
 
 const questions = [
   {
+    question: 'What do the two figures on slide 2 establish?',
+    answer: 'Investing.com reports 300,000 active paying subscribers on its company information page, accessed October 13, 2026. This shows willingness to pay for financial information and analysis tools. Separately, the FTC says the IM Mastery Academy investment-training and business-venture scheme took more than $1.2 billion from consumers. The FTC announced settlements with lead defendants in May 2026.',
+    context: 'Investing.com serves investors across asset classes, not exclusively forex traders, and its subscriber count is company-reported. The IM Mastery figure is a cumulative amount covering investment training and its multi-level-marketing business venture, not annual spending on courses alone. These figures illustrate existing paid demand and the cost of misplaced trust; they are not added together, a market-size estimate, or proof that VibeTrader improves trading outcomes.',
+    sources: [
+      { label: 'Investing.com: company information and active paying subscribers', href: 'https://www.investing.com/about-us/index/' },
+      { label: 'FTC: IM Mastery case, including May 2026 settlements', href: 'https://www.ftc.gov/legal-library/browse/cases-proceedings/im-mastery' },
+    ],
+  },
+  {
     question: 'How much do traders spend trying to find an edge?',
     answer: 'A great deal, much of it on products that do not deliver. IM Mastery Academy, a forex and crypto trading-education business, took in more than $1.2 billion from consumers since 2018; in May 2026 its lead defendants settled with the FTC, which had obtained a $795.8 million judgment. Mirror Trading International, marketed as a forex “AI trading bot”, was ordered to pay $1.7 billion in restitution to victims, the largest civil monetary penalty in CFTC history. On the legitimate side, FTMO, the largest proprietary-trading firm, reported about $329 million in 2024 revenue, largely challenge fees paid by traders. Data from FPFX Tech covering more than 300,000 prop-challenge accounts found that only 7% of traders ever received a payout, after spending about $800 each on challenges on average.',
     context: 'The IM Academy and Mirror Trading figures are regulator findings about specific schemes, not a measure of the whole market. The FPFX figures are vendor data reported by Finance Magnates, not an independent audit. Broader totals, such as the $8.65 billion in US investment-fraud losses reported by the FBI for 2025, mostly involve crypto and romance-style fraud rather than traders buying strategies, so we do not present them as trader spending.',
@@ -90,7 +99,7 @@ export default function TraderChallengesResearchPage() {
           <p className="text-sm uppercase tracking-widest text-gray-500 mb-4">VibeTrader research</p>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-tight">What traders struggle with</h1>
           <p className="mt-6 text-lg leading-relaxed text-gray-600">The evidence behind the challenges on slide 2, with a clear distinction between published findings and our interpretation of user needs.</p>
-          <p className="mt-4 text-sm text-gray-500">Research reviewed September 18, 2026</p>
+          <p className="mt-4 text-sm text-gray-500">Slide 2 spending and trust evidence reviewed October 13, 2026; broker disclosures captured September 18, 2026</p>
         </header>
         <ResearchSearch />
         <div className="divide-y divide-gray-200 border-t border-gray-200">

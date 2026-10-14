@@ -10,9 +10,9 @@ const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 1;
 
 const traderProblems = [
-  'Keeping strategies effective as markets change',
-  'Knowing which strategy fits current conditions',
-  'Turning charts and signals into a clear trading decision',
+  'Verify whether a strategy’s claims hold up',
+  'Know which strategy fits current markets',
+  'Understand the risk before trading',
 ];
 
 export default function Slide2() {
@@ -20,7 +20,7 @@ export default function Slide2() {
 
   return (
     <div
-      className="relative flex h-full w-full items-start pt-36 overflow-hidden bg-white"
+      className="relative flex h-full w-full items-start pt-24 overflow-hidden bg-white"
       onClick={nextSlide}
     >
       <div
@@ -47,12 +47,12 @@ export default function Slide2() {
           />
 
           <motion.h1
-            className="text-6xl font-black text-black mb-6 tracking-tighter leading-tight"
+            className="text-5xl font-black text-black mb-6 tracking-tighter leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Why We Built VibeTrader
+            Traders pay for an edge—but struggle to know what to trust
           </motion.h1>
 
           <div className="mt-10 flex items-center gap-12">
@@ -78,17 +78,61 @@ export default function Slide2() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
-              <h2 className="text-4xl font-bold tracking-tight text-black mb-9 leading-[1.25]">
-                What traders struggle with
-                <sup className="ml-1 text-base font-normal text-gray-500">1</sup>
+              <h2 className="text-3xl font-bold tracking-tight text-black mb-8 leading-[1.25]">
+                Tools, courses, and strategies are widely available.
               </h2>
+              <p className="mb-6 text-2xl text-gray-600 font-light">Traders still struggle to:</p>
               <ul className="list-disc pl-6 space-y-7 text-3xl text-gray-700 font-light leading-[1.45] marker:text-gray-400">
                 {traderProblems.map((problem) => (
                   <li key={problem} className="pl-2">{problem}</li>
                 ))}
               </ul>
+
             </motion.div>
           </div>
+
+          <motion.div
+            className="mt-8 grid grid-cols-3 gap-12 border-t-2 border-black pt-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.6 }}
+          >
+            <div>
+              <p className="text-6xl font-black tracking-tighter text-black">69–76%</p>
+              <p className="mt-3 text-2xl text-gray-700 font-light leading-snug">
+                of retail CFD accounts lose money at IG, Pepperstone and Plus500.¹
+              </p>
+              <p className="mt-2 text-lg text-gray-500">Broker disclosures · September 18, 2026</p>
+            </div>
+            <div>
+              <p className="text-6xl font-black tracking-tighter text-black">300K</p>
+              <p className="mt-3 text-2xl text-gray-700 font-light leading-snug">
+                paying subscribers at Investing.com for financial information and tools.
+              </p>
+              <a
+                href="https://www.investing.com/about-us/index/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(event) => event.stopPropagation()}
+                onPointerDown={(event) => event.stopPropagation()}
+                className="mt-2 inline-block text-lg text-gray-500 underline underline-offset-4 hover:text-black"
+              >Company-reported subscribers ↗</a>
+            </div>
+            <div>
+              <p className="text-6xl font-black tracking-tighter text-black">$1.2B</p>
+              <p className="mt-3 text-2xl text-gray-700 font-light leading-snug">
+                investment-training and business-venture scheme: IM Mastery, per FTC.
+              </p>
+              <a
+                href="https://www.ftc.gov/legal-library/browse/cases-proceedings/im-mastery"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(event) => event.stopPropagation()}
+                onPointerDown={(event) => event.stopPropagation()}
+                className="mt-2 inline-block text-lg text-gray-500 underline underline-offset-4 hover:text-black"
+              >FTC case and settlements, 2025–26 ↗</a>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
 
@@ -96,12 +140,12 @@ export default function Slide2() {
         href="/research/trader-challenges"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Supporting research and sources (opens in a new tab)"
+        aria-label="Broker disclosures and supporting sources (opens in a new tab)"
         onClick={(event) => event.stopPropagation()}
         onPointerDown={(event) => event.stopPropagation()}
         className="absolute bottom-24 right-20 z-20 text-base leading-normal text-gray-500 underline decoration-gray-300 underline-offset-4 hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4"
       >
-        <sup className="mr-1 text-xs">1</sup> Supporting research &amp; sources
+        <sup className="mr-1 text-xs">1</sup> Broker disclosures &amp; sources
       </a>
 
       <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 space-x-2 z-20">

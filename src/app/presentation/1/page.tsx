@@ -94,9 +94,14 @@ export default function Slide1() {
           <p className="text-xl uppercase tracking-[0.3em] text-gray-500 mb-3">Presented by</p>
           <p className="text-2xl text-gray-800 font-light">Saranya Amirthalingam</p>
           <p className="text-xl text-gray-500 font-light">CEO &amp; Co-Founder, VibeTrader</p>
+          <p className="mt-5 text-xl text-gray-500 font-light">
+            Bellevue, WA <span className="text-gray-400">•</span> vibetrader.com{' '}
+            <span className="text-gray-400">•</span> <span className="font-semibold text-black">Raising $1M pre-seed SAFE</span>
+          </p>
         </motion.div>
 
         <motion.div
+          data-pdf-hide
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.1, duration: 0.6 }}

@@ -11,11 +11,11 @@ const TOTAL_SLIDES = PRESENTATION_CONFIG.lastSlide;
 const ACTIVE = 11;
 
 const rows = [
-  { feature: 'Market Analysis', mt: '✓', tv: '✓', cap: '✓', ts: '✓', comp: '◐', vibe: '✓' },
-  { feature: 'Strategy Building & Testing', mt: '✓', tv: '✓', cap: '✓', ts: '✓', comp: '✓', vibe: '✓' },
-  { feature: 'Trade Automation', mt: '✓', tv: '◐', cap: '✓', ts: '✓', comp: '✓', vibe: '✓' },
-  { feature: 'Trader Decision Memory', mt: '—', tv: '—', cap: '—', ts: '—', comp: '—', vibe: '✓' },
-  { feature: 'Adaptive Intelligence', mt: '—', tv: '—', cap: '◐', ts: '◐', comp: '◐', vibe: '✓' },
+  { feature: 'Market analysis', mt: '✓', tv: '✓', cap: '✓', ts: '✓', comp: '◐', vibe: '✓' },
+  { feature: 'Strategy building & testing', mt: '✓', tv: '✓', cap: '✓', ts: '✓', comp: '✓', vibe: '✓' },
+  { feature: 'Trade automation', mt: '✓', tv: '◐', cap: '✓', ts: '✓', comp: '✓', vibe: '✓' },
+  { feature: 'Remembers each trader’s decisions', mt: '—', tv: '—', cap: '—', ts: '—', comp: '—', vibe: '✓' },
+  { feature: 'Adapts as markets change', mt: '—', tv: '—', cap: '◐', ts: '◐', comp: '◐', vibe: '✓' },
 ];
 
 const renderValue = (val: string, isVibe = false) => {
@@ -75,7 +75,7 @@ export default function Slide9() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            From Trading Tools to Decision Intelligence
+            From trading tools to an AI harness for trading
           </motion.p>
 
           {/* Comparison Table */}

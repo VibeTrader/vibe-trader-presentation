@@ -29,7 +29,7 @@ if (values.help) {
 
 Formats:
   full   Every slide is a page, including the FAQ and its answers. FAQ links jump inside the PDF.
-  web    Ends at the FAQ slide. FAQ questions link to the answers at ${hostedSite}.
+  web    Ends at the closing slide, which links to the FAQ at ${hostedSite}.
   both   Write both PDFs from one capture (default)
 
 Options:
@@ -65,15 +65,14 @@ const last = Number(config.match(/lastSlide:\s*(\d+)/)?.[1]);
 if (!first || !last || first > last) throw new Error('Cannot read slide range from presentation config.');
 const faqSlides = (config.match(/faqSlides:\s*\[([^\]]*)\]/)?.[1] ?? '').split(',').map(Number).filter(Boolean);
 if (formats.includes('web') && !faqSlides.length) throw new Error('Cannot read faqSlides from presentation config.');
-// The first FAQ slide lists the questions. The web format keeps it and leaves the answers on the hosted site.
-const faqIndex = Math.min(...faqSlides);
+// The web format ends at the closing slide, which links to the FAQ on the hosted site.
 const includes = {
   full: () => true,
-  web: number => !faqSlides.includes(number) || number === faqIndex,
+  web: number => !faqSlides.includes(number),
 };
 const subjects = {
   full: 'Pitch deck with FAQ answers. Videos and research sources open at pitchdeck.vibetrader.com.',
-  web: 'Pitch deck. FAQ answers, videos and research sources open at pitchdeck.vibetrader.com.',
+  web: 'Pitch deck. FAQ, videos and research sources open at pitchdeck.vibetrader.com.',
 };
 const slides = [];
 let browser;
@@ -125,7 +124,7 @@ try {
     await visit(path);
     await page.addStyleTag({ content: `
       button[aria-label^="Previous slide"], button[aria-label^="Next slide"],
-      nextjs-portal, [data-nextjs-toast] { visibility: hidden !important; }
+      nextjs-portal, [data-nextjs-toast], [data-pdf-hide] { visibility: hidden !important; }
       .fixed.bottom-8, .absolute.bottom-8.left-1\\/2 { visibility: hidden !important; }
     ` });
     // Freeze videos at a meaningful frame. A failed video must not silently become a blank slide.
@@ -138,7 +137,9 @@ try {
         const seek = () => {
           video.pause();
           video.controls = false;
-          const target = Math.min(seconds, Number.isFinite(video.duration) ? Math.max(0, video.duration - 0.1) : seconds);
+          // data-pdf-time picks a frame that shows the product instead of the default moment.
+          const wanted = Number(video.dataset.pdfTime) || seconds;
+          const target = Math.min(wanted, Number.isFinite(video.duration) ? Math.max(0, video.duration - 0.1) : wanted);
           if (Math.abs(video.currentTime - target) < 0.01 && video.readyState >= 2) return done();
           video.addEventListener('seeked', done, { once: true });
           video.currentTime = target;
@@ -177,9 +178,9 @@ try {
     slides.push({ number, path, heading, links, png: await page.screenshot({ animations: 'disabled' }) });
   }
 
-  // Web-FAQ links only work if the hosted site numbers its slides like this build. Warn before sending a broken PDF.
+  // Hosted FAQ links only work if the hosted site numbers its slides like this build. Warn before sending a broken PDF.
   if (formats.includes('web')) {
-    for (const slide of slides.filter(slide => faqSlides.includes(slide.number) && slide.number !== faqIndex)) {
+    for (const slide of slides.filter(slide => faqSlides.includes(slide.number))) {
       const url = new URL(slide.path, hostedSite).href;
       const heading = await page.goto(url, { waitUntil: 'domcontentloaded' })
         .then(response => response?.ok() ? page.locator('h1').first().innerText() : `HTTP ${response?.status()}`)
