@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import { useAuth } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { PresentationScaleWrapper } from '@/components/PresentationScaleWrapper';
 
@@ -19,15 +18,10 @@ const Globe = dynamic(() => import('@/components/Globe'), {
 });
 
 export default function Home() {
-  const { isSignedIn } = useAuth();
   const router = useRouter();
 
   const handleButtonClick = () => {
-    if (isSignedIn) {
-      router.push('/presentation/1');
-    } else {
-      router.push('/sign-in');
-    }
+    router.push('/presentation/1');
   };
 
   return (
@@ -89,13 +83,13 @@ export default function Home() {
             style={{ fontSize: '2.25rem', padding: '2.5rem 4rem', fontWeight: 'bold' }}
             className="group bg-black text-white hover:bg-gray-800 rounded-none transition-all duration-300"
           >
-            {isSignedIn ? 'View Pitch Deck' : 'Sign In to Continue'}
+            View Pitch Deck
             <ArrowRight className="ml-4 h-8 w-8 transition-transform group-hover:translate-x-1" />
           </Button>
           
           {/* Professional messaging */}
           <p className="mt-6 font-semibold text-gray-600" style={{ fontSize: '1.875rem' }}>
-            Confidential investor materials
+            Investor pitch deck
           </p>
         </motion.div>
 

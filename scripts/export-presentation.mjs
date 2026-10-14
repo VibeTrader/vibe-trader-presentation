@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-import { readFile, writeFile, mkdir, chmod } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
-import { createInterface } from 'node:readline/promises';
 import { chromium } from 'playwright';
 import { PDFDocument, PDFName, PDFString } from 'pdf-lib';
 
@@ -14,8 +13,6 @@ const { values } = parseArgs({ options: {
   format: { type: 'string', default: 'both' },
   output: { type: 'string', default: 'output/pdf/vibetrader-presentation.pdf' },
   'web-output': { type: 'string', default: 'output/pdf/vibetrader-presentation-web-faq.pdf' },
-  auth: { type: 'string', default: '.playwright-mcp/pdf-auth.json' },
-  login: { type: 'boolean', default: false },
   'video-time': { type: 'string', default: '2' },
   'settle-ms': { type: 'string', default: '2500' },
   help: { type: 'boolean', short: 'h' },
@@ -23,7 +20,6 @@ const { values } = parseArgs({ options: {
 if (values.help) {
   console.log(`Export the presentation as PDF decks.
 
-  npm run export:pdf -- --login
   npm run export:pdf -- --format web
   npm run export:pdf -- --base-url https://your-site.example
 
@@ -36,8 +32,6 @@ Options:
   --format NAME      full, web or both (default both)
   --output PATH      Full PDF (default output/pdf/vibetrader-presentation.pdf)
   --web-output PATH  Web-FAQ PDF (default output/pdf/vibetrader-presentation-web-faq.pdf)
-  --login            Open Chromium for sign-in, save session, then export
-  --auth PATH        Private Playwright session file (default .playwright-mcp/pdf-auth.json)
   --base-url URL     Running presentation (default http://localhost:3000)
   --video-time N     Video still-frame time in seconds (default 2)
   --settle-ms N      Animation settling time per slide (default 2500)
@@ -58,7 +52,6 @@ const videoTime = Number(values['video-time']);
 const settleMs = Number(values['settle-ms']);
 if (![videoTime, settleMs].every(n => Number.isFinite(n) && n >= 0)) throw new Error('Video time and settle time must be nonnegative numbers.');
 const outputs = { full: resolve(root, values.output), web: resolve(root, values['web-output']) };
-const authFile = resolve(root, values.auth);
 const config = await readFile(resolve(root, 'src/config/presentation.ts'), 'utf8');
 const first = Number(config.match(/firstSlide:\s*(\d+)/)?.[1]);
 const last = Number(config.match(/lastSlide:\s*(\d+)/)?.[1]);
@@ -78,36 +71,17 @@ const slides = [];
 let browser;
 
 try {
-  browser = await chromium.launch({ channel: 'chromium', headless: !values.login });
-  let storageState;
-  try { storageState = JSON.parse(await readFile(authFile, 'utf8')); }
-  catch (error) { if (error.code !== 'ENOENT') throw error; }
-  const context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1, storageState });
+  browser = await chromium.launch({ channel: 'chromium', headless: true });
+  const context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
   const page = await context.newPage();
   page.setDefaultTimeout(30000);
   await page.emulateMedia({ media: 'screen' });
-
-  if (values.login) {
-    await page.goto(new URL(`/presentation/${first}`, base).href);
-    await page.bringToFront();
-    const terminal = createInterface({ input: process.stdin, output: process.stdout });
-    try { await terminal.question('Sign in in the browser. Once the presentation is visible, press Enter here. '); }
-    finally { terminal.close(); }
-    // A sign-in flow may finish in a different tab. Revisit using the context's shared cookies.
-    await page.goto(new URL(`/presentation/${first}`, base).href);
-    if (!new URL(page.url()).pathname.startsWith('/presentation/')) throw new Error('Sign-in is incomplete. Run again with --login.');
-    await mkdir(dirname(authFile), { recursive: true });
-    // Create with restricted permissions before writing session secrets.
-    await writeFile(authFile, '', { mode: 0o600 });
-    await chmod(authFile, 0o600);
-    await context.storageState({ path: authFile });
-  }
 
   async function visit(path) {
     const response = await page.goto(new URL(path, base).href, { waitUntil: 'domcontentloaded' });
     if (!response?.ok()) throw new Error(`Cannot load ${path}: HTTP ${response?.status()}`);
     if (new URL(page.url()).pathname.replace(/\/$/, '') !== path) {
-      throw new Error(`Redirected away from ${path}. Run with --login to authenticate.`);
+      throw new Error(`Redirected away from ${path} to ${page.url()}.`);
     }
     await page.locator('h1').first().waitFor({ state: 'visible' });
     await page.evaluate(async () => {
